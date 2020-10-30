@@ -1,0 +1,31 @@
+import React, { Fragment } from "react";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import NavDrawer from "./components/navigation/NavDrawer";
+import InstructionList from "./components/work-instructions/InstructionList";
+import ActivityList from "./components/activities/ActivityList";
+import Home from "./components/home/Home";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles({
+  container: {
+    display: "flex",
+  },
+});
+
+function App() {
+  const classes = useStyles();
+  return (
+    <Fragment>
+      <Router>
+        <NavDrawer />
+        <Switch>
+          <Route exact from="/" render={(props) => <Home {...props} />} />
+          <Route path="/activities/" exact component={ActivityList} />
+          <Route path="/work-instructions/" exact component={InstructionList} />
+        </Switch>
+      </Router>
+    </Fragment>
+  );
+}
+
+export default App;
