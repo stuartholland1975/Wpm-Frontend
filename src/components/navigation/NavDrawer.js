@@ -19,7 +19,6 @@ import MailIcon from "@material-ui/icons/Mail";
 import LetterW from "../icons/letter-w.png";
 import LetterM from "../icons/letter-m.png";
 import LetterP from "../icons/letter-p.png";
-import { withRouter, } from "react-router-dom";
 
 const drawerWidth = 240;
 
@@ -83,28 +82,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const NavDrawer = (props) => {
+const NavDrawer = () => {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
-  const { history } = props;
 
   const itemsList = [
-    {
-      text: "Home",
-      icon: <InboxIcon />,
-      onClick: () => history.push("/"),
-    },
-    {
-      text: "Work Instructions",
-      icon: <InboxIcon />,
-      onClick: () => history.push("/work-instructions"),
-    },
-    {
-      text: "Activities",
-      icon: <InboxIcon />,
-      onClick: () => history.push("/activities"),
-    },
+    "Dashboard",
+    "Work Instructions",
+    "Activities",
+    "Applications",
   ];
 
   const handleDrawerOpen = () => {
@@ -141,8 +128,7 @@ const NavDrawer = (props) => {
       </AppBar>
       <Drawer
         className={classes.drawer}
-        variant="persistent"
-        //variant="permanent"
+        variant="persistant"
         anchor="left"
         open={open}
         classes={{
@@ -160,15 +146,25 @@ const NavDrawer = (props) => {
         </div>
         <Divider />
         <List>
-          {itemsList.map((item, index) => {
-            const { text, icon, onClick } = item;
-            return (
-              <ListItem button key={text} onClick={onClick}>
-                {icon && <ListItemIcon>{icon}</ListItemIcon>}
-                <ListItemText primary={text} />
-              </ListItem>
-            );
-          })}
+          {itemsList.map((text, index) => (
+            <ListItem button key={text}>
+              <ListItemIcon>
+                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+              </ListItemIcon>
+              <ListItemText primary={text} />
+            </ListItem>
+          ))}
+        </List>
+        <Divider />
+        <List>
+          {["All mail", "Trash", "Spam"].map((text, index) => (
+            <ListItem button key={text}>
+              <ListItemIcon>
+                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+              </ListItemIcon>
+              <ListItemText primary={text} />
+            </ListItem>
+          ))}
         </List>
       </Drawer>
       <main
@@ -182,4 +178,4 @@ const NavDrawer = (props) => {
   );
 };
 
-export default withRouter(NavDrawer);
+export default NavDrawer;

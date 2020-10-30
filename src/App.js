@@ -14,16 +14,18 @@ import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import InboxIcon from "@material-ui/icons/MoveToInbox";
-import MailIcon from "@material-ui/icons/Mail";
+import ListIcon from "@material-ui/icons/List";
+import HomeIcon from "@material-ui/icons/Home";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import LetterW from "./components/icons/letter-w.png";
 import LetterM from "./components/icons/letter-m.png";
 import LetterP from "./components/icons/letter-p.png";
-import { withRouter } from 'react-router-dom';
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { withRouter } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import InstructionList from "./components/work-instructions/InstructionList";
 import ActivityList from "./components/activities/ActivityList";
 import Home from "./components/home/Home";
+import Test from "./components/test/Test";
 
 const drawerWidth = 240;
 
@@ -96,18 +98,31 @@ const App = (props) => {
   const itemsList = [
     {
       text: "Home",
-      icon: <InboxIcon />,
+      icon: <HomeIcon />,
       onClick: () => history.push("/"),
     },
     {
       text: "Work Instructions",
-      icon: <InboxIcon />,
+      icon: <ListIcon />,
       onClick: () => history.push("/work-instructions"),
     },
     {
       text: "Activities",
-      icon: <InboxIcon />,
+      icon: <ListIcon />,
       onClick: () => history.push("/activities"),
+    },
+    {
+      text: "TEST",
+      icon: <ListIcon />,
+      onClick: () => history.push("/test"),
+    },
+  ];
+
+  const authList = [
+    {
+      text: "LOG OUT",
+      icon: <ExitToAppIcon />,
+      onClick: () => history.push("/"),
     },
   ];
 
@@ -146,7 +161,6 @@ const App = (props) => {
       <Drawer
         className={classes.drawer}
         variant="persistent"
-        //variant="permanent"
         anchor="left"
         open={open}
         classes={{
@@ -174,6 +188,18 @@ const App = (props) => {
             );
           })}
         </List>
+        <Divider />
+        <List>
+          {authList.map((item, index) => {
+            const { text, icon, onClick } = item;
+            return (
+              <ListItem button key={text} onClick={onClick}>
+                {icon && <ListItemIcon>{icon}</ListItemIcon>}
+                <ListItemText primary={text} />
+              </ListItem>
+            );
+          })}
+        </List>
       </Drawer>
       <main
         className={clsx(classes.content, {
@@ -181,14 +207,13 @@ const App = (props) => {
         })}
       >
         <div className={classes.drawerHeader} />
-        
-        
+
         <Switch>
           <Route exact from="/" render={(props) => <Home {...props} />} />
           <Route path="/activities/" exact component={ActivityList} />
           <Route path="/work-instructions/" exact component={InstructionList} />
+          <Route path="/test/" exact component={Test} />
         </Switch>
-      
       </main>
     </div>
   );
