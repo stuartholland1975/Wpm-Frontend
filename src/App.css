@@ -1,7 +1,6 @@
 .wpm-wrapper {
   background-color: hsl(0, 0%, 95%);
-  /* margin-top: 50px;*/
-  margin-bottom: 60px;
+   margin-top: 50px;
 }
 
 .grid-title {
@@ -13,5 +12,5 @@
   justify-content: space-between;
   text-transform: uppercase;
   vertical-align: middle;
-  padding: 3px;
+  padding: 5px;
 }

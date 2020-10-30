@@ -4,8 +4,8 @@ import { fetchWorkInstructions } from "./InstructionData";
 import { selectAllWorkInstructions } from "./InstructionData";
 import { useEffectOnce } from "react-use";
 import { useDispatch, useSelector } from "react-redux";
-import CustomNoRowsOverlay from '../../CustomNoRowsOverlay';
-import Loader from 'react-loader-spinner';
+import CustomNoRowsOverlay from "../../CustomNoRowsOverlay";
+import Loader from "react-loader-spinner";
 
 const formatNumber = (params) =>
   Math.floor(params.value)
@@ -30,7 +30,7 @@ const ColumnDefs = [
   {
     headerName: "Project Title",
     field: "project_title",
-    minWidth: 600,
+    minWidth: 400,
     editable: true,
   },
   {
@@ -120,48 +120,43 @@ const gridOptions = {
   //onRowValueChanged: rowValueChanged,
   suppressClickEdit: true,
   suppressNoRowsOverlay: false,
-    frameworkComponents: {
-        customNoRowsOverlay: CustomNoRowsOverlay,
+  frameworkComponents: {
+    customNoRowsOverlay: CustomNoRowsOverlay,
+  },
+  noRowsOverlayComponent: "customNoRowsOverlay",
+  noRowsOverlayComponentParams: {
+    noRowsMessageFunc: function () {
+      return (
+        <Loader
+          style={{ textAlign: "center" }}
+          type={"ThreeDots"}
+          color={"Blue"}
+        />
+      );
     },
-      noRowsOverlayComponent: "customNoRowsOverlay",
-      noRowsOverlayComponentParams: {
-         noRowsMessageFunc: function () {
-           return (
-              <Loader
-                 style={{textAlign: "center"}}
-                 type={"ThreeDots"}
-                  color={"Blue"}
-              />
-          );
-      },
-     },
+  },
 };
 
 const InstructionList = () => {
   const dispatch = useDispatch();
   const workInstructions = useSelector(selectAllWorkInstructions);
-  const open = useSelector(state => state.drawer.open);
 
   const [gridApi, setGridApi] = useState();
   const [columnApi, setColumnApi] = useState();
 
   useEffectOnce(() => dispatch(fetchWorkInstructions()));
 
-  useEffect(() => {
-    if (gridApi) {
-      gridApi.sizeColumnsToFit();
-    }
-  },[open]);
-
   const onGridReady = (params) => {
     setGridApi(params.api);
     setColumnApi(params.columnApi);
+    params.api.sizeColumnsToFit();
   };
 
   return (
     <Fragment>
+      
+      <div className="ag-theme-custom-react" style={{ width: "100%" }}>
       <div className="grid-title">WORK INSTRUCTION LISTING:</div>
-      <div className="ag-theme-custom-react" style={{width: '100%'}}>
         <AgGridReact
           gridOptions={gridOptions}
           rowData={workInstructions}

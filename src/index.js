@@ -10,12 +10,14 @@ import {store} from './Store';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 import './GridStyles.scss';
+import CssBaseline from "@material-ui/core/CssBaseline";
 
 function initialise () {
     if ( cssHasLoaded ('ag-theme-custom-react') ) {
         ReactDOM.render (
             <Router>
                 <Provider store={store}>
+                    <CssBaseline/>
                     <App/>
                 </Provider>
             </Router>,
