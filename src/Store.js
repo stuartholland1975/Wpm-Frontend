@@ -1,12 +1,24 @@
 import { combineReducers } from "redux";
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore, createSlice } from "@reduxjs/toolkit";
 import logger from "redux-logger";
 import WorkInstructionsReducer from './components/work-instructions/InstructionData';
 
+const drawerViewSlice = createSlice({
+    name: 'drawer',
+    initialState: {open: true},
+    reducers : {
+        toggleDrawerView(state, action) {
+            state.open = action.payload
+        }
+    }
+})
+
+export const {toggleDrawerView} = drawerViewSlice.actions
 
 const rootReducer = combineReducers({
     workInstructions: WorkInstructionsReducer,
-    activities: ''
+    activities: '',
+    drawer: drawerViewSlice.reducer
 })
 
 

@@ -28,7 +28,8 @@ import ActivityList from "./components/activities/ActivityList";
 import Home from "./components/home/Home";
 import Test from "./components/test/Test";
 import Login from "./services/login";
-
+import {toggleDrawerView} from './Store';
+import {useDispatch, useSelector} from 'react-redux';
 
 const drawerWidth = 240;
 
@@ -95,7 +96,8 @@ const useStyles = makeStyles((theme) => ({
 const App = (props) => {
   const classes = useStyles();
   const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
+  const open = useSelector(state => state.drawer.open)
+  const dispatch = useDispatch()
   const { history } = props;
 
   const itemsList = [
@@ -135,11 +137,11 @@ const App = (props) => {
   ];
 
   const handleDrawerOpen = () => {
-    setOpen(true);
+    dispatch(toggleDrawerView(true));
   };
 
   const handleDrawerClose = () => {
-    setOpen(false);
+    dispatch(toggleDrawerView(false));
   };
 
   return (
