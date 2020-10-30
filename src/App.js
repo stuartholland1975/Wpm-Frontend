@@ -8,6 +8,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import List from "@material-ui/core/List";
 import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
+import LockOpenIcon from '@material-ui/icons/LockOpen';
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
@@ -26,6 +27,8 @@ import InstructionList from "./components/work-instructions/InstructionList";
 import ActivityList from "./components/activities/ActivityList";
 import Home from "./components/home/Home";
 import Test from "./components/test/Test";
+import Login from "./services/login";
+
 
 const drawerWidth = 240;
 
@@ -124,6 +127,11 @@ const App = (props) => {
       icon: <ExitToAppIcon />,
       onClick: () => history.push("/"),
     },
+    {
+      text: "LOG IN",
+      icon: <LockOpenIcon />,
+      onClick: () => history.push("/login"),
+    },
   ];
 
   const handleDrawerOpen = () => {
@@ -213,6 +221,7 @@ const App = (props) => {
           <Route path="/activities/" exact component={ActivityList} />
           <Route path="/work-instructions/" exact component={InstructionList} />
           <Route path="/test/" exact component={Test} />
+          <Route path="/login/" exact component={Login} />
         </Switch>
       </main>
     </div>
