@@ -1,6 +1,7 @@
 import {createAsyncThunk, createEntityAdapter, createSlice,} from "@reduxjs/toolkit";
 import axiosInstance from '../../services/axiosApi';
 
+
 export const fetchWorkInstructions = createAsyncThunk(
     "workInstructions/fetchAll",
     async () => {
@@ -44,13 +45,17 @@ export const workInstructionsAdapter = createEntityAdapter();
 
 const initialState = workInstructionsAdapter.getInitialState();
 
-const workInstructionsSlice = createSlice({
+export const workInstructionsSlice = createSlice({
     name: "workInstructions",
     initialState,
     reducers: {
         removeWorkInstruction: workInstructionsAdapter.removeOne,
         updateGridData: workInstructionsAdapter.upsertOne,
         resetGridData: workInstructionsAdapter.upsertOne,
+        addDocumentCount: (state, {payload}) => {
+          const  {work_instruction} = payload
+          console.log(work_instruction)
+        }
     },
     extraReducers: (builder) => {
         builder.addCase(
@@ -72,7 +77,7 @@ const workInstructionsSlice = createSlice({
     },
 });
 
-export const {removeWorkInstruction, updateGridData, resetGridData} = workInstructionsSlice.actions;
+export const {removeWorkInstruction, updateGridData, resetGridData, addDocumentCount} = workInstructionsSlice.actions;
 
 export const {
     selectById: selectWorkInstructionById,

@@ -1,5 +1,5 @@
 import React from "react";
-import { withRouter } from "react-router-dom";
+import { withRouter, useLocation } from "react-router-dom";
 
 import clsx from "clsx";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
@@ -59,6 +59,10 @@ const NavDrawer = (props) => {
   const classes = useStyles();
   const theme = useTheme();
   const { history } = props;
+  const location = useLocation();
+
+  const atWorkInstructions = location.pathname ==='/work-instructions'
+  console.log(atWorkInstructions, location)
 
   const itemsList = [
     {
@@ -134,6 +138,10 @@ const NavDrawer = (props) => {
               </ListItem>
             );
           })}
+        </List>
+        <Divider />
+        <List>
+        <ListItem>{atWorkInstructions && 'BUTTON'}</ListItem>
         </List>
       </Drawer>
     </div>
