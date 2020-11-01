@@ -33,48 +33,48 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+const renderTextField = ({
+                             label,
+                             input,
+                             meta: {touched, invalid, error},
+                             ...custom
+                         }) =>
+    (
+        <TextField
+            label={label}
+            placeholder={label}
+            error={touched && invalid}
+            helperText={touched && error}
+            {...input}
+            {...custom}
+        />
+    )
+
 let InstructionForm = (props) => {
     const uiClasses = useStyles();
     const {handleSubmit, pristine, reset, submitting, classes} = props
     const areaOptions = useSelector(selectAllAreas).map(area => area['area_description'])
     const areas = useSelector(selectAllAreas)
     const workTypes = useSelector(selectAllWorkTypes)
-    console.log(areas)
-    const renderTextField = ({
-                                 label,
-                                 input,
-                                 meta: {touched, invalid, error},
-                                 ...custom
-                             }) =>
-        (
-            <TextField
-                label={label}
-                placeholder={label}
-                error={touched && invalid}
-                helperText={touched && error}
-                {...input}
-                {...custom}
-            />
-        )
 
     const renderSelectField = ({
-                                   label, input, meta: {touched, invalid, error}, ...custom
+                                   label, input, meta: {touched, invalid, error}, children, ...custom
                                }) => (
         <Autocomplete
             options={areas}
             getOptionLabel={option => option['area_description']}
             className={uiClasses.textField}
-            renderInput={(params => <TextField{...params}
-                                              onChange={(event, index, value) => input.onChange(value)}
-                                              label={label}
-                                              placeholder={label}
-                                              error={touched && invalid}
-                                              helperText={touched && error}
-                                              {...input}
-                                              {...custom}
-            />)}>
+
+            onChange={(event, value, reason) => input.onChange(value.id)}
+            renderInput={(params =>
+                <TextField{...params} label={label}
+                          error={touched && invalid}
+                          helperText={touched && error}{...custom}{...children}{...input}
+                />)}>
         </Autocomplete>
     );
+
+
     return (
 
         <form onSubmit={handleSubmit(validate)} className={uiClasses.root}>
@@ -152,6 +152,7 @@ let InstructionForm = (props) => {
                 label='Area'
                 variant='filled'
                 margin='normal'
+                autoSelect
 
             />
             <Field
@@ -179,6 +180,7 @@ let InstructionForm = (props) => {
 InstructionForm = reduxForm({
     // a unique name for the form
     form: 'instructionForm',
+    validate
 
 })(InstructionForm)
 
