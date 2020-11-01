@@ -5,6 +5,7 @@ import WorkInstructionsReducer from "./components/work-instructions/InstructionD
 import WorkTypeReducer from "./components/worktypes/workTypesDataReducer";
 import AreasReducer from "./components/areas/areaDataReducer";
 import DocumentsReducer from "./components/documents/documentsDataReducer";
+import { reducer as formReducer } from 'redux-form'
 
 const rootReducer = combineReducers({
   workInstructions: WorkInstructionsReducer,
@@ -12,6 +13,7 @@ const rootReducer = combineReducers({
   workTypes: WorkTypeReducer,
   areas: AreasReducer,
   documents: DocumentsReducer,
+  form: formReducer,
 });
 
 export const store = configureStore({

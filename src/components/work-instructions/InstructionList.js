@@ -6,6 +6,8 @@ import {useEffectOnce, useLatest} from 'react-use';
 import {useDispatch, useSelector} from 'react-redux';
 import CustomNoRowsOverlay from '../../CustomNoRowsOverlay';
 import Loader from 'react-loader-spinner';
+import {fetchAreas} from "../areas/areaDataReducer";
+import {fetchWorkTypes} from "../worktypes/workTypesDataReducer";
 
 const formatNumber = (params) =>
     Math.floor (params.value)
@@ -94,7 +96,7 @@ const InstructionList = () => {
         defaultColDef: defaultColDef,
         columnTypes: columnTypes,
         pagination: true,
-        paginationPageSize: 30,
+        paginationPageSize: 35,
         rowSelection: 'single',
         suppressRowClickSelection: false,
         domLayout: 'autoHeight',
@@ -112,6 +114,8 @@ const InstructionList = () => {
     useEffectOnce (() => {
         dispatch (fetchWorkInstructions ());
         dispatch (fetchDocuments ());
+        dispatch(fetchAreas());
+        dispatch(fetchWorkTypes())
     });
 
     const onGridReady = (params) => {
@@ -122,7 +126,7 @@ const InstructionList = () => {
 
     function getDocumentCount (params) {
         return latestDocs.current.filter (
-            (obj) => obj.work_instruction === params.data.id,
+            (obj) => obj["work_instruction"] === params.data.id,
         ).length;
     }
 
