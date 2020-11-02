@@ -7,8 +7,9 @@ import Test from './components/test/Test';
 import Login from './services/login';
 import NavDrawer from './components/navigation/NavDrawer';
 import {makeStyles} from '@material-ui/core/styles';
+import WpmModal from './components/ui-components/WpmModal';
 
-const useStyles = makeStyles ({
+const useStyles = makeStyles({
     container: {
         display: 'flex',
     },
@@ -20,13 +21,14 @@ const useStyles = makeStyles ({
 });
 
 const App = (props) => {
-    const classes = useStyles ();
+    const classes = useStyles();
     return (
         <div className={classes.container}>
 
             <NavDrawer/>
 
             <div className={classes.content}>
+
 
                 <Switch>
                     <Route exact from="/" render={(props) => <Home {...props} />}/>

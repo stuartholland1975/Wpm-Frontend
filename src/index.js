@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import './App.css';
+import "bootstrap/dist/css/bootstrap.css";
 import reportWebVitals from './reportWebVitals';
 import {BrowserRouter as Router} from 'react-router-dom';
 import {Provider} from 'react-redux';
@@ -11,6 +12,7 @@ import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 import './GridStyles.scss';
 import CssBaseline from "@material-ui/core/CssBaseline";
+import { StackableModalProvider } from 'react-redux-modal-provider';
 
 function initialise () {
     if ( cssHasLoaded ('ag-theme-custom-react') ) {
@@ -19,6 +21,7 @@ function initialise () {
                 <Provider store={store}>
                     <CssBaseline/>
                     <App/>
+
                 </Provider>
             </Router>,
 

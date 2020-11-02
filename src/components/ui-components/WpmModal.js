@@ -1,26 +1,70 @@
-import React, {useContext, useRef} from "react";
+import React, {useRef} from "react";
 import {Col, Modal} from "react-bootstrap";
-import { useDispatch, useSelector } from 'react-redux';
-import { connectModal } from 'redux-modal'
-import {GreenButton, RedButton} from "./Buttons";
+import Button from "@material-ui/core/Button";
 
-const WpmModal = props => {
-    const { show, handleHide, content, title } = props
+import {useDispatch, useSelector} from "react-redux";
+import makeStyles from "@material-ui/core/styles/makeStyles";
+import {connectModal} from 'redux-modal'
+
+const useStyles = makeStyles((theme) => ({
+    paper: {
+
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'left',
+    },
+    form: {
+        width: '100%', // Fix IE 11 issue.
+        marginTop: theme.spacing(1),
+    },
+
+    submit: {
+        margin: theme.spacing(3, 0, 2),
+    },
+}));
+
+const WpmModal = (props) => {
+    const dispatch = useDispatch();
+    const showModal = useSelector(state => state.components.showModal)
+    const modalTitle = useSelector(state => state.components.modalTitle)
+    const modalContent = useSelector(state => state.components.modalContent)
+    const submitButtonRef = useRef()
+    const classes = useStyles()
+    const {show, handleHide, message, content, title, hideModal} = props
     return (
-      <Modal show={show} style={{width: "100%"}}>
-        <Modal.Header>
-          <Modal.Title>Hello</Modal.Title>
-        </Modal.Header>
+        <div>
+            <Modal show={show} onHide={hideModal} backdrop={true} size='lg' autoFocus={false} centered={false}
+                   scrollable={true}>
+                <Modal.Header closeButton style={{backgroundColor: "hsl(180, 30%, 30%)", color: "white"}}>
+                    <Modal.Title style={{textAlign: 'center'}}>{title}</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    {content}
+                </Modal.Body>
+                <Modal.Footer style={{justifyContent: "space-between"}}>
+                    <Col>
+                        <Button
+                            fullWidth
+                            variant="contained"
+                            color="primary"
+                            className={classes.submit}
 
-        <Modal.Body>
-          { content }
-        </Modal.Body>
+                        >SAVE</Button>
+                    </Col>
+                    <Col>
+                        <Button
 
-        <Modal.Footer>
-          <GreenButton onClick={handleHide}>Close</GreenButton>
-          <RedButton  onClick={handleHide}>Save changes</RedButton>
-        </Modal.Footer>
-      </Modal>
-    );
-}
-export default connectModal({ name: 'wpm-modal' })(WpmModal)
+                            fullWidth
+                            variant="contained"
+                            color="secondary"
+
+                            onClick={hideModal}>CLOSE
+                        </Button>
+
+                    </Col>
+                </Modal.Footer>
+            </Modal>
+        </div>
+    )
+};
+export default WpmModal

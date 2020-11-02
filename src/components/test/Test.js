@@ -1,19 +1,19 @@
-import React from "react";
-import {useDispatch} from "react-redux";
+import React, {Fragment} from "react";
 import {BlueButton} from "../ui-components/Buttons";
-import {show} from 'redux-modal'
-import InstructionForm from "../work-instructions/InstructionForm";
+import {showModal} from 'react-redux-modal-provider';
+import WorkInstructionForm from "../work-instructions/WorkInstructionForm";
+import {useDispatch} from "react-redux";
+import { show } from 'redux-modal'
 
 const Test = (props) => {
     const dispatch = useDispatch()
-
-    const handleOpen = name => () => {
-        dispatch(show(name, {content: <InstructionForm/>, title: "CREATE WORK INSTRUCTION"}))
-    };
-    return <div>
-
-        <BlueButton onClick={handleOpen('wpm-modal')}>CREATE</BlueButton>
-
-    </div>
+const handleOpen = name => () => {
+    dispatch(show(name, { message: "CREATE WORK INSTRUCTION" }))
+  };
+    return <Fragment>
+        <BlueButton
+            onClick={handleOpen('work-instruction-form')}>CREATE</BlueButton>
+        <WorkInstructionForm/>
+    </Fragment>
 };
 export default Test;
