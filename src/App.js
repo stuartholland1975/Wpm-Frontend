@@ -23,9 +23,11 @@ const App = (props) => {
     const classes = useStyles ();
     return (
         <div className={classes.container}>
+
             <NavDrawer/>
 
             <div className={classes.content}>
+
                 <Switch>
                     <Route exact from="/" render={(props) => <Home {...props} />}/>
                     <Route path="/activities" exact component={ActivityList}/>

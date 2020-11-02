@@ -58,18 +58,24 @@ let InstructionForm = (props) => {
     const workTypes = useSelector(selectAllWorkTypes)
 
     const renderSelectField = ({
-                                   label, input, meta: {touched, invalid, error}, children, ...custom
+                                   label, input, meta: {touched, invalid, error}, options, optionLabel, ...custom
                                }) => (
         <Autocomplete
-            options={areas}
-            getOptionLabel={option => option['area_description']}
+            options={options}
+            getOptionLabel={option => option[optionLabel]}
             className={uiClasses.textField}
-
-            onChange={(event, value, reason) => input.onChange(value.id)}
+            autoComplete
+            onChange={(event, value) => console.log(value)}
             renderInput={(params =>
-                <TextField{...params} label={label}
-                          error={touched && invalid}
-                          helperText={touched && error}{...custom}{...children}{...input}
+                <TextField
+                {...params}
+                label={label}
+                error={touched && invalid}
+                helperText={touched && error}
+                {...custom}
+                {...input}
+                
+
                 />)}>
         </Autocomplete>
     );
@@ -153,6 +159,8 @@ let InstructionForm = (props) => {
                 variant='filled'
                 margin='normal'
                 autoSelect
+                options={areas}
+                optionLabel='area_description'
 
             />
             <Field

@@ -6,6 +6,7 @@ import WorkTypeReducer from "./components/worktypes/workTypesDataReducer";
 import AreasReducer from "./components/areas/areaDataReducer";
 import DocumentsReducer from "./components/documents/documentsDataReducer";
 import { reducer as formReducer } from 'redux-form'
+import { reducer as modal } from 'redux-modal'
 
 const rootReducer = combineReducers({
   workInstructions: WorkInstructionsReducer,
@@ -14,6 +15,7 @@ const rootReducer = combineReducers({
   areas: AreasReducer,
   documents: DocumentsReducer,
   form: formReducer,
+  modal,
 });
 
 export const store = configureStore({

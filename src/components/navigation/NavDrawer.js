@@ -1,7 +1,6 @@
 import React from "react";
 import { withRouter, useLocation } from "react-router-dom";
-
-import clsx from "clsx";
+import { BlueButton } from "../ui-components/Buttons";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import {
   Drawer,
@@ -141,7 +140,7 @@ const NavDrawer = (props) => {
         </List>
         <Divider />
         <List>
-        <ListItem>{atWorkInstructions && 'BUTTON'}</ListItem>
+        {atWorkInstructions && <BlueButton>CREATE</BlueButton>}
         </List>
       </Drawer>
     </div>
