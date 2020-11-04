@@ -19,6 +19,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import LetterW from "../icons/letter-w.png";
 import LetterM from "../icons/letter-m.png";
 import LetterP from "../icons/letter-p.png";
+import { editRow } from "../ui-components/componentsReducer";
 
 const drawerWidth = 240;
 
@@ -60,7 +61,6 @@ const NavDrawer = (props) => {
   const dispatch = useDispatch();
 
   const handleOpen = name => () => {
-    console.log("OPEN MODAL")
     dispatch(show(name, { title: "CREATE WORK INSTRUCTION", content: "instructionForm" }))
   };
 
@@ -112,7 +112,7 @@ const NavDrawer = (props) => {
     },
     {
       component: 
-        <BlueButton onClick={() => console.log("CLICKED")}>
+        <BlueButton onClick={() => dispatch(editRow(true))}>
           EDIT WORK INSTRUCTION
         </BlueButton>
     },

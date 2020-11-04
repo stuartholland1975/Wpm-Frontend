@@ -7,7 +7,8 @@ const componentSlice = createSlice({
         showModal: false,
         modalTitle: "",
         modalContent: "",
-        modalProps: {}
+        modalProps: {},
+        editRow: false,
     },
     reducers: {
         toggleModal: (state, action) => {
@@ -16,8 +17,11 @@ const componentSlice = createSlice({
         modalSettings: (state, action) => {
             state.modalTitle = action.payload.title
             state.modalContent = action.payload.content
+        },
+        editRow: (state, action) => {
+            state.editRow = action.payload
         }
     }
 })
-export const {toggleModal, modalSettings} = componentSlice.actions
+export const {toggleModal, modalSettings, editRow} = componentSlice.actions
 export default componentSlice.reducer
