@@ -12,6 +12,7 @@ import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-alpine.css";
 import "./GridStyles.scss";
 import CssBaseline from "@material-ui/core/CssBaseline";
+import { ConfirmProvider } from "material-ui-confirm";
 
 function initialise() {
   if (cssHasLoaded("ag-theme-custom-react")) {
@@ -19,7 +20,9 @@ function initialise() {
       <Router>
         <Provider store={store}>
           <CssBaseline />
-          <App />
+          <ConfirmProvider>
+            <App />
+          </ConfirmProvider>
         </Provider>
       </Router>,
 

@@ -4,10 +4,10 @@ import { connectModal } from "redux-modal";
 import InstructionForm from "../work-instructions/InstructionForm";
 
 const InstructionModal = (props) => {
-  const { show, handleHide, title, content } = props;
+  const { show, handleHide, title, content, formType } = props;
 
   const components = {
-    instructionForm: <InstructionForm handleHide={handleHide} />,
+    instructionForm: <InstructionForm handleHide={handleHide} formType={formType} />,
   };
 
   return (

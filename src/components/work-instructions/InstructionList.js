@@ -15,7 +15,9 @@ import Loader from "react-loader-spinner";
 import { fetchAreas } from "../areas/areaDataReducer";
 import { fetchWorkTypes } from "../worktypes/workTypesDataReducer";
 import { editRow } from "../ui-components/componentsReducer";
-import { useConfirm } from 'material-ui-confirm';
+import { useConfirm } from "material-ui-confirm";
+import { setInitialData } from "../forms/FormData";
+import { show } from 'redux-modal';
 
 const formatNumber = (params) =>
   Math.floor(params.value)
@@ -31,7 +33,7 @@ const InstructionList = () => {
   const [gridApi, setGridApi] = useState();
   const [columnApi, setColumnApi] = useState();
   const isMounted = useMountedState();
-  const confirm = useConfirm()
+  const confirm = useConfirm();
 
   const ColumnDefs = [
     { headerName: "ID", field: "id", hide: true },
@@ -145,16 +147,31 @@ const InstructionList = () => {
     ).length;
   }
 
+  const handleOpen = name => () => {
+    dispatch(show(name, { title: "EDIT WORK INSTRUCTION", content: "instructionForm", formType: 'edit' }))
+  };
+
   useEffect(() => {
     if (isMounted) {
       if (rowSelected) {
         const selectedNode = gridApi.getSelectedNodes();
-        const rowId = selectedNode.map((item) => item.data.id)[0];
-        dispatch(editRow(false))
-        console.log(rowId);
+        if (selectedNode.length > 0) {
+          dispatch(editRow(false));
+          dispatch(setInitialData(selectedNode[0].data));
+          dispatch(handleOpen('instruction-modal'))
+        } else {
+          confirm({
+            title: "NO WORK INSTRUCTION SELECTED",
+            cancellationButtonProps: {
+              disabled: true,
+              hidden: true,
+            },
+          });
+          dispatch(editRow(false));
+        }
       }
     }
-  }, [dispatch, gridApi, isMounted, rowSelected]);
+  }, [confirm, dispatch, gridApi, isMounted, rowSelected]);
 
   return (
     <Fragment>

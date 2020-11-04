@@ -64,7 +64,7 @@ export const workInstructionsSlice = createSlice({
         );
         builder.addCase(
             newWorkInstruction.fulfilled,
-            workInstructionsAdapter.addOne
+            workInstructionsAdapter.upsertOne
         );
         builder.addCase(
             updateWorkInstruction.fulfilled,

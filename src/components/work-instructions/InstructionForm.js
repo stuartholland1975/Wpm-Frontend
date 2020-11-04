@@ -1,5 +1,5 @@
-import React, {  } from "react";
-import { useForm } from "react-hook-form";
+import React, { useEffect } from "react";
+import { useForm, Controller } from "react-hook-form";
 import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { useDispatch, useSelector } from "react-redux";
@@ -7,9 +7,10 @@ import { selectAllAreas } from "../areas/areaDataReducer";
 import { selectAllWorkTypes } from "../worktypes/workTypesDataReducer";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import { BlueButton, GreyButton } from "../ui-components/Buttons";
-import { newWorkInstruction } from "./InstructionData";
+import { newWorkInstruction, updateWorkInstruction } from "./InstructionData";
 import Grid from "@material-ui/core/Grid";
 import FocusLock from "react-focus-lock";
+import { DevTool } from "@hookform/devtools";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -31,7 +32,23 @@ const useStyles = makeStyles((theme) => ({
 const InstructionForm = (props) => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const { register, handleSubmit, reset } = useForm();
+  const initialData = useSelector((state) => state.form.initialData);
+  const { register, handleSubmit, reset, control } = useForm({
+    mode: "onChange",
+    defaultValues: {
+      work_instruction: initialData.work_instruction,
+      job_number: initialData.job_number,
+      project_title: initialData.project_title,
+      project_address: initialData.project_address,
+      issued_date: initialData.issued_date,
+      start_date: initialData.start_date,
+      end_date: initialData.end_date,
+      work_type_description: initialData.work_type,
+      area_description: initialData.area_description,
+
+      notes: initialData.notes,
+    },
+  });
   const areas = useSelector(selectAllAreas);
   const workTypes = useSelector(selectAllWorkTypes);
 
@@ -42,19 +59,30 @@ const InstructionForm = (props) => {
     const workType = workTypes.filter(
       (obj) => obj["work_type_description"] === data["work_type_description"]
     );
-    const apiObject = {
+    let apiObject = {
       ...data,
       project_type: workType[0].id,
       area: area[0].id,
       project_status: 1,
     };
-    dispatch(newWorkInstruction(apiObject));
-    props.handleHide()
+
+    if (props.formType === "create") {
+      dispatch(newWorkInstruction(apiObject));
+      props.handleHide();
+    } else if (props.formType === "edit") {
+      apiObject = { ...apiObject, id: initialData.id };
+      dispatch(updateWorkInstruction(apiObject));
+      props.handleHide();
+    }
   };
+
+  useEffect(() => {
+    reset();
+  }, [reset]);
 
   return (
     <FocusLock>
-      <form className={classes.grid} onSubmit={handleSubmit(onSubmit)}>
+      <form className={classes.grid}>
         <Grid container spacing={2}>
           <Grid item xs>
             <TextField
@@ -155,16 +183,19 @@ const InstructionForm = (props) => {
                   variant="filled"
                   margin="normal"
                   inputRef={register({ required: true })}
+                  InputLabelProps={{ shrink: true }}
                 />
               )}
             />
           </Grid>
+
           <Grid item xs>
             <Autocomplete
               openOnFocus
               options={areas}
               getOptionLabel={(option) => option["area_description"]}
               fullWidth
+              
               renderInput={(params) => (
                 <TextField
                   {...params}
@@ -173,11 +204,13 @@ const InstructionForm = (props) => {
                   variant="filled"
                   margin="normal"
                   inputRef={register({ required: true })}
+                  InputLabelProps={{ shrink: true }}
                 />
               )}
             />
           </Grid>
         </Grid>
+
         <Grid container spacing={2}>
           <Grid item xs>
             <TextField
@@ -195,7 +228,7 @@ const InstructionForm = (props) => {
         <hr />
         <Grid container spacing={2}>
           <Grid item xs>
-            <BlueButton type="submit" fullWidth>
+            <BlueButton onClick={handleSubmit(onSubmit)} fullWidth>
               SUBMIT
             </BlueButton>
           </Grid>
@@ -212,6 +245,7 @@ const InstructionForm = (props) => {
         </Grid>
         <hr />
       </form>
+      <DevTool control={control} />
     </FocusLock>
   );
 };

@@ -61,11 +61,10 @@ const NavDrawer = (props) => {
   const dispatch = useDispatch();
 
   const handleOpen = name => () => {
-    dispatch(show(name, { title: "CREATE WORK INSTRUCTION", content: "instructionForm" }))
+    dispatch(show(name, { title: "CREATE WORK INSTRUCTION", content: "instructionForm", formType: 'create' }))
   };
 
   const atWorkInstructions = location.pathname === "/work-instructions";
-  console.log(atWorkInstructions, location);
 
   const itemsList = [
     {
