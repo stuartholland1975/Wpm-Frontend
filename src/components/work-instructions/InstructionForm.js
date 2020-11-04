@@ -10,8 +10,10 @@ import { BlueButton, GreyButton } from "../ui-components/Buttons";
 import { newWorkInstruction, updateWorkInstruction } from "./InstructionData";
 import Grid from "@material-ui/core/Grid";
 import FocusLock from "react-focus-lock";
-import { DevTool } from "@hookform/devtools";
-import MuiAutoComplete from "../forms/MuiAutoComplete";
+import { updateData } from "../forms/FormData";
+import _ from "lodash/fp";
+import { useRendersCount } from "react-use";
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -46,12 +48,16 @@ const InstructionForm = (props) => {
       end_date: initialData.end_date,
       work_type_description: initialData.work_type,
       area_description: initialData.area_description,
-      area_description2: initialData.area_description,
+      country: initialData.area_description,
       notes: initialData.notes,
     },
   });
   const areas = useSelector(selectAllAreas);
   const workTypes = useSelector(selectAllWorkTypes);
+  const rendersCount = useRendersCount();
+  
+
+  console.log({ renders: rendersCount });
 
   const onSubmit = (data) => {
     const area = areas.filter(
@@ -79,7 +85,7 @@ const InstructionForm = (props) => {
 
   useEffect(() => {
     reset();
-  }, []);
+  }, [reset]);
 
   return (
     <FocusLock>
@@ -175,7 +181,13 @@ const InstructionForm = (props) => {
               openOnFocus
               options={workTypes}
               getOptionLabel={(option) => option["work_type_description"]}
-              inputValue={initialData.work_type}
+              getOptionSelected={(option, values) => option._id === values._id}
+              onInputChange={(event, newInputValue) => {
+                console.log(event, initialData.name);
+                dispatch(
+                  updateData({ field: "work_type", value: newInputValue })
+                );
+              }}
               fullWidth
               renderInput={(params) => (
                 <TextField
@@ -226,6 +238,31 @@ const InstructionForm = (props) => {
               InputLabelProps={{ shrink: true }}
             />
           </Grid>
+          <Grid>
+            <Controller
+              render={(props) => (
+                <Autocomplete
+                  {...props}
+                  options={areas}
+                  getOptionLabel={(option) => option.area_description}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      label="Country"
+                      placeholder="Select a Country"
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                      variant="outlined"
+                    />
+                  )}
+                  onChange={(_, data) => props.onChange(data)}
+                />
+              )}
+              name="country"
+              control={control}
+            />
+          </Grid>
         </Grid>
         <hr />
         <Grid container spacing={2}>
@@ -246,8 +283,11 @@ const InstructionForm = (props) => {
           </Grid>
         </Grid>
         <hr />
+        
       </form>
+      
     </FocusLock>
+    
   );
 };
 export default InstructionForm;

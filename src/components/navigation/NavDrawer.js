@@ -60,9 +60,10 @@ const NavDrawer = (props) => {
   const location = useLocation();
   const dispatch = useDispatch();
 
-  const handleOpen = name => () => {
+  const handleOpenCreate = name => () => {
     dispatch(show(name, { title: "CREATE WORK INSTRUCTION", content: "instructionForm", formType: 'create' }))
   };
+
 
   const atWorkInstructions = location.pathname === "/work-instructions";
 
@@ -105,13 +106,15 @@ const NavDrawer = (props) => {
   const actionList = [
     {
       component: 
-        <BlueButton onClick={handleOpen('instruction-modal')}>
+        <BlueButton onClick={handleOpenCreate('instruction-modal')}>
           CREATE WORK INSTRUCTION
         </BlueButton>
     },
     {
       component: 
-        <BlueButton onClick={() => dispatch(editRow(true))}>
+        <BlueButton onClick={() => {
+          return dispatch(editRow(true));
+        }}>
           EDIT WORK INSTRUCTION
         </BlueButton>
     },

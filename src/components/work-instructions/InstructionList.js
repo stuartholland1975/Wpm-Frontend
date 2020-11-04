@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState, useCallback } from "react";
 import { AgGridReact } from "ag-grid-react";
 import {
   fetchWorkInstructions,
@@ -17,7 +17,7 @@ import { fetchWorkTypes } from "../worktypes/workTypesDataReducer";
 import { editRow } from "../ui-components/componentsReducer";
 import { useConfirm } from "material-ui-confirm";
 import { setInitialData } from "../forms/FormData";
-import { show } from 'redux-modal';
+import { show } from "redux-modal";
 
 const formatNumber = (params) =>
   Math.floor(params.value)
@@ -147,18 +147,21 @@ const InstructionList = () => {
     ).length;
   }
 
-  const handleOpen = name => () => {
-    dispatch(show(name, { title: "EDIT WORK INSTRUCTION", content: "instructionForm", formType: 'edit' }))
-  };
-
   useEffect(() => {
     if (isMounted) {
       if (rowSelected) {
         const selectedNode = gridApi.getSelectedNodes();
         if (selectedNode.length > 0) {
+          dispatch(
+            show("instruction-modal", {
+              title: "EDIT WORK INSTRUCTION",
+              content: "instructionForm",
+              formType: "edit",
+            })
+          );
+
           dispatch(editRow(false));
           dispatch(setInitialData(selectedNode[0].data));
-          dispatch(handleOpen('instruction-modal'))
         } else {
           confirm({
             title: "NO WORK INSTRUCTION SELECTED",

@@ -12,9 +12,12 @@ const formDataSlice = createSlice(({
         },
         setInitialData: (state, action) => {
             state.initialData = action.payload
+        },
+        updateData: (state, action) =>  {
+            state.initialData[action.payload.field] = action.payload.value
         }
     }
 }))
 
-export const {setFormData, setInitialData} = formDataSlice.actions
+export const {setFormData, setInitialData, updateData} = formDataSlice.actions
 export default formDataSlice.reducer
