@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,9 +11,8 @@ import { newWorkInstruction, updateWorkInstruction } from "./InstructionData";
 import Grid from "@material-ui/core/Grid";
 import FocusLock from "react-focus-lock";
 import { updateData } from "../forms/FormData";
-import _ from "lodash/fp";
 import { useRendersCount } from "react-use";
-
+import { setSelectedNode } from "../grid/gridData";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -35,8 +34,8 @@ const useStyles = makeStyles((theme) => ({
 const InstructionForm = (props) => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const initialData = useSelector((state) => state.form.initialData);
-  const { register, handleSubmit, reset, control } = useForm({
+  const initialData = useSelector((state) => state.gridData.selectedNode);
+  const { register, handleSubmit, reset } = useForm({
     mode: "onChange",
     defaultValues: {
       work_instruction: initialData.work_instruction,
@@ -55,7 +54,6 @@ const InstructionForm = (props) => {
   const areas = useSelector(selectAllAreas);
   const workTypes = useSelector(selectAllWorkTypes);
   const rendersCount = useRendersCount();
-  
 
   console.log({ renders: rendersCount });
 
@@ -76,11 +74,18 @@ const InstructionForm = (props) => {
     if (props.formType === "create") {
       dispatch(newWorkInstruction(apiObject));
       props.handleHide();
+      dispatch(setSelectedNode(false));
     } else if (props.formType === "edit") {
       apiObject = { ...apiObject, id: initialData.id };
       dispatch(updateWorkInstruction(apiObject));
       props.handleHide();
+      dispatch(setSelectedNode(false));
     }
+  };
+
+  const closeAndReset = () => {
+    props.handleHide();
+    dispatch(setSelectedNode(false));
   };
 
   useEffect(() => {
@@ -238,31 +243,6 @@ const InstructionForm = (props) => {
               InputLabelProps={{ shrink: true }}
             />
           </Grid>
-          <Grid>
-            <Controller
-              render={(props) => (
-                <Autocomplete
-                  {...props}
-                  options={areas}
-                  getOptionLabel={(option) => option.area_description}
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      label="Country"
-                      placeholder="Select a Country"
-                      InputLabelProps={{
-                        shrink: true,
-                      }}
-                      variant="outlined"
-                    />
-                  )}
-                  onChange={(_, data) => props.onChange(data)}
-                />
-              )}
-              name="country"
-              control={control}
-            />
-          </Grid>
         </Grid>
         <hr />
         <Grid container spacing={2}>
@@ -277,17 +257,14 @@ const InstructionForm = (props) => {
             </GreyButton>
           </Grid>
           <Grid item xs>
-            <GreyButton fullWidth onClick={() => props.handleHide()}>
+            <GreyButton fullWidth onClick={closeAndReset}>
               Close
             </GreyButton>
           </Grid>
         </Grid>
         <hr />
-        
       </form>
-      
     </FocusLock>
-    
   );
 };
 export default InstructionForm;

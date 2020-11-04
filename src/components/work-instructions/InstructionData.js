@@ -41,6 +41,16 @@ export const resetWorkInstruction = createAsyncThunk(
     }
 );
 
+export const deleteWorkInstruction = createAsyncThunk(
+    "workInstructions/deleteOne",
+    async (orderId) => {
+        const response = await axiosInstance.delete(
+            `/wpm/api/orderheader/${orderId}/`
+        );
+        return orderId
+    }
+);
+
 export const workInstructionsAdapter = createEntityAdapter();
 
 const initialState = workInstructionsAdapter.getInitialState();
@@ -73,7 +83,11 @@ export const workInstructionsSlice = createSlice({
         builder.addCase(
             resetWorkInstruction.fulfilled,
             workInstructionsAdapter.upsertOne,
-        )
+        );
+        builder.addCase(
+            deleteWorkInstruction.fulfilled,
+            workInstructionsAdapter.removeOne,
+        );
     },
 });
 

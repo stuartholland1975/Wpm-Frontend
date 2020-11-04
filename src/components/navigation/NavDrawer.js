@@ -2,14 +2,9 @@ import React from "react";
 import { withRouter, useLocation } from "react-router-dom";
 import { BlueButton, RedButton } from "../ui-components/Buttons";
 import { makeStyles } from "@material-ui/core/styles";
-import {
-  Drawer,
-  List,
-  Divider,
-  ListItem,
-} from "@material-ui/core";
-import { show } from 'redux-modal';
-import { useDispatch } from 'react-redux';
+import { Drawer, List, Divider, ListItem } from "@material-ui/core";
+import { show } from "redux-modal";
+import { useDispatch, useSelector } from "react-redux";
 import HomeIcon from "@material-ui/icons/Home";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import LockOpenIcon from "@material-ui/icons/LockOpen";
@@ -19,7 +14,9 @@ import ListItemText from "@material-ui/core/ListItemText";
 import LetterW from "../icons/letter-w.png";
 import LetterM from "../icons/letter-m.png";
 import LetterP from "../icons/letter-p.png";
-import { editRow } from "../ui-components/componentsReducer";
+import { useConfirm } from "material-ui-confirm";
+import { setSelectedNode } from "../grid/gridData";
+import { deleteWorkInstruction } from "../work-instructions/InstructionData";
 
 const drawerWidth = 240;
 
@@ -59,11 +56,65 @@ const NavDrawer = (props) => {
   const { history } = props;
   const location = useLocation();
   const dispatch = useDispatch();
+  const selectedNode = useSelector((state) => state.gridData.selectedNode);
+  const confirm = useConfirm();
 
-  const handleOpenCreate = name => () => {
-    dispatch(show(name, { title: "CREATE WORK INSTRUCTION", content: "instructionForm", formType: 'create' }))
+  const handleOpenCreate = (name) => () => {
+    dispatch(
+      show(name, {
+        title: "CREATE WORK INSTRUCTION",
+        content: "instructionForm",
+        formType: "create",
+      })
+    );
   };
 
+  const handleOpenEdit = (name) => () => {
+    console.log(selectedNode);
+    if (selectedNode) {
+      dispatch(
+        show(name, {
+          title: "EDIT WORK INSTRUCTION",
+          content: "instructionForm",
+          formType: "edit",
+        })
+      );
+    } else {
+      confirm({
+        title: "NO WORK INSTRUCTION SELECTED",
+        cancellationButtonProps: {
+          disabled: true,
+          hidden: true,
+        },
+      }).then(() => dispatch(setSelectedNode(false)));
+    }
+  };
+
+  const handleDeleteRow = () => {
+    if (selectedNode) {
+      confirm({
+        title: `DELETE ORDER ${selectedNode.work_instruction}`,
+        description: "Do you Want to Save These Changes ?",
+        confirmationButtonProps: {
+          variant: "contained",
+          color: "primary",
+        },
+        cancellationButtonProps: {
+          variant: "contained",
+        },
+      })
+        .then(() => dispatch(deleteWorkInstruction(selectedNode.id)))
+        .catch(() => dispatch(setSelectedNode(false)));
+    } else {
+      confirm({
+        title: "NO WORK INSTRUCTION SELECTED",
+        cancellationButtonProps: {
+          disabled: true,
+          hidden: true,
+        },
+      }).then(() => dispatch(setSelectedNode(false)));
+    }
+  };
 
   const atWorkInstructions = location.pathname === "/work-instructions";
 
@@ -105,24 +156,23 @@ const NavDrawer = (props) => {
 
   const actionList = [
     {
-      component: 
-        <BlueButton onClick={handleOpenCreate('instruction-modal')}>
+      component: (
+        <BlueButton onClick={handleOpenCreate("instruction-modal")}>
           CREATE WORK INSTRUCTION
         </BlueButton>
+      ),
     },
     {
-      component: 
-        <BlueButton onClick={() => {
-          return dispatch(editRow(true));
-        }}>
+      component: (
+        <BlueButton onClick={handleOpenEdit("instruction-modal")}>
           EDIT WORK INSTRUCTION
         </BlueButton>
+      ),
     },
     {
-      component: 
-        <RedButton onClick={() => console.log("CLICKED")}>
-          DELETE WORK INSTRUCTION
-        </RedButton>
+      component: (
+        <RedButton onClick={handleDeleteRow}>DELETE WORK INSTRUCTION</RedButton>
+      ),
     },
   ];
 
@@ -171,7 +221,11 @@ const NavDrawer = (props) => {
             {atWorkInstructions &&
               actionList.map((item) => {
                 const { component } = item;
-                return <ListItem key={component.props.children}>{component}</ListItem>;
+                return (
+                  <ListItem key={component.props.children}>
+                    {component}
+                  </ListItem>
+                );
               })}
           </List>
         </div>

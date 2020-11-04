@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState, useCallback } from "react";
+import React, { Fragment, useEffect, useState} from "react";
 import { AgGridReact } from "ag-grid-react";
 import {
   fetchWorkInstructions,
@@ -14,10 +14,7 @@ import CustomNoRowsOverlay from "../../CustomNoRowsOverlay";
 import Loader from "react-loader-spinner";
 import { fetchAreas } from "../areas/areaDataReducer";
 import { fetchWorkTypes } from "../worktypes/workTypesDataReducer";
-import { editRow } from "../ui-components/componentsReducer";
-import { useConfirm } from "material-ui-confirm";
-import { setInitialData } from "../forms/FormData";
-import { show } from "redux-modal";
+import { setSelectedNode } from "../grid/gridData";
 
 const formatNumber = (params) =>
   Math.floor(params.value)
@@ -29,11 +26,11 @@ const InstructionList = () => {
   const workInstructions = useSelector(selectAllWorkInstructions);
   const documents = useSelector(selectAllDocuments);
   const latestDocs = useLatest(documents);
-  const rowSelected = useSelector((state) => state.components.editRow);
   const [gridApi, setGridApi] = useState();
-  const [columnApi, setColumnApi] = useState();
+  const [, setColumnApi] = useState();
   const isMounted = useMountedState();
-  const confirm = useConfirm();
+  const selectedNode = useSelector((state) => state.gridData.selectedNode);
+  
 
   const ColumnDefs = [
     { headerName: "ID", field: "id", hide: true },
@@ -109,6 +106,7 @@ const InstructionList = () => {
     pagination: true,
     paginationPageSize: 35,
     rowSelection: "single",
+    onRowSelected: nodeSelected,
     suppressRowClickSelection: false,
     domLayout: "autoHeight",
     suppressClickEdit: true,
@@ -147,34 +145,22 @@ const InstructionList = () => {
     ).length;
   }
 
+  function nodeSelected() {
+    const selectedNode = gridOptions.api.getSelectedNodes();
+    if (selectedNode.length > 0) {
+      dispatch(setSelectedNode(selectedNode[0].data));
+    }
+  }
+
   useEffect(() => {
     if (isMounted) {
-      if (rowSelected) {
-        const selectedNode = gridApi.getSelectedNodes();
-        if (selectedNode.length > 0) {
-          dispatch(
-            show("instruction-modal", {
-              title: "EDIT WORK INSTRUCTION",
-              content: "instructionForm",
-              formType: "edit",
-            })
-          );
-
-          dispatch(editRow(false));
-          dispatch(setInitialData(selectedNode[0].data));
-        } else {
-          confirm({
-            title: "NO WORK INSTRUCTION SELECTED",
-            cancellationButtonProps: {
-              disabled: true,
-              hidden: true,
-            },
-          });
-          dispatch(editRow(false));
+      if (gridApi) {
+        if (!selectedNode) {
+          gridApi.deselectAll();
         }
       }
     }
-  }, [confirm, dispatch, gridApi, isMounted, rowSelected]);
+  }, [gridApi, isMounted, selectedNode]);
 
   return (
     <Fragment>
