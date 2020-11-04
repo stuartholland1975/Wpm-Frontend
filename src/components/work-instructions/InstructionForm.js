@@ -11,6 +11,7 @@ import { newWorkInstruction, updateWorkInstruction } from "./InstructionData";
 import Grid from "@material-ui/core/Grid";
 import FocusLock from "react-focus-lock";
 import { DevTool } from "@hookform/devtools";
+import MuiAutoComplete from "../forms/MuiAutoComplete";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -45,7 +46,7 @@ const InstructionForm = (props) => {
       end_date: initialData.end_date,
       work_type_description: initialData.work_type,
       area_description: initialData.area_description,
-
+      area_description2: initialData.area_description,
       notes: initialData.notes,
     },
   });
@@ -78,7 +79,7 @@ const InstructionForm = (props) => {
 
   useEffect(() => {
     reset();
-  }, [reset]);
+  }, []);
 
   return (
     <FocusLock>
@@ -174,6 +175,7 @@ const InstructionForm = (props) => {
               openOnFocus
               options={workTypes}
               getOptionLabel={(option) => option["work_type_description"]}
+              inputValue={initialData.work_type}
               fullWidth
               renderInput={(params) => (
                 <TextField
@@ -188,14 +190,13 @@ const InstructionForm = (props) => {
               )}
             />
           </Grid>
-
           <Grid item xs>
             <Autocomplete
               openOnFocus
               options={areas}
               getOptionLabel={(option) => option["area_description"]}
+              inputValue={initialData.area_description}
               fullWidth
-              
               renderInput={(params) => (
                 <TextField
                   {...params}
@@ -205,6 +206,7 @@ const InstructionForm = (props) => {
                   margin="normal"
                   inputRef={register({ required: true })}
                   InputLabelProps={{ shrink: true }}
+                  value={params}
                 />
               )}
             />
@@ -245,7 +247,6 @@ const InstructionForm = (props) => {
         </Grid>
         <hr />
       </form>
-      <DevTool control={control} />
     </FocusLock>
   );
 };
