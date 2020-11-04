@@ -8,7 +8,7 @@ import AreasReducer from "./components/areas/areaDataReducer";
 import DocumentsReducer from "./components/documents/documentsDataReducer";
 import formDataReducer from './components/forms/FormData';
 import componentsReducer from "./components/ui-components/componentsReducer";
-import { reducer as modalProvider } from 'react-redux-modal-provider';
+
 
 const rootReducer = combineReducers({
     workInstructions: WorkInstructionsReducer,

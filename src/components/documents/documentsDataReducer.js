@@ -4,7 +4,6 @@ import {
   createSlice,
 } from "@reduxjs/toolkit";
 import axiosInstance from "../../services/axiosApi";
-import { workInstructionsSlice } from '../work-instructions/InstructionData';
 
 export const fetchDocuments = createAsyncThunk(
   "documents/fetchAll",
@@ -38,7 +37,6 @@ const documentsSlice = createSlice({
       const { id, ...changes } = payload;
       documentsAdapter.updateOne(state, { id, changes });
     });
-    
   },
 });
 

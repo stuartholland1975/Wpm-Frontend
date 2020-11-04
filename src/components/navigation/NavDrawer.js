@@ -1,29 +1,21 @@
 import React from "react";
 import { withRouter, useLocation } from "react-router-dom";
-import { BlueButton } from "../ui-components/Buttons";
-import { makeStyles, useTheme } from "@material-ui/core/styles";
+import { BlueButton, RedButton } from "../ui-components/Buttons";
+import { makeStyles } from "@material-ui/core/styles";
 import {
   Drawer,
-  CssBaseline,
-  AppBar,
-  Toolbar,
   List,
   Divider,
   ListItem,
 } from "@material-ui/core";
-
+import { show } from 'redux-modal';
+import { useDispatch } from 'react-redux';
 import HomeIcon from "@material-ui/icons/Home";
-import IconButton from "@material-ui/core/IconButton";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import LockOpenIcon from "@material-ui/icons/LockOpen";
-import MenuIcon from "@material-ui/icons/Menu";
 import ListIcon from "@material-ui/icons/List";
-import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import InboxIcon from "@material-ui/icons/MoveToInbox";
-import MailIcon from "@material-ui/icons/Mail";
 import LetterW from "../icons/letter-w.png";
 import LetterM from "../icons/letter-m.png";
 import LetterP from "../icons/letter-p.png";
@@ -52,16 +44,28 @@ const useStyles = makeStyles((theme) => ({
     ...theme.mixins.toolbar,
     justifyContent: "center",
   },
+  actions: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: theme.spacing(0, 1),
+    verticalAlign: "middle",
+  },
 }));
 
 const NavDrawer = (props) => {
   const classes = useStyles();
-  const theme = useTheme();
   const { history } = props;
   const location = useLocation();
+  const dispatch = useDispatch();
 
-  const atWorkInstructions = location.pathname ==='/work-instructions'
-  console.log(atWorkInstructions, location)
+  const handleOpen = name => () => {
+    console.log("OPEN MODAL")
+    dispatch(show(name, { title: "CREATE WORK INSTRUCTION", content: "instructionForm" }))
+  };
+
+  const atWorkInstructions = location.pathname === "/work-instructions";
+  console.log(atWorkInstructions, location);
 
   const itemsList = [
     {
@@ -99,6 +103,27 @@ const NavDrawer = (props) => {
     },
   ];
 
+  const actionList = [
+    {
+      component: 
+        <BlueButton onClick={handleOpen('instruction-modal')}>
+          CREATE WORK INSTRUCTION
+        </BlueButton>
+    },
+    {
+      component: 
+        <BlueButton onClick={() => console.log("CLICKED")}>
+          EDIT WORK INSTRUCTION
+        </BlueButton>
+    },
+    {
+      component: 
+        <RedButton onClick={() => console.log("CLICKED")}>
+          DELETE WORK INSTRUCTION
+        </RedButton>
+    },
+  ];
+
   return (
     <div className={classes.root}>
       <Drawer
@@ -116,7 +141,7 @@ const NavDrawer = (props) => {
         </div>
         <Divider />
         <List>
-          {itemsList.map((item, index) => {
+          {itemsList.map((item) => {
             const { text, icon, onClick } = item;
             return (
               <ListItem button key={text} onClick={onClick}>
@@ -128,7 +153,7 @@ const NavDrawer = (props) => {
         </List>
         <Divider />
         <List>
-          {authList.map((item, index) => {
+          {authList.map((item) => {
             const { text, icon, onClick } = item;
             return (
               <ListItem button key={text} onClick={onClick}>
@@ -139,9 +164,15 @@ const NavDrawer = (props) => {
           })}
         </List>
         <Divider />
-        <List>
-        {atWorkInstructions && <BlueButton>CREATE</BlueButton>}
-        </List>
+        <div className={classes.actions}>
+          <List>
+            {atWorkInstructions &&
+              actionList.map((item) => {
+                const { component } = item;
+                return <ListItem key={component.props.children}>{component}</ListItem>;
+              })}
+          </List>
+        </div>
       </Drawer>
     </div>
   );
