@@ -70,7 +70,6 @@ const NavDrawer = (props) => {
   };
 
   const handleOpenEdit = (name) => () => {
-    console.log(selectedNode);
     if (selectedNode) {
       dispatch(
         show(name, {
