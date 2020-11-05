@@ -212,7 +212,13 @@ const InstructionForm = (props) => {
               openOnFocus
               options={areas}
               getOptionLabel={(option) => option["area_description"]}
-              inputValue={initialData.area_description}
+              getOptionSelected={(option, values) => option._id === values._id}
+              onInputChange={(event, newInputValue) => {
+                console.log(event, initialData.name);
+                dispatch(
+                  updateData({ field: "area_description", value: newInputValue })
+                );
+              }}
               fullWidth
               renderInput={(params) => (
                 <TextField

@@ -16,7 +16,7 @@ export const updateArea = createAsyncThunk("area/updateOne", async (arg) => {
 });
 
 export const areasAdapter = createEntityAdapter({
-  sortComparer: (a, b) => a.area_code.localeCompare(b.area_code),
+  sortComparer: (a, b) => a["area_code"].localeCompare(b["area_code"]),
 });
 
 const initialState = areasAdapter.getInitialState();
