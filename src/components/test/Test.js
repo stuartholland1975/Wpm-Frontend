@@ -2,7 +2,7 @@ import React, { Fragment } from "react";
 import { show } from 'redux-modal'
 import { BlueButton, GreyButton } from "../ui-components/Buttons";
 import { useDispatch } from 'react-redux';
-import InstructionModal from '../work-instructions/InstructionModal';
+import InstructionModal from '../ui-components/InstructionModal';
 import InstructionForm from '../work-instructions/InstructionForm';
 
 

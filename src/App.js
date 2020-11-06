@@ -7,7 +7,8 @@ import Test from './components/test/Test';
 import Login from './services/login';
 import NavDrawer from './components/navigation/NavDrawer';
 import {makeStyles} from '@material-ui/core/styles';
-import WpmModal from './components/work-instructions/InstructionModal';
+import WpmModal from './components/ui-components/InstructionModal';
+import LocationList from './components/locations/LocationList';
 
 const useStyles = makeStyles({
     container: {
@@ -26,7 +27,7 @@ const App = (props) => {
         <div className={classes.container}>
 
             <NavDrawer/>
-            <WpmModal />
+            <WpmModal/>
 
             <div className={classes.content}>
 
@@ -37,6 +38,7 @@ const App = (props) => {
                     <Route path="/work-instructions" exact component={InstructionList}/>
                     <Route path="/test" exact component={Test}/>
                     <Route path="/login" exact component={Login}/>
+                    <Route path="/work-instructions/locations/summary/:OrderId" component={LocationList}/>
                 </Switch>
             </div>
         </div>

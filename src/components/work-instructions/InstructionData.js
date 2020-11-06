@@ -60,12 +60,7 @@ export const workInstructionsSlice = createSlice({
     initialState,
     reducers: {
         removeWorkInstruction: workInstructionsAdapter.removeOne,
-        updateGridData: workInstructionsAdapter.upsertOne,
-        resetGridData: workInstructionsAdapter.upsertOne,
-        addDocumentCount: (state, {payload}) => {
-          const  {work_instruction} = payload
-          console.log(work_instruction)
-        }
+        removeAllWorkInstructions: workInstructionsAdapter.removeAll,
     },
     extraReducers: (builder) => {
         builder.addCase(
@@ -91,7 +86,7 @@ export const workInstructionsSlice = createSlice({
     },
 });
 
-export const {removeWorkInstruction, updateGridData, resetGridData, addDocumentCount} = workInstructionsSlice.actions;
+export const {removeWorkInstruction} = workInstructionsSlice.actions;
 
 export const {
     selectById: selectWorkInstructionById,

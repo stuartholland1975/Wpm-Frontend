@@ -9,11 +9,17 @@ import DocumentsReducer from "./components/documents/documentsDataReducer";
 import formDataReducer from "./components/forms/FormData";
 import componentsReducer from "./components/ui-components/componentsReducer";
 import gridReducer from "./components/grid/gridData";
+import LocationsReducer from "./components/locations/locationData";
+import InstructionDetailSlice from "./components/work-instructions/instructionDetailData";
+import ImagesReducer from "./components/images/ImageData"
 
 const rootReducer = combineReducers({
   workInstructions: WorkInstructionsReducer,
   activities: "",
+  locations: LocationsReducer,
+  instructionDetails: InstructionDetailSlice,
   workTypes: WorkTypeReducer,
+  images: ImagesReducer,
   areas: AreasReducer,
   documents: DocumentsReducer,
   form: formDataReducer,

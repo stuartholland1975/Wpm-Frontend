@@ -18,13 +18,15 @@ import { fetchInstructionDetail } from "../work-instructions/instructionDetailDa
 import {
   fetchLocations,
   selectAllLocations,
-} from "../locations/locationData";
+} from "./locationData";
 import { fetchImages, selectAllImages } from "../images/ImageData";
 import { PurpleButton, RedButton, GreenButton } from "../ui-components/Buttons";
 import InstructionSummary from "../work-instructions/InstructionSummary";
+import useOnWindowResize from "@rooks/use-on-window-resize";
+import {setSelectedNode} from "../grid/gridData";
 
 const LocationList = (props) => {
-  const params = useParams();
+  const {OrderId} = useParams();
   const dispatch = useDispatch();
   const [] = useState({
     title: "",
@@ -42,6 +44,7 @@ const LocationList = (props) => {
   const [gridApi, setGridApi] = useState();
   const [, setColumnApi] = useState();
   const rendersCount = useRendersCount();
+  const update = useUpdate();
 
   useLogger("LocationList", props);
 
@@ -125,7 +128,7 @@ const LocationList = (props) => {
     domLayout: "autoHeight",
     rowSelection: "single",
     suppressRowClickSelection: false,
-    //onRowSelected: setWorksheetData,
+    onRowSelected: nodeSelected,
     suppressNoRowsOverlay: false,
     frameworkComponents: {
       customNoRowsOverlay: CustomNoRowsOverlay,
@@ -143,9 +146,9 @@ const LocationList = (props) => {
   };
 
   useEffectOnce(() => {
-    dispatch(fetchImages(params.OrderId));
-    dispatch(fetchInstructionDetail(params.OrderId));
-    dispatch(fetchLocations(params.OrderId));
+    dispatch(fetchImages(OrderId));
+    dispatch(fetchInstructionDetail(OrderId));
+    dispatch(fetchLocations(OrderId));
   });
 
   useUpdateEffect(() => {
@@ -157,6 +160,22 @@ const LocationList = (props) => {
     setColumnApi(params.columnApi);
     params.api.sizeColumnsToFit();
   };
+
+  useOnWindowResize(() => {
+        if (gridApi) {
+            gridApi.sizeColumnsToFit();
+            update()
+        }
+    });
+
+  function nodeSelected() {
+        const selectedNode = gridOptions.api.getSelectedNodes();
+        const nodeStatus = gridOptions.api.isSelected(selectedNode)
+    console.log(nodeStatus)
+        if (selectedNode.length > 0) {
+            dispatch(setSelectedNode(selectedNode[0].data));
+        }
+    }
 
   function getImageCount(params) {
     const siteLocationImages = latestImages.current.filter(
@@ -205,61 +224,7 @@ const LocationList = (props) => {
           />
         </div>
       </Container>
-      <Navbar
-        fixed="bottom"
-        expand="lg"
-        style={{
-          backgroundImage: "linear-gradient(hsl(0, 0%, 60%), hsl(0, 0%, 20%))",
-        }}
-      >
-        <Navbar.Toggle aria-controls="wpm-footbar" />
-        <Navbar.Collapse id="wpm-footbar">
-          <Nav className="mr-auto">
-            <Nav.Item>
-              <Link to={``}>
-                <PurpleButton component="button">VIEW BILL ITEMS</PurpleButton>
-              </Link>
-            </Nav.Item>
-            <Nav.Item>
-              <PurpleButton component="button">
-                VIEW ORDER DOCUMENTS
-              </PurpleButton>
-            </Nav.Item>
-            <Nav.Item>
-              <PurpleButton component="button">VIEW IMAGES</PurpleButton>
-            </Nav.Item>
-          </Nav>
-          <Nav>
-            <Nav.Item>
-              <GreenButton component="button">CREATE LOCATION</GreenButton>
-            </Nav.Item>
-            <Nav.Item>
-              <GreenButton component="button">EDIT LOCATION</GreenButton>
-            </Nav.Item>
-            <Nav.Item>
-              <RedButton component="button">DELETE LOCATION</RedButton>
-            </Nav.Item>
-          </Nav>
-          <Nav className="ml-auto">
-            <Nav.Item>
-              <GreenButton component="button">UPDATE WORK PROGRESS</GreenButton>
-            </Nav.Item>
-            <Nav.Item>
-              <GreenButton component="button" onClick={uploadImageHandler}>
-                UPLOAD IMAGE
-              </GreenButton>
-            </Nav.Item>
-            <Nav.Item>
-              <GreenButton
-                component="button"
-                onClick={() => console.log(rendersCount)}
-              >
-                UPLOAD DOCUMENT
-              </GreenButton>
-            </Nav.Item>
-          </Nav>
-        </Navbar.Collapse>
-      </Navbar>
+
     </Fragment>
   );
 };

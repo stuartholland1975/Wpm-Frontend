@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { Container, CardDeck } from "react-bootstrap";
 import Loader from "react-loader-spinner";
-import { selectAllInstructionDetails } from "../work-instructions/instructionDetailData";
+import { selectAllInstructionDetails } from "./instructionDetailData";
 import {useLogger} from "react-use";
 
 const numFormat = (num) => {

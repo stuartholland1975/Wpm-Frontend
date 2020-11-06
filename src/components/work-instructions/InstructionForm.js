@@ -14,6 +14,9 @@ import { updateData } from "../forms/FormData";
 import { useRendersCount } from "react-use";
 import { setSelectedNode } from "../grid/gridData";
 
+
+//TODO: AREA AND WORKTYPE DEFAULTS CLEAR ON FIRST RERENDER
+
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",

@@ -12,10 +12,13 @@ const gridDataSlice = createSlice(({
         },
         setDeleteGridRow: (state, action) => {
             state.deleteGridRow = action.payload
-        }
-        
+        },
+
+        resetGridRow: (state) => {
+            state.selectedNode = false
+        },
     }
 }))
 
-export const {setSelectedNode, setDeleteGridRow} = gridDataSlice.actions
+export const {setSelectedNode, setDeleteGridRow, resetGridRow} = gridDataSlice.actions
 export default gridDataSlice.reducer
