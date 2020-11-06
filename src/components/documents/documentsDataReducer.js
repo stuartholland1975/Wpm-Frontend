@@ -30,6 +30,7 @@ const documentsSlice = createSlice({
   initialState,
   reducers: {
     removeDocument: documentsAdapter.removeOne,
+    resetDocuments: documentsAdapter.removeAll,
   },
   extraReducers: (builder) => {
     builder.addCase(fetchDocuments.fulfilled, documentsAdapter.upsertMany);
@@ -40,7 +41,7 @@ const documentsSlice = createSlice({
   },
 });
 
-export const { removeDocument } = documentsSlice.actions;
+export const { removeDocument, resetDocuments } = documentsSlice.actions;
 
 export const {
   selectById: selectDocumentById,

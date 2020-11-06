@@ -66,6 +66,7 @@
     "@hookform/devtools": "^2.2.1",
     "@rooks/use-on-window-resize": "^3.6.0",
     "react-redux-modal-provider": "^2.2.0",
-    "redux-modal": "^4.0.0"
+    "redux-modal": "^4.0.0",
+    "reselect": "^4.0.0"
   }
 }

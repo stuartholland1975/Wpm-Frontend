@@ -1,7 +1,7 @@
 import React, {Fragment, useEffect, useState} from "react";
 import {AgGridReact} from "ag-grid-react";
 import {fetchWorkInstructions, selectAllWorkInstructions,} from "./InstructionData";
-import {fetchDocuments, selectAllDocuments,} from "../documents/documentsDataReducer";
+import { fetchDocuments, resetDocuments, selectAllDocuments, } from "../documents/documentsDataReducer";
 import {useEffectOnce, useLatest, useMountedState, useUpdateEffect, useWindowSize, useUpdate} from "react-use";
 import {useDispatch, useSelector} from "react-redux";
 import CustomNoRowsOverlay from "../../CustomNoRowsOverlay";
@@ -18,112 +18,102 @@ const formatNumber = (params) =>
         .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
 
 const InstructionList = () => {
-    const dispatch = useDispatch();
-    const workInstructions = useSelector(selectAllWorkInstructions);
-    const documents = useSelector(selectAllDocuments);
-    const latestDocs = useLatest(documents);
-    const [gridApi, setGridApi] = useState();
-    const [, setColumnApi] = useState();
-    const isMounted = useMountedState();
-    const selectedNode = useSelector((state) => state.gridData.selectedNode);
-    const {width, height} = useWindowSize();
-    const update = useUpdate()
-    
-
-
-    const ColumnDefs = [
-        {headerName: "ID", field: "id", hide: true},
-        {
-            headerName: "Select",
-            colId: "select",
-            checkboxSelection: true,
-            maxWidth: 80,
-        },
-        {
-            headerName: "Work Instruction",
-            field: "work_instruction",
-            sort: "desc",
-        },
-        {
-            headerName: "Project Title",
-            field: "project_title",
-            minWidth: 400,
-        },
-        {
-            headerName: "Date Issued",
-            field: "issued_date_formatted",
-            type: "dateColumn",
-        },
-        {
-            headerName: "Work Type",
-            field: "work_type",
-        },
-        {
-            headerName: "Area",
-            field: "area_description",
-            editable: true,
-            maxWidth: 100,
-        },
-        {
-            headerName: "Docs",
-            colId: "docs",
-            type: "numericColumn",
-            maxWidth: 100,
-            valueGetter: getDocumentCount,
-        },
-        {
-            headerName: "Item Count",
-            field: "item_count",
-            type: "numericColumn",
-            maxWidth: 110,
-        },
-        {
-            headerName: "Order Value",
-            field: "order_value",
-            type: "numericColumn",
-            cellStyle: {fontWeight: "bold"},
+    const dispatch = useDispatch(), workInstructions = useSelector(selectAllWorkInstructions),
+        documents = useSelector(selectAllDocuments),
+        latestDocs = useLatest(documents), [gridApi, setGridApi] = useState(), [, setColumnApi] = useState(),
+        isMounted = useMountedState(),
+        selectedNode = useSelector((state) => state.gridData.selectedNode), {width, height} = useWindowSize(),
+        update = useUpdate(), ColumnDefs = [
+            {headerName: "ID", field: "id", hide: true},
+            {
+                headerName: "Select",
+                colId: "select",
+                checkboxSelection: true,
+                maxWidth: 80,
+            },
+            {
+                headerName: "Work Instruction",
+                field: "work_instruction",
+                sort: "desc",
+            },
+            {
+                headerName: "Project Title",
+                field: "project_title",
+                minWidth: 400,
+            },
+            {
+                headerName: "Date Issued",
+                field: "issued_date_formatted",
+                type: "dateColumn",
+            },
+            {
+                headerName: "Work Type",
+                field: "work_type",
+            },
+            {
+                headerName: "Area",
+                field: "area_description",
+                editable: true,
+                maxWidth: 100,
+            },
+            {
+                headerName: "Docs",
+                colId: "docs",
+                type: "numericColumn",
+                maxWidth: 100,
+                valueGetter: getDocumentCount,
+            },
+            {
+                headerName: "Item Count",
+                field: "item_count",
+                type: "numericColumn",
+                maxWidth: 110,
+            },
+            {
+                headerName: "Order Value",
+                field: "order_value",
+                type: "numericColumn",
+                cellStyle: {fontWeight: "bold"},
+                sortable: true,
+                filter: "agNumberColumnFilter",
+                valueFormatter: formatNumber,
+            },
+        ], defaultColDef = {
+            filter: true,
             sortable: true,
-            filter: "agNumberColumnFilter",
-            valueFormatter: formatNumber,
-        },
-    ];
-    const defaultColDef = {
-        filter: true,
-        sortable: true,
-        resizable: true,
-        flex: true,
-    };
-    const columnTypes = {
-        dateColumn: {
-            filter: "agDateColumnFilter",
-        },
-    };
-    const gridOptions = {
-        columnDefs: ColumnDefs,
-        defaultColDef: defaultColDef,
-        columnTypes: columnTypes,
-        pagination: true,
-        paginationPageSize: 35,
-        rowSelection: "single",
-        onRowSelected: nodeSelected,
-        suppressRowClickSelection: false,
-        domLayout: "autoHeight",
-        suppressClickEdit: true,
-        suppressNoRowsOverlay: false,
-        frameworkComponents: {
-            customNoRowsOverlay: CustomNoRowsOverlay,
-        },
-        noRowsOverlayComponent: "customNoRowsOverlay",
-        noRowsOverlayComponentParams: {
-            noRowsMessageFunc: () => (
-                <Loader
-                    style={{textAlign: "center"}}
-                    type={"ThreeDots"}
-                    color={"Blue"}
-                />
-            ),
-        },
-    };
+            resizable: true,
+            flex: true,
+        }, columnTypes = {
+            dateColumn: {
+                filter: "agDateColumnFilter",
+            },
+        }, gridOptions = {
+            columnDefs: ColumnDefs,
+            defaultColDef: defaultColDef,
+            columnTypes: columnTypes,
+            pagination: true,
+            paginationPageSize: 35,
+            rowSelection: "single",
+            onRowSelected: nodeSelected,
+            suppressRowClickSelection: false,
+            domLayout: "autoHeight",
+            suppressClickEdit: true,
+            suppressNoRowsOverlay: false,
+            frameworkComponents: {
+                customNoRowsOverlay: CustomNoRowsOverlay,
+            },
+            noRowsOverlayComponent: "customNoRowsOverlay",
+            noRowsOverlayComponentParams: {
+                noRowsMessageFunc: () => (
+                    <Loader
+                        style={ {textAlign: "center"} }
+                        type={ "ThreeDots" }
+                        color={ "Blue" }
+                    />
+                ),
+            },
+        };
+
 
     useEffectOnce(() => {
         dispatch(fetchWorkInstructions());
@@ -132,6 +122,7 @@ const InstructionList = () => {
         dispatch(fetchWorkTypes());
         dispatch(resetLocations());
         dispatch(resetInstructionDetails());
+        dispatch(resetDocuments());
         dispatch(resetGridRow());
     });
 
