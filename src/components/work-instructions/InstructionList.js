@@ -2,16 +2,15 @@ import React, {Fragment, useEffect, useState} from "react";
 import {AgGridReact} from "ag-grid-react";
 import {fetchWorkInstructions, selectAllWorkInstructions,} from "./InstructionData";
 import {fetchDocuments, selectAllDocuments,} from "../documents/documentsDataReducer";
-import {useEffectOnce, useLatest, useMountedState, useUpdate} from "react-use";
+import {useEffectOnce, useLatest, useMountedState, useUpdateEffect, useWindowSize, useUpdate} from "react-use";
 import {useDispatch, useSelector} from "react-redux";
 import CustomNoRowsOverlay from "../../CustomNoRowsOverlay";
 import Loader from "react-loader-spinner";
-import {fetchAreas} from "../areas/areaDataReducer";
+import {fetchAreas, updateArea} from "../areas/areaDataReducer";
 import {fetchWorkTypes} from "../worktypes/workTypesDataReducer";
 import {resetLocations} from "../locations/locationData";
 import {resetInstructionDetails} from "./instructionDetailData";
 import {setSelectedNode, resetGridRow} from "../grid/gridData";
-import useOnWindowResize from "@rooks/use-on-window-resize";
 
 const formatNumber = (params) =>
     Math.floor(params.value)
@@ -25,12 +24,11 @@ const InstructionList = () => {
     const latestDocs = useLatest(documents);
     const [gridApi, setGridApi] = useState();
     const [, setColumnApi] = useState();
-    const [resized, setResized] = useState(false)
     const isMounted = useMountedState();
     const selectedNode = useSelector((state) => state.gridData.selectedNode);
-    const update = useUpdate();
-
-
+    const {width, height} = useWindowSize();
+    const update = useUpdate()
+    
 
 
     const ColumnDefs = [
@@ -156,16 +154,13 @@ const InstructionList = () => {
         }
     }
 
-    useEffect(() => {
-        useOnWindowResize(() => {
-            if(isMounted) {
-                if(gridApi) {
-                    useOnWindowResize(() => update())
-                }
-            }
-        })
-    },[])
-
+    useUpdateEffect(() => {
+        gridApi.sizeColumnsToFit()
+        update()
+    },[width])
+    
+    
+    
     useEffect(() => {
         if (isMounted) {
             if (gridApi) {

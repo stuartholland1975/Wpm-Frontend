@@ -13,20 +13,18 @@ import {
   useRendersCount,
   useUpdateEffect,
   useLogger,
+  useWindowSize,
 } from "react-use";
 import { fetchInstructionDetail } from "../work-instructions/instructionDetailData";
-import {
-  fetchLocations,
-  selectAllLocations,
-} from "./locationData";
+import { fetchLocations, selectAllLocations } from "./locationData";
 import { fetchImages, selectAllImages } from "../images/ImageData";
 import { PurpleButton, RedButton, GreenButton } from "../ui-components/Buttons";
 import InstructionSummary from "../work-instructions/InstructionSummary";
 import useOnWindowResize from "@rooks/use-on-window-resize";
-import {setSelectedNode} from "../grid/gridData";
+import { setSelectedNode } from "../grid/gridData";
 
 const LocationList = (props) => {
-  const {OrderId} = useParams();
+  const { OrderId } = useParams();
   const dispatch = useDispatch();
   const [] = useState({
     title: "",
@@ -43,7 +41,7 @@ const LocationList = (props) => {
   const latestImages = useLatest(images);
   const [gridApi, setGridApi] = useState();
   const [, setColumnApi] = useState();
-  const rendersCount = useRendersCount();
+  const { width, height } = useWindowSize();
   const update = useUpdate();
 
   useLogger("LocationList", props);
@@ -62,7 +60,7 @@ const LocationList = (props) => {
       filter: false,
     },
     { headerName: "Worksheet Ref", field: "worksheet_ref" },
-    { headerName: "Location", field: "location_ref", minWidth: 150 },
+    { headerName: "Location", field: "location_ref"},
     {
       headerName: "Item Count",
       field: "item_count",
@@ -161,21 +159,18 @@ const LocationList = (props) => {
     params.api.sizeColumnsToFit();
   };
 
-  useOnWindowResize(() => {
-        if (gridApi) {
-            gridApi.sizeColumnsToFit();
-            update()
-        }
-    });
+  useUpdateEffect(() => {
+    gridApi.sizeColumnsToFit();
+    update();
+  }, [width]);
 
   function nodeSelected() {
-        const selectedNode = gridOptions.api.getSelectedNodes();
-        const nodeStatus = gridOptions.api.isSelected(selectedNode)
-    console.log(nodeStatus)
-        if (selectedNode.length > 0) {
-            dispatch(setSelectedNode(selectedNode[0].data));
-        }
+    const selectedNode = gridOptions.api.getSelectedNodes();
+
+    if (selectedNode.length > 0) {
+      dispatch(setSelectedNode(selectedNode[0].data));
     }
+  }
 
   function getImageCount(params) {
     const siteLocationImages = latestImages.current.filter(
@@ -204,8 +199,6 @@ const LocationList = (props) => {
     console.log("VIEW IMAGES");
   }
 
-
-
   const uploadImageHandler = () => {};
 
   return (
@@ -224,7 +217,6 @@ const LocationList = (props) => {
           />
         </div>
       </Container>
-
     </Fragment>
   );
 };
