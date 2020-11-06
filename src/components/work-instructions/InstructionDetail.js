@@ -5,12 +5,8 @@ import { selectAllInstructionDetails } from "../work-instructions/instructionDet
 import InstructionSummary from "./InstructionSummary";
 import { Container } from "react-bootstrap";
 import {
-  useEffectOnce,
-  useLatest,
   useUpdate,
-  useRendersCount,
   useUpdateEffect,
-  useLogger,
   useWindowSize,
 } from "react-use";
 
@@ -85,13 +81,13 @@ function niceNumber(params) {
   });
 }
 
-const InstructionDetail = (props) => {
+const InstructionDetail = () => {
   const orderItems = useSelector(selectAllInstructionDetails);
-  const { width, height } = useWindowSize();
+  const { width } = useWindowSize();
   const update = useUpdate();
   const [gridApi, setGridApi] = useState();
   const [, setColumnApi] = useState();
-  
+
   const onGridReady = (params) => {
     setGridApi(params.api);
     setColumnApi(params.columnApi);

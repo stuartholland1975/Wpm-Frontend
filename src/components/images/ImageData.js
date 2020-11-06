@@ -33,7 +33,7 @@ export const newImage = createAsyncThunk(
 export const deleteImage = createAsyncThunk(
     "images/deleteOne",
     async (imageId) => {
-        const response = await axiosInstance.delete(
+        await axiosInstance.delete(
             `/wpm/api/images/${imageId}/`
         );
         return imageId

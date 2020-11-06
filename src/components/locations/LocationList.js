@@ -2,15 +2,12 @@ import React, { Fragment, useState } from "react";
 import { AgGridReact } from "ag-grid-react";
 import { useDispatch, useSelector } from "react-redux";
 import CustomNoRowsOverlay from "../grid/CustomNoRowsOverlay";
-import Navbar from "react-bootstrap/Navbar";
-import Nav from "react-bootstrap/Nav";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { Container } from "react-bootstrap";
 import {
   useEffectOnce,
   useLatest,
   useUpdate,
-  useRendersCount,
   useUpdateEffect,
   useLogger,
   useWindowSize,
@@ -18,9 +15,7 @@ import {
 import { fetchInstructionDetail } from "../work-instructions/instructionDetailData";
 import { fetchLocations, selectAllLocations } from "./locationData";
 import { fetchImages, selectAllImages } from "../images/ImageData";
-import { PurpleButton, RedButton, GreenButton } from "../ui-components/Buttons";
 import InstructionSummary from "../work-instructions/InstructionSummary";
-import useOnWindowResize from "@rooks/use-on-window-resize";
 import { setSelectedNode } from "../grid/gridData";
 import { ChangeDetectionStrategyType } from 'ag-grid-react/lib/changeDetectionService'
 
@@ -42,7 +37,7 @@ const LocationList = (props) => {
   const latestImages = useLatest(images);
   const [gridApi, setGridApi] = useState();
   const [, setColumnApi] = useState();
-  const { width, height } = useWindowSize();
+  const { width } = useWindowSize();
   const update = useUpdate();
 
   useLogger("LocationList", props);
@@ -200,7 +195,6 @@ const LocationList = (props) => {
     console.log("VIEW IMAGES");
   }
 
-  const uploadImageHandler = () => {};
 
   return (
     <Fragment>

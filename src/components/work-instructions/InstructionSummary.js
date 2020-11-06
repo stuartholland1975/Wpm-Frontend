@@ -2,7 +2,7 @@ import React, { Fragment, useState } from "react";
 import SummaryCard from "../ui-components/SummaryCard";
 import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
-import { Container, CardDeck } from "react-bootstrap";
+import { CardDeck } from "react-bootstrap";
 import Loader from "react-loader-spinner";
 import { selectAllInstructionDetails } from "./instructionDetailData";
 import { useLogger } from "react-use";
