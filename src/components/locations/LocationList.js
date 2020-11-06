@@ -22,6 +22,7 @@ import { PurpleButton, RedButton, GreenButton } from "../ui-components/Buttons";
 import InstructionSummary from "../work-instructions/InstructionSummary";
 import useOnWindowResize from "@rooks/use-on-window-resize";
 import { setSelectedNode } from "../grid/gridData";
+import { ChangeDetectionStrategyType } from 'ag-grid-react/lib/changeDetectionService'
 
 const LocationList = (props) => {
   const { OrderId } = useParams();
@@ -59,8 +60,8 @@ const LocationList = (props) => {
       },
       filter: false,
     },
-    { headerName: "Worksheet Ref", field: "worksheet_ref" },
-    { headerName: "Location", field: "location_ref"},
+    { headerName: "Worksheet Ref", field: "worksheet_ref", maxWidth: 150 },
+    { headerName: "Location", field: "location_ref" },
     {
       headerName: "Item Count",
       field: "item_count",
@@ -122,7 +123,7 @@ const LocationList = (props) => {
     defaultColDef: defaultColDef,
     columnTypes: columnTypes,
     pagination: true,
-    paginationPageSize: 20,
+    paginationPageSize: 15,
     domLayout: "autoHeight",
     rowSelection: "single",
     suppressRowClickSelection: false,
@@ -214,6 +215,7 @@ const LocationList = (props) => {
             immuntableData={true}
             getRowNodeId={(data) => data.id}
             onGridReady={onGridReady}
+            rowDataChangeDetectionStrategy={ChangeDetectionStrategyType.IdentityCheck}
           />
         </div>
       </Container>

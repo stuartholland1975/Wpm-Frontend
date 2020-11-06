@@ -73,10 +73,8 @@ const gridOptions = {
   },
 
   pagination: true,
-  paginationPageSize: 20,
+  paginationPageSize: 15,
   rowSelection: "single",
-  //headerHeight: 30,
-  //rowHeight: 30,
   domLayout: "autoHeight",
 };
 
@@ -93,7 +91,7 @@ const InstructionDetail = (props) => {
   const update = useUpdate();
   const [gridApi, setGridApi] = useState();
   const [, setColumnApi] = useState();
-
+  
   const onGridReady = (params) => {
     setGridApi(params.api);
     setColumnApi(params.columnApi);

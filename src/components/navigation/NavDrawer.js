@@ -144,6 +144,9 @@ const NavDrawer = (props) => {
   const atLocations = location.pathname.startsWith(
     "/work-instructions/locations/summary/"
   );
+  const atItemDetail = location.pathname.startsWith(
+    "/work-instructions/items/summary/"
+  );
 
   const itemsList = [
     {
@@ -207,12 +210,50 @@ const NavDrawer = (props) => {
     },
   ];
 
+  const itemDetailButtonCrudList = [
+    {
+      component: (
+        <GreenButton
+          fullWidth
+          onClick={handleOpenCreate("instruction-modal", "itemForm")}
+        >
+          CREATE BILL ITEM
+        </GreenButton>
+      ),
+    },
+    {
+      component: (
+        <GreenButton
+          fullWidth
+          onClick={handleOpenEdit("instruction-modal", "itemForm")}
+        >
+          EDIT BILL ITEM
+        </GreenButton>
+      ),
+    },
+    {
+      component: (
+        <RedButton fullWidth onClick={handleDeleteRow}>
+          DELETE BILL ITEM
+        </RedButton>
+      ),
+    },
+  ];
+
   const instructionsViewList = [
     {
       component: (
         <PurpleButton onClick={handleViewSummary}>
           VIEW INSTRUCTION SUMMARY
         </PurpleButton>
+      ),
+    },
+  ];
+
+  const itemDetailViewList = [
+    {
+      component: (
+        <PurpleButton onClick={handleViewSummary}>VIEW LOCATIONS</PurpleButton>
       ),
     },
   ];
@@ -243,7 +284,11 @@ const NavDrawer = (props) => {
 
   const locationsViewList = [
     {
-      component: <PurpleButton fullWidth onClick={handleViewItems}>VIEW ITEMS</PurpleButton>,
+      component: (
+        <PurpleButton fullWidth onClick={handleViewItems}>
+          VIEW ITEMS
+        </PurpleButton>
+      ),
     },
     {
       component: <PurpleButton fullWidth>VIEW DOCUMENTS</PurpleButton>,
@@ -328,6 +373,17 @@ const NavDrawer = (props) => {
                 );
               })}
           </List>
+          <List>
+            {atItemDetail &&
+              itemDetailButtonCrudList.map((item) => {
+                const { component } = item;
+                return (
+                  <ListItem key={component.props.children}>
+                    {component}
+                  </ListItem>
+                );
+              })}
+          </List>
         </div>
         <Divider />
         <div className={classes.actions}>
@@ -342,6 +398,18 @@ const NavDrawer = (props) => {
                 );
               })}
           </List>
+          <List>
+            {atItemDetail &&
+              itemDetailViewList.map((item) => {
+                const { component } = item;
+                return (
+                  <ListItem key={component.props.children}>
+                    {component}
+                  </ListItem>
+                );
+              })}
+          </List>
+
           <List>
             {atLocations &&
               locationsViewList.map((item) => {

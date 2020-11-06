@@ -59,7 +59,7 @@ const InstructionSummary = (props) => {
 
   return (
     <Fragment>
-      <h3 className="grid-title">{projectTitle}</h3>
+      <div className="grid-title">{projectTitle}</div>
       {isLoading && (
         <Loader
           style={{ textAlign: "center" }}
@@ -67,7 +67,7 @@ const InstructionSummary = (props) => {
           color={"Blue"}
         />
       )}
-      <h3 className="grid-title">{""}</h3>
+      <div className="grid-title">{""}</div>
       <CardDeck>
         <SummaryCard
           cardTitle="Original Order Value:"
