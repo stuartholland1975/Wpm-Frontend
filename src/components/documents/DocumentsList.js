@@ -5,14 +5,9 @@ import { GreyButton } from '../ui-components/Buttons';
 
 const DocumentImages = (props) => {
 	const documents = useSelector(selectAllDocuments);
-	const selectedNode = useSelector(state => state.gridData)
-	const modalDocuments = () => {
-		if (selectedNode.length > 0) {
-			return documents.filter(obj => obj.work_instruction === selectedNode[0].id)
-		} else {
-			return documents
-		}
-	}
+	const selectedInstruction = useSelector(state => state.gridData.selectedNode.id)
+	const modalDocuments = documents.filter(obj => obj.work_instruction === selectedInstruction)
+
 	return (
 		<div>
 			<ul>
