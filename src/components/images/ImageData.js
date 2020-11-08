@@ -64,6 +64,9 @@ const initialState = imagesAdapter.getInitialState();
 export const ImagesSlice = createSlice({
 	name: 'images',
 	initialState,
+	reducers: {
+		resetImages: imagesAdapter.removeAll,
+	},
 	extraReducers: builder => {
 		builder.addCase(
 			fetchImages.fulfilled,
@@ -91,5 +94,7 @@ export const {
 	selectAll: selectAllImages,
 	selectTotal: selectTotalImages,
 } = imagesAdapter.getSelectors((state) => state.images);
+
+export const {resetImages} = ImagesSlice.actions
 
 export default ImagesSlice.reducer

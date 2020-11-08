@@ -12,7 +12,7 @@ import Grid from "@material-ui/core/Grid";
 import FocusLock from "react-focus-lock";
 import { updateData } from "../forms/FormData";
 import { useRendersCount } from "react-use";
-import { setSelectedNode } from "../grid/gridData";
+import { setSelectedRow } from "../grid/gridData";
 
 
 //TODO: AREA AND WORKTYPE DEFAULTS CLEAR ON FIRST RERENDER
@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
 const InstructionForm = (props) => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const initialData = useSelector((state) => state.gridData.selectedNode);
+  const initialData = useSelector((state) => state.gridData.selectedRow);
   const { register, handleSubmit, reset } = useForm({
     mode: "onChange",
     defaultValues: {
@@ -77,18 +77,18 @@ const InstructionForm = (props) => {
     if (props.formType === "create") {
       dispatch(newWorkInstruction(apiObject));
       props.handleHide();
-      dispatch(setSelectedNode(false));
+      dispatch(setSelectedRow(false));
     } else if (props.formType === "edit") {
       apiObject = { ...apiObject, id: initialData.id };
       dispatch(updateWorkInstruction(apiObject));
       props.handleHide();
-      dispatch(setSelectedNode(false));
+      dispatch(setSelectedRow(false));
     }
   };
 
   const closeAndReset = () => {
     props.handleHide();
-    dispatch(setSelectedNode(false));
+    dispatch(setSelectedRow(false));
   };
 
   useEffect(() => {

@@ -10,7 +10,8 @@ import {fetchAreas, updateArea} from "../areas/areaDataReducer";
 import {fetchWorkTypes} from "../worktypes/workTypesDataReducer";
 import {resetLocations} from "../locations/locationData";
 import {resetInstructionDetails} from "./instructionDetailData";
-import {setSelectedNode, resetGridRow} from "../grid/gridData";
+import {setSelectedRow, resetGridRow} from "../grid/gridData";
+import { resetImages } from "../images/ImageData";
 
 const formatNumber = (params) =>
     Math.floor(params.value)
@@ -22,7 +23,7 @@ const InstructionList = () => {
         documents = useSelector(selectAllDocuments),
         latestDocs = useLatest(documents), [gridApi, setGridApi] = useState(), [, setColumnApi] = useState(),
         isMounted = useMountedState(),
-        selectedNode = useSelector((state) => state.gridData.selectedNode), {width, height} = useWindowSize(),
+        selectedNode = useSelector((state) => state.gridData.selectedRow), {width, height} = useWindowSize(),
         update = useUpdate(), ColumnDefs = [
             {headerName: "ID", field: "id", hide: true},
             {
@@ -123,6 +124,7 @@ const InstructionList = () => {
         dispatch(resetLocations());
         dispatch(resetInstructionDetails());
         dispatch(resetDocuments());
+        dispatch(resetImages())
         dispatch(resetGridRow());
     });
 
@@ -141,7 +143,7 @@ const InstructionList = () => {
     function nodeSelected() {
         const selectedNode = gridOptions.api.getSelectedNodes();
         if (selectedNode.length > 0) {
-            dispatch(setSelectedNode(selectedNode[0].data));
+            dispatch(setSelectedRow(selectedNode[0].data));
         }
     }
 

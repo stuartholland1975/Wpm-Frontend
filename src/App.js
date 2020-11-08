@@ -40,8 +40,8 @@ const App = (props) => {
                     <Route path="/work-instructions" exact component={InstructionList}/>
                     <Route path="/test" exact component={Test}/>
                     <Route path="/login" exact component={Login}/>
-                    <Route path="/work-instructions/locations/summary/:OrderId" exact component={LocationList}/>
-                    <Route path="/work-instructions/items/summary/:OrderId" exact component={InstructionDetail}/>
+                    <Route path="/work-instructions/summary/locations/:OrderId" exact component={LocationList}/>
+                    <Route path="/work-instructions/summary/items/:OrderId" exact component={InstructionDetail}/>
                 </Switch>
             </div>
         </div>

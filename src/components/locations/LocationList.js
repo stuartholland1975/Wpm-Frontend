@@ -1,16 +1,25 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { AgGridReact } from "ag-grid-react";
 import { useDispatch, useSelector } from "react-redux";
 import CustomNoRowsOverlay from "../grid/CustomNoRowsOverlay";
 import { useParams } from "react-router-dom";
 import { Container } from "react-bootstrap";
-import { useEffectOnce, useLatest, useLogger, useUpdate, useUpdateEffect, useWindowSize, } from "react-use";
+import {
+	useEffectOnce,
+	useLatest,
+	useLogger,
+	useMountedState,
+	useUpdate,
+	useUpdateEffect,
+	useWindowSize,
+} from "react-use";
 import { fetchInstructionDetail } from "../work-instructions/instructionDetailData";
 import { fetchLocations, selectAllLocations } from "./locationData";
 import { fetchImages, selectAllImages } from "../images/ImageData";
 import InstructionSummary from "../work-instructions/InstructionSummary";
-import { setSelectedNode } from "../grid/gridData";
+import { setClickedLocation, setSelectedLocation, setSelectedRow } from "../grid/gridData";
 import { ChangeDetectionStrategyType } from 'ag-grid-react/lib/changeDetectionService'
+import { show } from "redux-modal";
 
 const LocationList = (props) => {
 	const {OrderId} = useParams();
@@ -32,8 +41,9 @@ const LocationList = (props) => {
 	const [, setColumnApi] = useState();
 	const {width} = useWindowSize();
 	const update = useUpdate();
+	const isMounted = useMountedState()
+	const selectedLocation = useSelector(state => state.gridData.selectedLocation)
 
-	useLogger("LocationList", props);
 
 	let columnDefs = [
 		{
@@ -42,23 +52,25 @@ const LocationList = (props) => {
 			checkboxSelection: true,
 			maxWidth: 100,
 			valueGetter: function (params) {
-				if (params.data.item_count - params.data.items_complete === 0) {
+				if (params.data.item_count === 0) {
+					return "New"
+				} else if (params.data.item_count - params.data.items_complete === 0) {
 					return "Complete";
 				}
 			},
 			filter: false,
 		},
-		{headerName: "Worksheet Ref", field: "worksheet_ref", maxWidth: 150, sort: 'asc'},
+		{headerName: "Worksheet Ref", field: "worksheet_ref", colId: "worksheet_ref", maxWidth: 150, sort: 'asc'},
 		{headerName: "Location", field: "location_ref"},
 		{
 			headerName: "Item Count",
-			field: "item_count",
+			field: "item_count", colId: "item_count",
 			type: "numericColumn",
 			maxWidth: 150,
 		},
 		{
 			headerName: "Items Complete",
-			field: "items_complete",
+			field: "items_complete", colId: "items_complete",
 			type: "numericColumn",
 			maxWidth: 150,
 		},
@@ -81,7 +93,7 @@ const LocationList = (props) => {
 		},
 		{
 			headerName: "Order Value",
-			field: "total_payable",
+			field: "total_payable", colId: "total_payable",
 			type: "rightAligned",
 			cellStyle: {fontWeight: "bold"},
 			valueFormatter: function (params) {
@@ -111,11 +123,12 @@ const LocationList = (props) => {
 		defaultColDef: defaultColDef,
 		columnTypes: columnTypes,
 		pagination: true,
-		paginationPageSize: 15,
+		paginationPageSize: 25,
 		domLayout: "autoHeight",
 		rowSelection: "single",
-		suppressRowClickSelection: false,
-		onRowSelected: nodeSelected,
+		suppressRowClickSelection: true,
+		onRowSelected: rowSelected,
+		onCellClicked: cellClicked,
 		suppressNoRowsOverlay: false,
 		frameworkComponents: {
 			customNoRowsOverlay: CustomNoRowsOverlay,
@@ -128,7 +141,7 @@ const LocationList = (props) => {
 		},
 		isRowSelectable: function (rowNode) {
 			const {item_count, items_complete} = rowNode.data;
-			return rowNode.data ? item_count - items_complete > 0 : true;
+			return rowNode.data ? item_count - items_complete > 0 || item_count === 0 : true;
 		},
 	};
 
@@ -153,11 +166,18 @@ const LocationList = (props) => {
 		update();
 	}, [width]);
 
-	function nodeSelected() {
+	function rowSelected() {
 		const selectedNode = gridOptions.api.getSelectedNodes();
 
 		if (selectedNode.length > 0) {
-			dispatch(setSelectedNode(selectedNode[0].data));
+			dispatch(setSelectedLocation(selectedNode[0].data));
+		}
+	}
+
+	function cellClicked(params) {
+		const imageColumn = gridOptions.columnApi.getColumn('images')
+		if (params.colDef.colId === imageColumn.colDef.colId) {
+			dispatch(setClickedLocation(params.data))
 		}
 	}
 
@@ -174,16 +194,24 @@ const LocationList = (props) => {
 			link.innerText = siteLocationImages.length;
 			link.addEventListener("click", (e) => {
 				e.preventDefault();
-				dispatch(setSelectedNode(params.data));
-
+				dispatch(show('instruction-modal', {title: "LOCATION IMAGES", content: 'locationImages'}));
 			});
-
 			return link;
 		} else {
 			link = siteLocationImages.length;
 		}
 		return link;
 	}
+
+	useEffect(() => {
+        if (isMounted) {
+            if (gridApi) {
+                if (!selectedLocation) {
+                    gridApi.deselectAll();
+                }
+            }
+        }
+    }, [gridApi, isMounted, selectedLocation]);
 
 	return (
 		<Fragment>

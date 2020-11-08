@@ -69,7 +69,7 @@ const gridOptions = {
   },
 
   pagination: true,
-  paginationPageSize: 15,
+  paginationPageSize: 25,
   rowSelection: "single",
   domLayout: "autoHeight",
 };

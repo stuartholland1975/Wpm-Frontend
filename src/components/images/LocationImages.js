@@ -1,22 +1,26 @@
 import React, { useState } from "react";
 import { Carousel } from "react-bootstrap";
 import { selectAllImages } from "./ImageData";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { GreyButton } from "../ui-components/Buttons";
-import { createSelector } from 'reselect'
-
+import { useUnmount } from 'react-use';
+import { setClickedLocation } from "../grid/gridData";
 
 const LocationImages = (props) => {
-
+	const dispatch = useDispatch()
 	const [index, setIndex] = useState(0);
 	const handleSelect = (selectedIndex) => {
 		setIndex(selectedIndex);
 	};
 	const images = useSelector(selectAllImages)
+	const selectedLocation = useSelector(state => state.gridData.clickedRow.id)
+
+	const modalImages = (selectedLocation) ? images.filter(obj => obj.location === selectedLocation) : images
+	useUnmount(() => dispatch(setClickedLocation(false)));
 
 	return <div>
 		<Carousel activeIndex={ index } onSelect={ handleSelect } interval={ 1500 }>
-			{ images.map(item => <Carousel.Item
+			{ modalImages.map(item => <Carousel.Item
 				key={ item.id }>
 				<h3>{ item.imageTypeDescription }</h3>
 				<img
