@@ -6,7 +6,7 @@ const gridDataSlice = createSlice(({
 		selectedRow: false,
 		clickedRow: false,
 		selectedLocation: false,
-		editedRow: false,
+		editedRow: [],
 		deleteGridRow: false,
 	},
 	reducers: {
@@ -22,8 +22,11 @@ const gridDataSlice = createSlice(({
 		setClickedLocation(state, action) {
 			state.clickedRow = action.payload
 		},
-		setEditedRow(state, action) {
-			state.editedRow = action.payload
+		setEditedRow:(state, action) =>  {
+			return {
+				...state.editedRow,
+				...action.payload
+			}
 		},
 		resetGridRow: (state) => {
 			state.selectedNode = false

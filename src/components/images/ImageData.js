@@ -1,5 +1,6 @@
 import { createAsyncThunk, createEntityAdapter, createSlice, } from "@reduxjs/toolkit";
 import axiosInstance from '../../services/axiosApi';
+import { fetchOrderSummaryInfo } from "../../services/thunks";
 
 export const fetchImages = createAsyncThunk(
 	"images/fetchAll",
@@ -68,10 +69,9 @@ export const ImagesSlice = createSlice({
 		resetImages: imagesAdapter.removeAll,
 	},
 	extraReducers: builder => {
-		builder.addCase(
-			fetchImages.fulfilled,
-			imagesAdapter.setAll
-		);
+		builder.addCase(fetchOrderSummaryInfo.fulfilled, ((state, action) => {
+			return imagesAdapter.setAll(state, action.payload.Image)
+		}))
 		builder.addCase(
 			updateImage.fulfilled,
 			imagesAdapter.upsertOne

@@ -20,6 +20,7 @@ import InstructionSummary from "../work-instructions/InstructionSummary";
 import { setClickedLocation, setSelectedLocation, setSelectedRow } from "../grid/gridData";
 import { ChangeDetectionStrategyType } from 'ag-grid-react/lib/changeDetectionService'
 import { show } from "redux-modal";
+import {fetchOrderSummaryInfo} from "../../services/thunks";
 
 const LocationList = (props) => {
 	const {OrderId} = useParams();
@@ -146,9 +147,7 @@ const LocationList = (props) => {
 	};
 
 	useEffectOnce(() => {
-		dispatch(fetchInstructionDetail(OrderId));
-		dispatch(fetchImages(OrderId));
-		dispatch(fetchLocations(OrderId));
+		dispatch(fetchOrderSummaryInfo(OrderId))
 	});
 
 	useUpdateEffect(() => {

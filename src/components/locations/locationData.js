@@ -1,16 +1,8 @@
 import { createAsyncThunk, createEntityAdapter, createSlice, } from "@reduxjs/toolkit";
 import axiosInstance from "../../services/axiosApi";
+import {fetchOrderSummaryInfo} from "../../services/thunks";
 
-export const fetchLocations = createAsyncThunk(
-	"locations/fetchAll",
-	async (orderId) => {
-		const locations = await axiosInstance.get(
-			`/wpm/orders/locations/${ orderId }`
-		);
 
-		return locations.data;
-	}
-);
 export const updateLocation = createAsyncThunk(
 	"locations/upsertOne",
 	async (apiObject) => {
@@ -59,7 +51,10 @@ export const LocationsSlice = createSlice({
 		updateImageCount: locationsAdapter.updateOne,
 	},
 	extraReducers: (builder) => {
-		builder.addCase(fetchLocations.fulfilled, locationsAdapter.setAll);
+
+		builder.addCase(fetchOrderSummaryInfo.fulfilled, ((state, action) => {
+		return 	 locationsAdapter.setAll(state, action.payload.SiteLocation)
+		}))
 		builder.addCase(updateLocation.fulfilled, locationsAdapter.upsertOne);
 		builder.addCase(createLocation.fulfilled, locationsAdapter.addOne);
 		builder.addCase(deleteLocation.fulfilled, locationsAdapter.removeOne);

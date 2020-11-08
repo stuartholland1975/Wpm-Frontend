@@ -12,23 +12,25 @@ import gridReducer from "./components/grid/gridData";
 import LocationsReducer from "./components/locations/locationData";
 import InstructionDetailSlice from "./components/work-instructions/instructionDetailData";
 import ImagesReducer from "./components/images/ImageData"
+import { InstructionHeaderSlice } from "./services/thunks"
 
 const rootReducer = combineReducers({
-  workInstructions: WorkInstructionsReducer,
-  activities: "",
-  locations: LocationsReducer,
-  instructionDetails: InstructionDetailSlice,
-  workTypes: WorkTypeReducer,
-  images: ImagesReducer,
-  areas: AreasReducer,
-  documents: DocumentsReducer,
-  form: formDataReducer,
-  components: componentsReducer,
-  modal,
-  gridData: gridReducer,
+	workInstructions: WorkInstructionsReducer,
+	activities: "",
+	locations: LocationsReducer,
+	instructionDetails: InstructionDetailSlice,
+	workTypes: WorkTypeReducer,
+	images: ImagesReducer,
+	areas: AreasReducer,
+	documents: DocumentsReducer,
+	form: formDataReducer,
+	components: componentsReducer,
+	modal,
+	gridData: gridReducer,
+	instructionHeader: InstructionHeaderSlice.reducer,
 });
 
 export const store = configureStore({
-  reducer: rootReducer,
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
+	reducer: rootReducer,
+	middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
 });

@@ -16,7 +16,7 @@ import LetterM from "../icons/letter-m.png";
 import LetterP from "../icons/letter-p.png";
 import { useConfirm } from "material-ui-confirm";
 import { setClickedLocation, setSelectedLocation, setSelectedRow } from "../grid/gridData";
-import { deleteWorkInstruction } from "../work-instructions/InstructionData";
+import { deleteWorkInstruction } from "../../services/thunks";
 import { deleteLocation } from "../locations/locationData";
 
 
@@ -169,7 +169,7 @@ const NavDrawer = (props) => {
 	const handleViewSummary = () => {
 		if (selectedRow) {
 			history.push({
-				pathname: `/work-instructions/summary/locations/${ selectedRow.work_instruction }`,
+				pathname: `/work-instructions/summary/locations/${ selectedRow.id }`,
 				state: selectedRow.project_title,
 			});
 		} else {
@@ -198,9 +198,9 @@ const NavDrawer = (props) => {
 	const handleViewWorksheets = () => {
 		if (selectedLocation) {
 			history.push({
-			pathname: `/work-instructions/summary/worksheets/${ selectedRow.work_instruction }`,
-			state: selectedRow.project_title,
-		})
+				pathname: `/work-instructions/summary/worksheets/${ selectedRow.work_instruction }`,
+				state: selectedRow.project_title,
+			})
 		} else {
 			confirm({
 				title: "NO LOCATION SELECTED",

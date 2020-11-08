@@ -9,6 +9,7 @@ import { createSelector } from "reselect";
 import { useConfirm } from "material-ui-confirm";
 import { setEditedRow } from "../grid/gridData";
 import FocusLock from "react-focus-lock";
+import SimpleEditor from "../grid/SimpleEditor";
 
 function formatNumber(params) {
   return params.value.toLocaleString(undefined, {
@@ -18,7 +19,7 @@ function formatNumber(params) {
 }
 
 function parseNumber(params) {
-  return parseFloat(params.newValue);
+  return parseFloat(params.newValue).toFixed(2);
 }
 
 const selectedLocation = (state) => state.gridData.selectedLocation;
@@ -66,8 +67,9 @@ const WorkProgressTable = (props) => {
       field: "qty_to_complete",
       type: "numericColumn",
       editable: true,
-      valueFormatter: formatNumber,
+      //valueFormatter: formatNumber,
       valueParser: parseNumber,
+      cellRenderer: 'simpleEditor',
     },
   ];
   let defaultColDef = {
@@ -89,6 +91,7 @@ const WorkProgressTable = (props) => {
     onRowValueChanged: onCellChangedHandler,
     frameworkComponents: {
       customNoRowsOverlay: CustomNoRowsOverlay,
+      simpleEditor: SimpleEditor,
     },
     noRowsOverlayComponent: "customNoRowsOverlay",
     noRowsOverlayComponentParams: {
@@ -123,7 +126,7 @@ const WorkProgressTable = (props) => {
       rowNodes: [event.node],
       columns: ["qty_to_complete"],
     });
-    if (
+    /*if (
       event.data.qty_to_complete >
       event.data.qty_ordered - event.data.qty_complete
     ) {
@@ -145,7 +148,7 @@ const WorkProgressTable = (props) => {
       });
     } else {
       newFormData.push(event.data.id);
-    }
+    }*/
   }
 
   return (
@@ -155,7 +158,7 @@ const WorkProgressTable = (props) => {
         <div className="grid-title">UPDATE WORK PROGRESS</div>
         <hr />
         <div className="ag-theme-custom-react">
-            <FocusLock>
+
           <AgGridReact
             gridOptions={gridOptions}
             //enterMovesDown={true}
@@ -165,7 +168,7 @@ const WorkProgressTable = (props) => {
             getRowNodeId={(data) => data.id}
             onGridSizeChanged={onGridReady}
           />
-          </FocusLock>
+
         </div>
       </Container>
     </Fragment>
