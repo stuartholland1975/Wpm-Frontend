@@ -13,86 +13,26 @@ const numFormat = (num) => {
 	});
 };
 
-const orderItems = state => state
-
-const boqItems = createSelector(
-	[orderItems],
-	items => items.filter(({item_type}) => item_type === 'BOQ')
-)
-
-const varnItems = createSelector(
-	[orderItems],
-	items => items.filter(({item_type}) => item_type === 'VARN')
-)
-
-const totalLabourValue = createSelector(
-	[orderItems],
-	items => items.map(item => item['labour_total']).reduce((acc, item) => acc + item, 0)
-)
-
-const totalMaterialsValue = createSelector(
-	[orderItems],
-	items => items.map(item => item['materials_total_incl_other_materials']).reduce((acc, item) => acc + item, 0)
-)
-
-const boqLabourValue = createSelector(
-	[boqItems],
-	items => items.map(item => item['labour_total']).reduce((acc, item) => acc + item, 0)
-)
-
-const boqMaterialsValue = createSelector(
-	[boqItems],
-	items => items.map(item => item['materials_total_incl_other_materials']).reduce((acc, item) => acc + item, 0)
-)
-
-const boqTotalValue = createSelector(
-	[boqLabourValue, boqMaterialsValue],
-	(labour, materials) => labour + materials
-)
-
-const varnLabourValue = createSelector(
-	[varnItems],
-	items => items.map(item => item['labour_total']).reduce((acc, item) => acc + item, 0)
-)
-
-const varnMaterialsValue = createSelector(
-	[varnItems],
-	items => items.map(item => item['materials_total_incl_other_materials']).reduce((acc, item) => acc + item, 0)
-)
-
-const varnTotalValue = createSelector(
-	[varnLabourValue, varnMaterialsValue],
-	(labour, materials) => labour + materials
-)
-
-const completedValue = createSelector(
-	[orderItems],
-	items => items.map(item => item['value_complete']).reduce((acc, item) => acc + item, 0)
-)
-
-const appliedValue = createSelector(
-	[orderItems],
-	items => items.map(item => item['value_applied']).reduce((acc, item) => acc + item, 0)
-)
-
-const totalPayable = createSelector(
-	[totalLabourValue, totalMaterialsValue],
-	(labour, materials) => labour + materials
-)
-
-const valueToComplete = createSelector(
-	[totalPayable, completedValue],
-	(total, complete) => total - complete
-)
-
-const valueToApply = createSelector(
-	[completedValue, appliedValue],
-	(complete, applied) => complete - applied
-)
-
 const InstructionSummary = (props) => {
 	const orderDetail = useSelector(selectAllInstructionDetails);
 	const projectTitle = useLocation().state;
+
+	const boqItems = orderDetail.filter(({item_type}) => item_type === 'BOQ')
+	const varnItems = orderDetail.filter(({item_type}) => item_type === 'VARN')
+	const totalLabourValue = orderDetail.map(item => item['labour_total']).reduce((acc, item) => acc + item, 0)
+	const totalMaterialsValue = orderDetail.map(item => item['materials_total_incl_other_materials']).reduce((acc, item) => acc + item, 0)
+	const boqLabourValue = boqItems.map(item => item['labour_total']).reduce((acc, item) => acc + item, 0)
+	const boqMaterialsValue = boqItems.map(item => item['materials_total_incl_other_materials']).reduce((acc, item) => acc + item, 0)
+	const boqTotalValue = boqLabourValue + boqMaterialsValue
+	const varnLabourValue = varnItems.map(item => item['labour_total']).reduce((acc, item) => acc + item, 0)
+	const varnMaterialsValue = varnItems.map(item => item['materials_total_incl_other_materials']).reduce((acc, item) => acc + item, 0)
+	const varnTotalValue = varnLabourValue + varnMaterialsValue
+	const completedValue = orderDetail.map(item => item['value_complete']).reduce((acc, item) => acc + item, 0)
+	const appliedValue = orderDetail.map(item => item['value_applied']).reduce((acc, item) => acc + item, 0)
+	const totalPayable = totalLabourValue + totalMaterialsValue
+	const valueToComplete = totalPayable + completedValue
+	const valueToApply = completedValue - appliedValue
+
 
 	return (
 		<Fragment>
@@ -104,45 +44,45 @@ const InstructionSummary = (props) => {
 					labelTop={ "Labour Value:" }
 					labelMid={ "Materials Value:" }
 					labelBot={ "Total Payable:" }
-					valueTop={ numFormat(boqLabourValue(orderDetail)) }
-					valueMid={ numFormat(boqMaterialsValue(orderDetail)) }
-					valueBot={ numFormat(boqTotalValue(orderDetail)) }
+					valueTop={ numFormat(boqLabourValue) }
+					valueMid={ numFormat(boqMaterialsValue) }
+					valueBot={ numFormat(boqTotalValue) }
 				/>
 				<SummaryCard
 					cardTitle="Variation Values:"
 					labelTop={ "Labour Value:" }
 					labelMid={ "Materials Value:" }
 					labelBot={ "Total Payable:" }
-					valueTop={ numFormat(varnLabourValue(orderDetail)) }
-					valueMid={ numFormat(varnMaterialsValue(orderDetail)) }
-					valueBot={ numFormat(varnTotalValue(orderDetail)) }
+					valueTop={ numFormat(varnLabourValue) }
+					valueMid={ numFormat(varnMaterialsValue) }
+					valueBot={ numFormat(varnTotalValue) }
 				/>
 				<SummaryCard
 					cardTitle="Current Order Values:"
 					labelTop={ "Labour Value:" }
 					labelMid={ "Materials Value:" }
 					labelBot={ "Total Payable:" }
-					valueTop={ numFormat(totalLabourValue(orderDetail)) }
-					valueMid={ numFormat(totalMaterialsValue(orderDetail)) }
-					valueBot={ numFormat(totalPayable(orderDetail)) }
+					valueTop={ numFormat(totalLabourValue) }
+					valueMid={ numFormat(totalMaterialsValue) }
+					valueBot={ numFormat(totalPayable) }
 				/>
 				<SummaryCard
 					cardTitle="Construction Progress Values:"
 					labelTop={ "Current Value:" }
 					labelBot={ "Value Complete:" }
 					labelMid={ "To Complete:" }
-					valueTop={ numFormat(totalPayable(orderDetail)) }
-					valueBot={ numFormat(completedValue(orderDetail)) }
-					valueMid={ numFormat(valueToComplete(orderDetail)) }
+					valueTop={ numFormat(totalPayable) }
+					valueBot={ numFormat(completedValue) }
+					valueMid={ numFormat(valueToComplete) }
 				/>
 				<SummaryCard
 					cardTitle="Application Values:"
 					labelBot={ "Value Applied:" }
 					labelTop={ "Value Complete:" }
 					labelMid={ "Not Applied:" }
-					valueBot={ numFormat(appliedValue(orderDetail)) }
-					valueTop={ numFormat(completedValue(orderDetail)) }
-					valueMid={ numFormat(valueToApply(orderDetail)) }
+					valueBot={ numFormat(appliedValue) }
+					valueTop={ numFormat(completedValue) }
+					valueMid={ numFormat(valueToApply) }
 				/>
 			</CardDeck>
 			<hr/>

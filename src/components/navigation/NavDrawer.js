@@ -195,6 +195,22 @@ const NavDrawer = (props) => {
 		});
 	};
 
+	const handleViewWorksheets = () => {
+		if (selectedLocation) {
+			history.push({
+			pathname: "/work-instructions/summary/worksheets/"
+		})
+		} else {
+			confirm({
+				title: "NO LOCATION SELECTED",
+				cancellationButtonProps: {
+					disabled: true,
+					hidden: true,
+				},
+			}).then(() => dispatch(setSelectedLocation(false)));
+		}
+	}
+
 	const instructionBarButtons = {
 		crudButtons: [
 			{
@@ -264,7 +280,7 @@ const NavDrawer = (props) => {
 			},
 			{
 				component: (
-					<GreenButton type="button" fullWidth>
+					<GreenButton type="button" fullWidth onClick={ handleViewWorksheets }>
 						UPDATE WORK PROGRESS
 					</GreenButton>
 				),

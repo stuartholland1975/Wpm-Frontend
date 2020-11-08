@@ -129,8 +129,7 @@ const InstructionList = () => {
     });
 
     const onGridReady = (params) => {
-        setGridApi(params.api);
-        setColumnApi(params.columnApi);
+
         params.api.sizeColumnsToFit();
     };
 
@@ -148,7 +147,7 @@ const InstructionList = () => {
     }
 
     useUpdateEffect(() => {
-        gridApi.sizeColumnsToFit()
+        gridOptions.api.sizeColumnsToFit()
         update()
     },[width])
     
@@ -156,13 +155,13 @@ const InstructionList = () => {
     
     useEffect(() => {
         if (isMounted) {
-            if (gridApi) {
+            if (gridOptions.api) {
                 if (!selectedNode) {
-                    gridApi.deselectAll();
+                    gridOptions.api.deselectAll();
                 }
             }
         }
-    }, [gridApi, isMounted, selectedNode]);
+    }, [selectedNode]);
 
     return (
         <Fragment>

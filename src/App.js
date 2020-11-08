@@ -10,6 +10,7 @@ import {makeStyles} from '@material-ui/core/styles';
 import WpmModal from './components/ui-components/InstructionModal';
 import LocationList from './components/locations/LocationList';
 import InstructionDetail from './components/work-instructions/InstructionDetail';
+import WorkProgressTable from "./components/worksheets/WorkProgressTable";
 
 
 const useStyles = makeStyles({
@@ -42,6 +43,7 @@ const App = (props) => {
                     <Route path="/login" exact component={Login}/>
                     <Route path="/work-instructions/summary/locations/:OrderId" exact component={LocationList}/>
                     <Route path="/work-instructions/summary/items/:OrderId" exact component={InstructionDetail}/>
+                    <Route path="/work-instructions/summary/worksheets" exact component={WorkProgressTable}/>
                 </Switch>
             </div>
         </div>
