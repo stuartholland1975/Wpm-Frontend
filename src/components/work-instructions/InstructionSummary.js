@@ -1,10 +1,9 @@
 import React, { Fragment } from "react";
-import SummaryCard from "../ui-components/SummaryCard";
+import { CardDeck } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
-import { CardDeck } from "react-bootstrap";
+import SummaryCard from "../ui-components/SummaryCard";
 import { selectAllInstructionDetails } from "./instructionDetailData";
-import { createSelector } from "reselect";
 
 const numFormat = (num) => {
 	return num.toLocaleString(undefined, {
@@ -17,21 +16,21 @@ const InstructionSummary = (props) => {
 	const orderDetail = useSelector(selectAllInstructionDetails);
 	const projectTitle = useLocation().state;
 
-	const boqItems = orderDetail.filter(({item_type}) => item_type === 'BOQ')
-	const varnItems = orderDetail.filter(({item_type}) => item_type === 'VARN')
-	const totalLabourValue = orderDetail.map(item => item['labour_total']).reduce((acc, item) => acc + item, 0)
-	const totalMaterialsValue = orderDetail.map(item => item['materials_total_incl_other_materials']).reduce((acc, item) => acc + item, 0)
-	const boqLabourValue = boqItems.map(item => item['labour_total']).reduce((acc, item) => acc + item, 0)
-	const boqMaterialsValue = boqItems.map(item => item['materials_total_incl_other_materials']).reduce((acc, item) => acc + item, 0)
-	const boqTotalValue = boqLabourValue + boqMaterialsValue
-	const varnLabourValue = varnItems.map(item => item['labour_total']).reduce((acc, item) => acc + item, 0)
-	const varnMaterialsValue = varnItems.map(item => item['materials_total_incl_other_materials']).reduce((acc, item) => acc + item, 0)
-	const varnTotalValue = varnLabourValue + varnMaterialsValue
-	const completedValue = orderDetail.map(item => item['value_complete']).reduce((acc, item) => acc + item, 0)
-	const appliedValue = orderDetail.map(item => item['value_applied']).reduce((acc, item) => acc + item, 0)
-	const totalPayable = totalLabourValue + totalMaterialsValue
-	const valueToComplete = totalPayable + completedValue
-	const valueToApply = completedValue - appliedValue
+	const boqItems = orderDetail.filter(({item_type}) => item_type === "BOQ");
+	const varnItems = orderDetail.filter(({item_type}) => item_type === "VARN");
+	const totalLabourValue = orderDetail.map(item => item["labour_total"]).reduce((acc, item) => acc + item, 0);
+	const totalMaterialsValue = orderDetail.map(item => item["materials_total_incl_other_materials"]).reduce((acc, item) => acc + item, 0);
+	const boqLabourValue = boqItems.map(item => item["labour_total"]).reduce((acc, item) => acc + item, 0);
+	const boqMaterialsValue = boqItems.map(item => item["materials_total_incl_other_materials"]).reduce((acc, item) => acc + item, 0);
+	const boqTotalValue = boqLabourValue + boqMaterialsValue;
+	const varnLabourValue = varnItems.map(item => item["labour_total"]).reduce((acc, item) => acc + item, 0);
+	const varnMaterialsValue = varnItems.map(item => item["materials_total_incl_other_materials"]).reduce((acc, item) => acc + item, 0);
+	const varnTotalValue = varnLabourValue + varnMaterialsValue;
+	const completedValue = orderDetail.map(item => item["value_complete"]).reduce((acc, item) => acc + item, 0);
+	const appliedValue = orderDetail.map(item => item["value_applied"]).reduce((acc, item) => acc + item, 0);
+	const totalPayable = totalLabourValue + totalMaterialsValue;
+	const valueToComplete = totalPayable + completedValue;
+	const valueToApply = completedValue - appliedValue;
 
 
 	return (

@@ -8,7 +8,7 @@ import AreasReducer from "./components/areas/areaDataReducer";
 import DocumentsReducer from "./components/documents/documentsDataReducer";
 import formDataReducer from "./components/forms/FormData";
 import componentsReducer from "./components/ui-components/componentsReducer";
-import gridReducer from "./components/grid/gridData";
+import gridReducer, {SelectedRowSlice} from "./components/grid/gridData";
 import LocationsReducer from "./components/locations/locationData";
 import InstructionDetailSlice from "./components/work-instructions/instructionDetailData";
 import ImagesReducer from "./components/images/ImageData"
@@ -28,6 +28,8 @@ const rootReducer = combineReducers({
 	modal,
 	gridData: gridReducer,
 	instructionHeader: InstructionHeaderSlice.reducer,
+	editedRow: SelectedRowSlice.reducer,
+
 });
 
 export const store = configureStore({

@@ -1,18 +1,18 @@
-import React, { useEffect } from "react";
-import { useForm } from "react-hook-form";
+import Grid from "@material-ui/core/Grid";
+import makeStyles from "@material-ui/core/styles/makeStyles";
 import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
-import { useDispatch, useSelector } from "react-redux";
-import { selectAllAreas } from "../areas/areaDataReducer";
-import { selectAllWorkTypes } from "../worktypes/workTypesDataReducer";
-import makeStyles from "@material-ui/core/styles/makeStyles";
-import { BlueButton, GreyButton } from "../ui-components/Buttons";
-import { newWorkInstruction, updateWorkInstruction } from "../../services/thunks";
-import Grid from "@material-ui/core/Grid";
+import React, { useEffect } from "react";
 import FocusLock from "react-focus-lock";
-import { updateData } from "../forms/FormData";
+import { useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
 import { useRendersCount } from "react-use";
+import { newWorkInstruction, updateWorkInstruction } from "../../services/thunks";
+import { selectAllAreas } from "../areas/areaDataReducer";
+import { updateData } from "../forms/FormData";
 import { setSelectedRow } from "../grid/gridData";
+import { BlueButton, GreyButton } from "../ui-components/Buttons";
+import { selectAllWorkTypes } from "../worktypes/workTypesDataReducer";
 
 
 //TODO: AREA AND WORKTYPE DEFAULTS CLEAR ON FIRST RERENDER

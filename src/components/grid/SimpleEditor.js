@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 
 export default forwardRef((props, ref) => {
 	const inputRef = useRef();
-	const dispatch = useDispatch()
+	const dispatch = useDispatch();
 
 	useImperativeHandle(ref, () => {
 		return {
@@ -13,6 +13,6 @@ export default forwardRef((props, ref) => {
 			}
 		};
 	});
-	return <input style={ {textAlign: 'right', height: '20px', width: '100px'} } type="text" ref={ inputRef }
-	              defaultValue={ 0.00 } value={ props['value'] }/>;
-})
+	return <input style={ {textAlign: "right", height: "20px", width: "100px"} } type="text" ref={ inputRef }
+	              defaultValue={ 0.00 } />;
+});

@@ -1,177 +1,203 @@
-import React, { Fragment } from "react";
-import CustomNoRowsOverlay from "../grid/CustomNoRowsOverlay";
 import { AgGridReact } from "ag-grid-react";
-import InstructionSummary from "../work-instructions/InstructionSummary";
+import { useConfirm } from "material-ui-confirm";
+import React, { Fragment } from "react";
 import Container from "react-bootstrap/Container";
 import { useDispatch, useSelector } from "react-redux";
-import { selectAllInstructionDetails } from "../work-instructions/instructionDetailData";
 import { createSelector } from "reselect";
-import { useConfirm } from "material-ui-confirm";
+import CustomNoRowsOverlay from "../grid/CustomNoRowsOverlay";
 import { setEditedRow } from "../grid/gridData";
-import FocusLock from "react-focus-lock";
 import SimpleEditor from "../grid/SimpleEditor";
+import { selectAllInstructionDetails, updateGridOrderItem } from "../work-instructions/instructionDetailData";
+import InstructionSummary from "../work-instructions/InstructionSummary";
 
 function formatNumber(params) {
-  return params.value.toLocaleString(undefined, {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  });
+	return params.value && params.value.toLocaleString(undefined, {
+		minimumFractionDigits: 2,
+		maximumFractionDigits: 2,
+	});
 }
 
 function parseNumber(params) {
-  return parseFloat(params.newValue).toFixed(2);
+	return parseFloat(params.newValue).toFixed(2);
 }
 
 const selectedLocation = (state) => state.gridData.selectedLocation;
 
 const dataSelector = createSelector(
-  [selectAllInstructionDetails, selectedLocation],
-  (items, location) =>
-    items
-      .filter((obj) => obj.qty_os > 0 && obj.location_ref === location.id)
-      .map((v) => ({ ...v, qty_to_complete: 0 }))
+	[selectAllInstructionDetails, selectedLocation],
+	(items, location) =>
+		items
+			.filter((obj) => obj.qty_os > 0 && obj.location_ref === location.id)
 );
 
 const WorkProgressTable = (props) => {
-  let cellDefs = [];
-  const rowData = useSelector(dataSelector);
-  const confirm = useConfirm();
-  const dispatch = useDispatch();
+	let cellDefs = [];
+	const rowData = useSelector(dataSelector);
+	const confirm = useConfirm();
+	const dispatch = useDispatch();
 
-  let columnDefs = [
-    { headerName: "ID", field: "id", hide: true },
-    { headerName: "Worksheet Ref", field: "worksheet_ref" },
-    { headerName: "Item Ref", field: "item_number", sort: "asc" },
-    { headerName: "Item Type", field: "item_type" },
-    {
-      headerName: "Qty Ordered",
-      field: "qty_ordered",
-      type: "numericColumn",
-      valueFormatter: formatNumber,
-    },
-    { headerName: "Activity Code", field: "activity_code" },
-    {
-      headerName: "Activity Description",
-      field: "activity_description",
-      minWidth: 500,
-    },
-    {
-      headerName: "Qty Os",
-      field: "qty_os",
-      type: "numericColumn",
-      valueFormatter: formatNumber,
-    },
-    {
-      headerName: "Qty Done",
-      colId: "qty_to_complete",
-      field: "qty_to_complete",
-      type: "numericColumn",
-      editable: true,
-      //valueFormatter: formatNumber,
-      valueParser: parseNumber,
-      cellRenderer: 'simpleEditor',
-    },
-  ];
-  let defaultColDef = {
-    filter: true,
-    sortable: true,
-    resizable: true,
-    flex: true,
-  };
+	let columnDefs = [
+		{headerName: "ID", field: "id", hide: true},
+		{headerName: "Worksheet Ref", field: "worksheet_ref"},
+		{headerName: "Item Ref", field: "item_number", sort: "asc"},
+		{headerName: "Item Type", field: "item_type"},
+		{
+			headerName: "Qty Ordered",
+			field: "qty_ordered",
+			type: "numericColumn",
+			valueFormatter: formatNumber,
+		},
+		{headerName: "Activity Code", field: "activity_code"},
+		{
+			headerName: "Activity Description",
+			field: "activity_description",
+			minWidth: 500,
+		},
+		{
+			headerName: "Qty Os",
+			field: "qty_os",
+			type: "numericColumn",
+			valueFormatter: formatNumber,
+		},
+		{
+			headerName: "Qty Done",
+			colId: "qty_to_complete",
+			field: "qty_to_complete",
+			type: "numericColumn",
+			editable: true,
+			valueFormatter: formatNumber,
+			//valueParser: parseNumber,
+			//cellRenderer: "simpleEditor",
+			valueSetter: function (params) {
+				if (params.newValue == params.oldValue) {
+					console.log("EQUAL");
+				} else {
+					console.log("NOT EQUAL");
+					dispatch(updateGridOrderItem({...params.data, qty_to_complete: Number(params.newValue)}));
+					dispatch(setEditedRow({...params.data, qty_to_complete: Number(params.newValue)}));
+					return false;
+				}
+			}
+		},
+	];
+	let defaultColDef = {
+		filter: true,
+		sortable: true,
+		resizable: true,
+		flex: true,
+	};
 
-  let gridOptions = {
-    columnDefs: columnDefs,
-    defaultColDef: defaultColDef,
-    pagination: true,
-    paginationPageSize: 20,
-    domLayout: "autoHeight",
-    singleClickEdit: true,
-    editType: "fullRow",
-    enableCellChangeFlash: true,
-    onRowValueChanged: onCellChangedHandler,
-    frameworkComponents: {
-      customNoRowsOverlay: CustomNoRowsOverlay,
-      simpleEditor: SimpleEditor,
-    },
-    noRowsOverlayComponent: "customNoRowsOverlay",
-    noRowsOverlayComponentParams: {
-      noRowsMessageFunc: function () {
-        return "ALL ITEMS FOR THIS WORKSHEET ARE COMPLETE";
-      },
-    },
-    /* onGridReady: function () {
-      gridOptions.api.startEditingCell({ rowIndex: 0, colKey: "qty_to_complete" });
-      cellDefs = gridOptions.api.getEditingCells();
-      cellDefs.forEach(function (cellDef) {
-        const { rowIndex, column } = cellDef;
-        setEditingGridCell({ rowIndex: rowIndex, colKey: column.getId() });
-        console.log(cellDefs);
-      });
-    }, */
-  };
+	let gridOptions = {
+		columnDefs: columnDefs,
+		defaultColDef: defaultColDef,
+		pagination: true,
+		paginationPageSize: 20,
+		domLayout: "autoHeight",
+		singleClickEdit: true,
+		editType: "fullRow",
+		enableCellChangeFlash: true,
+		/*onRowValueChanged: function(event){
+			console.log("FIRED")
+			return dispatch(setEditedRow(event.data));
+		},*/
+		frameworkComponents: {
+			customNoRowsOverlay: CustomNoRowsOverlay,
+			simpleEditor: SimpleEditor,
+		},
+		noRowsOverlayComponent: "customNoRowsOverlay",
+		noRowsOverlayComponentParams: {
+			noRowsMessageFunc: function () {
+				return "ALL ITEMS FOR THIS WORKSHEET ARE COMPLETE";
+			},
+		},
 
-  const onGridReady = () => {
-    gridOptions.api.sizeColumnsToFit();
-    gridOptions.api.startEditingCell({
-      rowIndex: 0,
-      colKey: "qty_to_complete",
-    });
-  };
 
-  let newFormData = [];
+	};
 
-  function onCellChangedHandler(event) {
-    dispatch(setEditedRow(event.data))
-    gridOptions.api.flashCells({
-      rowNodes: [event.node],
-      columns: ["qty_to_complete"],
-    });
-    /*if (
-      event.data.qty_to_complete >
-      event.data.qty_ordered - event.data.qty_complete
-    ) {
-      confirm({
-        title: "QTY DONE CANNOT EXCEED QTY OUTSTANDING",
-        cancellationButtonProps: {
-          disabled: true,
-          hidden: true,
-        },
-      }).then(() => {
-        const rowIndex = gridOptions.api.getEditingCells()[0].rowIndex - 1;
-        //gridOptions.api.stopEditing()
-        gridOptions.api.setFocusedCell(rowIndex, "qty_to_complete");
-        gridOptions.api.startEditingCell({
-          rowIndex: rowIndex,
-          colKey: "qty_to_complete",
-          keyPress: 46,
-        });
-      });
-    } else {
-      newFormData.push(event.data.id);
-    }*/
-  }
+	/*useEffect(() => {
+		if (gridOptions.api) {
+			gridOptions.api.addGlobalListener((event) => console.log(event));
 
-  return (
-    <Fragment>
-      <Container fluid>
-        <InstructionSummary />
-        <div className="grid-title">UPDATE WORK PROGRESS</div>
-        <hr />
-        <div className="ag-theme-custom-react">
+		}
 
-          <AgGridReact
-            gridOptions={gridOptions}
-            //enterMovesDown={true}
-            //enterMovesDownAfterEdit={true}
-            rowData={rowData}
-            immutableData={true}
-            getRowNodeId={(data) => data.id}
-            onGridSizeChanged={onGridReady}
-          />
+		return () => {
+			if (gridOptions.api) {
+				gridOptions.api.removeGlobalListener((event) => console.log(event));
+			}
+		};
+	}, []);*/
 
-        </div>
-      </Container>
-    </Fragment>
-  );
+	const onGridReady = (params) => {
+		params.api.sizeColumnsToFit();
+		params.api.startEditingCell({
+			rowIndex: 0,
+			colKey: "qty_to_complete",
+		});
+
+		//gridOptions.api.setFocusedCell(0, "qty_to_complete");
+	};
+
+	let newFormData = [];
+
+	function onCellChangedHandler(event) {
+
+		dispatch(dispatch(setEditedRow({...event.data, qty_to_complete: Number(event.newValue)})));
+	}
+
+
+	/*function onCellChangedHandler2(event) {
+		dispatch(setEditedRow(event.data));
+		gridOptions.api.flashCells({
+			rowNodes: [event.node],
+			columns: ["qty_to_complete"],
+		});
+		if (
+			event.data.qty_to_complete >
+			event.data.qty_ordered - event.data.qty_complete
+		) {
+			confirm({
+				title: "QTY DONE CANNOT EXCEED QTY OUTSTANDING",
+				cancellationButtonProps: {
+					disabled: true,
+					hidden: true,
+				},
+			}).then(() => {
+				const rowIndex = gridOptions.api.getEditingCells()[0].rowIndex - 1;
+				//gridOptions.api.stopEditing()
+				gridOptions.api.setFocusedCell(rowIndex, "qty_to_complete");
+				gridOptions.api.startEditingCell({
+					rowIndex: rowIndex,
+					colKey: "qty_to_complete",
+					keyPress: 46,
+				});
+			});
+		} else {
+			newFormData.push(event.data.id);
+		}
+	}*/
+
+	return (
+		<Fragment>
+			<Container fluid>
+				<InstructionSummary/>
+				<div className="grid-title">UPDATE WORK PROGRESS</div>
+				<hr/>
+				<div className="ag-theme-custom-react">
+
+					<AgGridReact
+						gridOptions={ gridOptions }
+						//enterMovesDown={true}
+						//enterMovesDownAfterEdit={true}
+						rowData={ rowData }
+						onGridReady={ onGridReady }
+						immutableData={ true }
+						getRowNodeId={ (data) => data.id }
+						onGridSizeChanged={ (params) => params.api.sizeColumnsToFit() }
+					/>
+
+				</div>
+			</Container>
+		</Fragment>
+	);
 };
 export default WorkProgressTable;

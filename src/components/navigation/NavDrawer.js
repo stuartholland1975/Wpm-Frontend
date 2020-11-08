@@ -1,23 +1,22 @@
-import React from "react";
-import { useLocation, useParams, withRouter } from "react-router-dom";
-import { GreenButton, PurpleButton, RedButton } from "../ui-components/Buttons";
-import { makeStyles } from "@material-ui/core/styles";
 import { Divider, Drawer, List, ListItem } from "@material-ui/core";
-import { show } from "redux-modal";
-import { useDispatch, useSelector } from "react-redux";
-import HomeIcon from "@material-ui/icons/Home";
-import ExitToAppIcon from "@material-ui/icons/ExitToApp";
-import LockOpenIcon from "@material-ui/icons/LockOpen";
-import ListIcon from "@material-ui/icons/List";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import LetterW from "../icons/letter-w.png";
+import { makeStyles } from "@material-ui/core/styles";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+import HomeIcon from "@material-ui/icons/Home";
+import ListIcon from "@material-ui/icons/List";
+import LockOpenIcon from "@material-ui/icons/LockOpen";
+import { useConfirm } from "material-ui-confirm";
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useLocation, useParams, withRouter } from "react-router-dom";
+import { show } from "redux-modal";
+import { deleteWorkInstruction, deleteLocation } from "../../services/thunks";
+import { setClickedLocation, setSelectedLocation, setSelectedRow } from "../grid/gridData";
 import LetterM from "../icons/letter-m.png";
 import LetterP from "../icons/letter-p.png";
-import { useConfirm } from "material-ui-confirm";
-import { setClickedLocation, setSelectedLocation, setSelectedRow } from "../grid/gridData";
-import { deleteWorkInstruction } from "../../services/thunks";
-import { deleteLocation } from "../locations/locationData";
+import LetterW from "../icons/letter-w.png";
+import { GreenButton, PurpleButton, RedButton } from "../ui-components/Buttons";
 
 
 const drawerWidth = 240;
@@ -59,7 +58,7 @@ const NavDrawer = (props) => {
 	const location = useLocation();
 	const dispatch = useDispatch();
 	const selectedRow = useSelector((state) => state.gridData.selectedRow);
-	const selectedLocation = useSelector(state => state.gridData.selectedLocation)
+	const selectedLocation = useSelector(state => state.gridData.selectedLocation);
 	const confirm = useConfirm();
 	const params = useParams();
 
@@ -200,7 +199,7 @@ const NavDrawer = (props) => {
 			history.push({
 				pathname: `/work-instructions/summary/worksheets/${ selectedRow.work_instruction }`,
 				state: selectedRow.project_title,
-			})
+			});
 		} else {
 			confirm({
 				title: "NO LOCATION SELECTED",
@@ -210,7 +209,7 @@ const NavDrawer = (props) => {
 				},
 			}).then(() => dispatch(setSelectedLocation(false)));
 		}
-	}
+	};
 
 	const instructionBarButtons = {
 		crudButtons: [
@@ -261,7 +260,7 @@ const NavDrawer = (props) => {
 				component: (
 					<GreenButton
 						type="button"
-						onClick={ handleOpenCreate("instruction-modal", 'locationForm', 'CREATE LOCATION') }
+						onClick={ handleOpenCreate("instruction-modal", "locationForm", "CREATE LOCATION") }
 						fullWidth
 					>
 						CREATE LOCATION
@@ -272,7 +271,7 @@ const NavDrawer = (props) => {
 				component: (
 					<GreenButton
 						type="button"
-						onClick={ handleOpenEditLocation("instruction-modal", 'locationForm') }
+						onClick={ handleOpenEditLocation("instruction-modal", "locationForm") }
 						fullWidth
 					>
 						EDIT LOCATION
@@ -428,7 +427,7 @@ const NavDrawer = (props) => {
 
 	const atSummary = location.pathname.startsWith(
 		"/work-instructions/summary/"
-	)
+	);
 
 	const itemsList = [
 		{

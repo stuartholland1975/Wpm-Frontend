@@ -1,7 +1,20 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createEntityAdapter } from "@reduxjs/toolkit";
+
+const editedRowAdapter = createEntityAdapter()
+
+export const SelectedRowSlice = createSlice({
+	name: 'editedRow',
+	initialState: editedRowAdapter.getInitialState(),
+	reducers: {
+		setEditedRow: editedRowAdapter.upsertOne,
+		resetEditedRow: editedRowAdapter.removeAll,
+	}
+})
+
+export const {setEditedRow, resetEditedRow} = SelectedRowSlice.actions
 
 const gridDataSlice = createSlice(({
-	name: 'gridData',
+	name: "gridData",
 	initialState: {
 		selectedRow: false,
 		clickedRow: false,
@@ -11,28 +24,25 @@ const gridDataSlice = createSlice(({
 	},
 	reducers: {
 		setSelectedRow: (state, action) => {
-			state.selectedRow = action.payload
+			state.selectedRow = action.payload;
 		},
 		setSelectedLocation: (state, action) => {
-			state.selectedLocation = action.payload
+			state.selectedLocation = action.payload;
 		},
 		setDeleteGridRow: (state, action) => {
-			state.deleteGridRow = action.payload
+			state.deleteGridRow = action.payload;
 		},
 		setClickedLocation(state, action) {
-			state.clickedRow = action.payload
+			state.clickedRow = action.payload;
 		},
-		setEditedRow:(state, action) =>  {
-			return {
-				...state.editedRow,
-				...action.payload
-			}
+		setEditedRow: (state, action) => {
+			state.editedRow = [...state.editedRow, ...action.payload];
 		},
 		resetGridRow: (state) => {
-			state.selectedNode = false
+			state.selectedNode = false;
 		},
 	}
-}))
+}));
 
-export const {setSelectedRow, setDeleteGridRow, resetGridRow, setClickedLocation, setSelectedLocation, setEditedRow} = gridDataSlice.actions
-export default gridDataSlice.reducer
+export const {setSelectedRow, setDeleteGridRow, resetGridRow, setClickedLocation, setSelectedLocation} = gridDataSlice.actions;
+export default gridDataSlice.reducer;

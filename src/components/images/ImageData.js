@@ -1,29 +1,6 @@
 import { createAsyncThunk, createEntityAdapter, createSlice, } from "@reduxjs/toolkit";
-import axiosInstance from '../../services/axiosApi';
+import axiosInstance from "../../services/axiosApi";
 import { fetchOrderSummaryInfo } from "../../services/thunks";
-
-export const fetchImages = createAsyncThunk(
-	"images/fetchAll",
-	async (orderId) => {
-		const response = await axiosInstance.get(`/wpm/api/images/?location__work_instruction=${ orderId }`);
-
-		return response.data.map(({construction_image, image_type, title, id, site_location, gps_lat, gps_long, gps_date, exif, location}) => {
-			const container = {}
-			container.title = title;
-			container.construction_image = construction_image
-			container.imageType = image_type
-			container.id = id
-			container.imageTypeDescription = image_type + "  Construction Image"
-			container.locationRef = site_location
-			container.gps_lat = gps_lat
-			container.gps_long = gps_long
-			container.gps_date = gps_date
-			container.exif = exif
-			container.location = location
-			return container
-		})
-	}
-);
 
 export const updateImage = createAsyncThunk(
 	"images/upsertOne",
@@ -42,7 +19,7 @@ export const newImage = createAsyncThunk(
 			`/wpm/api/images/`,
 			apiObject
 		);
-		return response.data
+		return response.data;
 	}
 );
 
@@ -52,7 +29,7 @@ export const deleteImage = createAsyncThunk(
 		await axiosInstance.delete(
 			`/wpm/api/images/${ imageId }/`
 		);
-		return imageId
+		return imageId;
 	}
 );
 
@@ -63,15 +40,30 @@ export const imagesAdapter = createEntityAdapter({
 const initialState = imagesAdapter.getInitialState();
 
 export const ImagesSlice = createSlice({
-	name: 'images',
+	name: "images",
 	initialState,
 	reducers: {
 		resetImages: imagesAdapter.removeAll,
 	},
 	extraReducers: builder => {
 		builder.addCase(fetchOrderSummaryInfo.fulfilled, ((state, action) => {
-			return imagesAdapter.setAll(state, action.payload.Image)
-		}))
+			return imagesAdapter.setAll(state,
+				action.payload.Image.map(({construction_image, image_type, title, id, site_location, gps_lat, gps_long, gps_date, exif, location}) => {
+					const container = {};
+					container.title = title;
+					container.construction_image = construction_image;
+					container.imageType = image_type;
+					container.id = id;
+					container.imageTypeDescription = image_type + "  Construction Image";
+					container.locationRef = site_location;
+					container.gps_lat = gps_lat;
+					container.gps_long = gps_long;
+					container.gps_date = gps_date;
+					container.exif = exif;
+					container.location = location;
+					return container;
+				}));
+		}));
 		builder.addCase(
 			updateImage.fulfilled,
 			imagesAdapter.upsertOne
@@ -85,7 +77,7 @@ export const ImagesSlice = createSlice({
 			imagesAdapter.removeOne
 		);
 	},
-})
+});
 
 export const {
 	selectById: selectImageById,
@@ -95,6 +87,6 @@ export const {
 	selectTotal: selectTotalImages,
 } = imagesAdapter.getSelectors((state) => state.images);
 
-export const {resetImages} = ImagesSlice.actions
+export const {resetImages} = ImagesSlice.actions;
 
-export default ImagesSlice.reducer
+export default ImagesSlice.reducer;

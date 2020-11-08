@@ -1,13 +1,13 @@
-import makeStyles from "@material-ui/core/styles/makeStyles";
-import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useForm } from "react-hook-form";
-import { BlueButton, GreyButton } from "../ui-components/Buttons";
-import { createLocation, updateLocation } from "./locationData";
-import FocusLock from "react-focus-lock";
 import Grid from "@material-ui/core/Grid";
+import makeStyles from "@material-ui/core/styles/makeStyles";
 import TextField from "@material-ui/core/TextField";
+import React from "react";
+import FocusLock from "react-focus-lock";
+import { useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
 import { setSelectedLocation } from "../grid/gridData";
+import { BlueButton, GreyButton } from "../ui-components/Buttons";
+import { createLocation, updateLocation, deleteLocation } from "../../services/thunks";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -32,24 +32,24 @@ const LocationForm = (props) => {
 
 	const classes = useStyles();
 	const dispatch = useDispatch();
-	const workInstruction = useSelector(state => state.gridData.selectedRow)
-	const selectedLocation = useSelector(state => state.gridData.selectedLocation)
+	const workInstruction = useSelector(state => state.gridData.selectedRow);
+	const selectedLocation = useSelector(state => state.gridData.selectedLocation);
 	const {register, handleSubmit, reset} = useForm({
-		mode: 'onChange',
+		mode: "onChange",
 		defaultValues: {
 			location_ref: selectedLocation.location_ref,
 			location_description: selectedLocation.location_description,
 
 		}
-	})
+	});
 
 	const onSubmit = data => {
 		let apiObject = {
 			...data,
 			work_instruction: workInstruction.work_instruction,
-		}
+		};
 		if (props.formType === "create") {
-			dispatch(createLocation(apiObject))
+			dispatch(createLocation(apiObject));
 			props.handleHide();
 			dispatch(setSelectedLocation(false));
 		} else if (props.formType === "edit") {
@@ -59,7 +59,7 @@ const LocationForm = (props) => {
 			dispatch(setSelectedLocation(false));
 			props.handleHide();
 		}
-	}
+	};
 
 	const closeAndReset = () => {
 		props.handleHide();

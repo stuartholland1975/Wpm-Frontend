@@ -1,21 +1,21 @@
 import React, { useState } from "react";
 import { Carousel } from "react-bootstrap";
-import { selectAllImages } from "./ImageData";
-import { useSelector, useDispatch } from "react-redux";
-import { GreyButton } from "../ui-components/Buttons";
-import { useUnmount } from 'react-use';
+import { useDispatch, useSelector } from "react-redux";
+import { useUnmount } from "react-use";
 import { setClickedLocation } from "../grid/gridData";
+import { GreyButton } from "../ui-components/Buttons";
+import { selectAllImages } from "./ImageData";
 
 const LocationImages = (props) => {
-	const dispatch = useDispatch()
+	const dispatch = useDispatch();
 	const [index, setIndex] = useState(0);
 	const handleSelect = (selectedIndex) => {
 		setIndex(selectedIndex);
 	};
-	const images = useSelector(selectAllImages)
-	const selectedLocation = useSelector(state => state.gridData.clickedRow.id)
+	const images = useSelector(selectAllImages);
+	const selectedLocation = useSelector(state => state.gridData.clickedRow.id);
 
-	const modalImages = (selectedLocation) ? images.filter(obj => obj.location === selectedLocation) : images
+	const modalImages = (selectedLocation) ? images.filter(obj => obj.location === selectedLocation) : images;
 	useUnmount(() => dispatch(setClickedLocation(false)));
 
 	return <div>
@@ -31,14 +31,14 @@ const LocationImages = (props) => {
 				/>
 				<Carousel.Caption>
 
-					<h4 style={ {color: 'white', fontWeight: 'bolder'} }>{ item.title }</h4>
-					<p style={ {color: 'white', fontWeight: 'bolder'} }>{ item.locationRef }</p>
+					<h4 style={ {color: "white", fontWeight: "bolder"} }>{ item.title }</h4>
+					<p style={ {color: "white", fontWeight: "bolder"} }>{ item.locationRef }</p>
 				</Carousel.Caption>
 
 			</Carousel.Item>) }
 		</Carousel>
 		<hr/>
 		<GreyButton fullWidth type='button' onClick={ props.handleHide }>Close</GreyButton>
-	</div>
-}
-export default LocationImages
+	</div>;
+};
+export default LocationImages;

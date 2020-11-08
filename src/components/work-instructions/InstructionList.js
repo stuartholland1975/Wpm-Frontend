@@ -1,18 +1,18 @@
-import React, { Fragment, useEffect, useState } from "react";
 import { AgGridReact } from "ag-grid-react";
-import { selectAllWorkInstructions, } from "./InstructionData";
-import { fetchWorkInstructions } from "../../services/thunks"
-import { fetchDocuments, resetDocuments, selectAllDocuments, } from "../documents/documentsDataReducer";
-import { useEffectOnce, useLatest, useMountedState, useUpdate, useUpdateEffect, useWindowSize } from "react-use";
-import { useDispatch, useSelector } from "react-redux";
-import CustomNoRowsOverlay from "../../CustomNoRowsOverlay";
+import React, { Fragment, useEffect, useState } from "react";
 import Loader from "react-loader-spinner";
-import { fetchAreas } from "../areas/areaDataReducer";
-import { fetchWorkTypes } from "../worktypes/workTypesDataReducer";
-import { resetLocations } from "../locations/locationData";
-import { resetInstructionDetails } from "./instructionDetailData";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffectOnce, useLatest, useMountedState, useUpdate, useWindowSize } from "react-use";
+import CustomNoRowsOverlay from "../../CustomNoRowsOverlay";
+import { fetchWorkInstructions, fetchAreas, fetchDocuments } from "../../services/thunks";
+import {  } from "../areas/areaDataReducer";
+import {  selectAllDocuments, resetDocuments } from "../documents/documentsDataReducer";
 import { resetGridRow, setSelectedRow } from "../grid/gridData";
 import { resetImages } from "../images/ImageData";
+import { resetLocations } from "../locations/locationData";
+import { fetchWorkTypes } from "../worktypes/workTypesDataReducer";
+import { selectAllWorkInstructions, } from "./InstructionData";
+import { resetInstructionDetails } from "./instructionDetailData";
 
 const formatNumber = (params) =>
 	Math.floor(params.value)
@@ -25,6 +25,7 @@ const InstructionList = () => {
 		latestDocs = useLatest(documents), [gridApi, setGridApi] = useState(), [, setColumnApi] = useState(),
 		isMounted = useMountedState(),
 		selectedNode = useSelector((state) => state.gridData.selectedRow), {width, height} = useWindowSize(),
+
 		update = useUpdate(), ColumnDefs = [
 			{headerName: "ID", field: "id", hide: true},
 			{
@@ -89,32 +90,33 @@ const InstructionList = () => {
 			dateColumn: {
 				filter: "agDateColumnFilter",
 			},
-		}, gridOptions = {
-			columnDefs: ColumnDefs,
-			defaultColDef: defaultColDef,
-			columnTypes: columnTypes,
-			pagination: true,
-			paginationPageSize: 35,
-			rowSelection: "single",
-			onRowSelected: nodeSelected,
-			suppressRowClickSelection: false,
-			domLayout: "autoHeight",
-			suppressClickEdit: true,
-			suppressNoRowsOverlay: false,
-			frameworkComponents: {
-				customNoRowsOverlay: CustomNoRowsOverlay,
-			},
-			noRowsOverlayComponent: "customNoRowsOverlay",
-			noRowsOverlayComponentParams: {
-				noRowsMessageFunc: () => (
-					<Loader
-						style={ {textAlign: "center"} }
-						type={ "ThreeDots" }
-						color={ "Blue" }
-					/>
-				),
-			},
 		};
+	const gridOptions = {
+		columnDefs: ColumnDefs,
+		defaultColDef: defaultColDef,
+		columnTypes: columnTypes,
+		pagination: true,
+		paginationPageSize: 35,
+		rowSelection: "single",
+		onRowSelected: nodeSelected,
+		suppressRowClickSelection: false,
+		domLayout: "autoHeight",
+		suppressClickEdit: true,
+		suppressNoRowsOverlay: false,
+		frameworkComponents: {
+			customNoRowsOverlay: CustomNoRowsOverlay,
+		},
+		noRowsOverlayComponent: "customNoRowsOverlay",
+		noRowsOverlayComponentParams: {
+			noRowsMessageFunc: () => (
+				<Loader
+					style={ {textAlign: "center"} }
+					type={ "ThreeDots" }
+					color={ "Blue" }
+				/>
+			),
+		},
+	};
 
 
 	useEffectOnce(() => {
@@ -125,12 +127,12 @@ const InstructionList = () => {
 		dispatch(resetLocations());
 		dispatch(resetInstructionDetails());
 		dispatch(resetDocuments());
-		dispatch(resetImages())
+		dispatch(resetImages());
 		dispatch(resetGridRow());
 	});
 
 	const onGridReady = (params) => {
-
+		setGridApi(params.api);
 		params.api.sizeColumnsToFit();
 	};
 
@@ -147,11 +149,15 @@ const InstructionList = () => {
 		}
 	}
 
-	useUpdateEffect(() => {
-		gridOptions.api.sizeColumnsToFit()
-		update()
-	}, [width])
-
+	useEffect(() => {
+		if (isMounted) {
+			console.log(gridOptions);
+			if (gridApi) {
+				gridApi.sizeColumnsToFit();
+				update();
+			}
+		}
+	}, [width]);
 
 	useEffect(() => {
 		if (isMounted) {

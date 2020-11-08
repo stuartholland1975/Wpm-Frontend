@@ -1,60 +1,30 @@
 import { createAsyncThunk, createEntityAdapter, createSlice, } from "@reduxjs/toolkit";
-import axiosInstance from '../../services/axiosApi';
-import { fetchOrderSummaryInfo } from "../../services/thunks";
+import axiosInstance from "../../services/axiosApi";
+import {
+	deleteInstructionDetail,
+	fetchOrderSummaryInfo,
+	newInstructionDetail,
+	updateInstructionDetail
+} from "../../services/thunks";
 
-export const fetchInstructionDetail = createAsyncThunk(
-	"instructionDetail/fetchAll",
-	async (orderId) => {
-		const response = await axiosInstance.get(`/wpm/api/orderdetail/?work_instruction=${ orderId }`);
-		return response.data;
-	}
-);
 
-export const updateInstructionDetail = createAsyncThunk(
-	"instructionDetail/upsertOne",
-	async (apiObject) => {
-		const response = await axiosInstance.put(
-			`/wpm/api/orderdetail/${ apiObject.id }/`, apiObject
-		);
-		return response.data;
-	}
-);
 
-export const newInstructionDetail = createAsyncThunk(
-	"instructionDetail/addOne",
-	async (apiObject) => {
-		const response = await axiosInstance.post(
-			`/wpm/api/orderdetail/`,
-			apiObject
-		);
-		return response.data
-	}
-);
-
-export const deleteInstructionDetail = createAsyncThunk(
-	"instructionDetails/deleteOne",
-	async (itemId) => {
-		const response = await axiosInstance.delete(
-			`/wpm/api/siteinstructionDetail/${ itemId }/`
-		);
-		return itemId
-	}
-);
 
 export const instructionDetailAdapter = createEntityAdapter();
 
 const initialState = instructionDetailAdapter.getInitialState();
 
 export const InstructionDetailSlice = createSlice({
-	name: 'instructionDetail',
+	name: "instructionDetail",
 	initialState,
 	reducers: {
 		resetInstructionDetails: instructionDetailAdapter.removeAll,
+		updateGridOrderItem: instructionDetailAdapter.upsertOne,
 	},
 	extraReducers: builder => {
 		builder.addCase(fetchOrderSummaryInfo.fulfilled, ((state, action) => {
-			return instructionDetailAdapter.setAll(state, action.payload.OrderDetail)
-		}))
+			return instructionDetailAdapter.setAll(state, action.payload.OrderDetail);
+		}));
 		builder.addCase(
 			updateInstructionDetail.fulfilled,
 			instructionDetailAdapter.upsertOne
@@ -68,7 +38,7 @@ export const InstructionDetailSlice = createSlice({
 			instructionDetailAdapter.removeOne
 		);
 	},
-})
+});
 
 export const {
 	selectById: selectInstructionDetailById,
@@ -78,6 +48,6 @@ export const {
 	selectTotal: selectTotalInstructionDetails,
 } = instructionDetailAdapter.getSelectors((state) => state.instructionDetails);
 
-export const {resetInstructionDetails} = InstructionDetailSlice.actions
+export const {resetInstructionDetails, updateGridOrderItem} = InstructionDetailSlice.actions;
 
-export default InstructionDetailSlice.reducer
+export default InstructionDetailSlice.reducer;

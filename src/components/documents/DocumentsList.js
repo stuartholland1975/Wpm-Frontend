@@ -1,12 +1,12 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { selectAllDocuments } from './documentsDataReducer';
-import { GreyButton } from '../ui-components/Buttons';
+import { GreyButton } from "../ui-components/Buttons";
+import { selectAllDocuments } from "./documentsDataReducer";
 
 const DocumentImages = (props) => {
 	const documents = useSelector(selectAllDocuments);
-	const selectedInstruction = useSelector(state => state.gridData.selectedNode.id)
-	const modalDocuments = documents.filter(obj => obj.work_instruction === selectedInstruction)
+	const selectedInstruction = useSelector(state => state.gridData.selectedNode.id);
+	const modalDocuments = documents.filter(obj => obj.work_instruction === selectedInstruction);
 
 	return (
 		<div>

@@ -1,26 +1,17 @@
-import React, { Fragment, useEffect, useState } from "react";
 import { AgGridReact } from "ag-grid-react";
-import { useDispatch, useSelector } from "react-redux";
-import CustomNoRowsOverlay from "../grid/CustomNoRowsOverlay";
-import { useParams } from "react-router-dom";
+import { ChangeDetectionStrategyType } from "ag-grid-react/lib/changeDetectionService";
+import React, { Fragment, useEffect, useState } from "react";
 import { Container } from "react-bootstrap";
-import {
-	useEffectOnce,
-	useLatest,
-	useLogger,
-	useMountedState,
-	useUpdate,
-	useUpdateEffect,
-	useWindowSize,
-} from "react-use";
-import { fetchInstructionDetail } from "../work-instructions/instructionDetailData";
-import { fetchLocations, selectAllLocations } from "./locationData";
-import { fetchImages, selectAllImages } from "../images/ImageData";
-import InstructionSummary from "../work-instructions/InstructionSummary";
-import { setClickedLocation, setSelectedLocation, setSelectedRow } from "../grid/gridData";
-import { ChangeDetectionStrategyType } from 'ag-grid-react/lib/changeDetectionService'
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import { useEffectOnce, useLatest, useMountedState, useUpdate, useUpdateEffect, useWindowSize, } from "react-use";
 import { show } from "redux-modal";
-import {fetchOrderSummaryInfo} from "../../services/thunks";
+import { fetchOrderSummaryInfo } from "../../services/thunks";
+import CustomNoRowsOverlay from "../grid/CustomNoRowsOverlay";
+import { setClickedLocation, setSelectedLocation } from "../grid/gridData";
+import { selectAllImages } from "../images/ImageData";
+import InstructionSummary from "../work-instructions/InstructionSummary";
+import { selectAllLocations } from "./locationData";
 
 const LocationList = (props) => {
 	const {OrderId} = useParams();
@@ -42,8 +33,8 @@ const LocationList = (props) => {
 	const [, setColumnApi] = useState();
 	const {width} = useWindowSize();
 	const update = useUpdate();
-	const isMounted = useMountedState()
-	const selectedLocation = useSelector(state => state.gridData.selectedLocation)
+	const isMounted = useMountedState();
+	const selectedLocation = useSelector(state => state.gridData.selectedLocation);
 
 
 	let columnDefs = [
@@ -54,14 +45,14 @@ const LocationList = (props) => {
 			maxWidth: 100,
 			valueGetter: function (params) {
 				if (params.data.item_count === 0) {
-					return "New"
+					return "New";
 				} else if (params.data.item_count - params.data.items_complete === 0) {
 					return "Complete";
 				}
 			},
 			filter: false,
 		},
-		{headerName: "Worksheet Ref", field: "worksheet_ref", colId: "worksheet_ref", maxWidth: 150, sort: 'asc'},
+		{headerName: "Worksheet Ref", field: "worksheet_ref", colId: "worksheet_ref", maxWidth: 150, sort: "asc"},
 		{headerName: "Location", field: "location_ref"},
 		{
 			headerName: "Item Count",
@@ -147,7 +138,7 @@ const LocationList = (props) => {
 	};
 
 	useEffectOnce(() => {
-		dispatch(fetchOrderSummaryInfo(OrderId))
+		dispatch(fetchOrderSummaryInfo(OrderId));
 	});
 
 	useUpdateEffect(() => {
@@ -174,9 +165,9 @@ const LocationList = (props) => {
 	}
 
 	function cellClicked(params) {
-		const imageColumn = gridOptions.columnApi.getColumn('images')
+		const imageColumn = gridOptions.columnApi.getColumn("images");
 		if (params.colDef.colId === imageColumn.colDef.colId) {
-			dispatch(setClickedLocation(params.data))
+			dispatch(setClickedLocation(params.data));
 		}
 	}
 
@@ -193,7 +184,7 @@ const LocationList = (props) => {
 			link.innerText = siteLocationImages.length;
 			link.addEventListener("click", (e) => {
 				e.preventDefault();
-				dispatch(show('instruction-modal', {title: "LOCATION IMAGES", content: 'locationImages'}));
+				dispatch(show("instruction-modal", {title: "LOCATION IMAGES", content: "locationImages"}));
 			});
 			return link;
 		} else {
@@ -203,14 +194,14 @@ const LocationList = (props) => {
 	}
 
 	useEffect(() => {
-        if (isMounted) {
-            if (gridApi) {
-                if (!selectedLocation) {
-                    gridApi.deselectAll();
-                }
-            }
-        }
-    }, [gridApi, isMounted, selectedLocation]);
+		if (isMounted) {
+			if (gridApi) {
+				if (!selectedLocation) {
+					gridApi.deselectAll();
+				}
+			}
+		}
+	}, [gridApi, isMounted, selectedLocation]);
 
 	return (
 		<Fragment>
