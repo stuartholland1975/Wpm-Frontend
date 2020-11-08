@@ -198,7 +198,8 @@ const NavDrawer = (props) => {
 	const handleViewWorksheets = () => {
 		if (selectedLocation) {
 			history.push({
-			pathname: "/work-instructions/summary/worksheets/"
+			pathname: `/work-instructions/summary/worksheets/${ selectedRow.work_instruction }`,
+			state: selectedRow.project_title,
 		})
 		} else {
 			confirm({

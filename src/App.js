@@ -43,7 +43,7 @@ const App = (props) => {
                     <Route path="/login" exact component={Login}/>
                     <Route path="/work-instructions/summary/locations/:OrderId" exact component={LocationList}/>
                     <Route path="/work-instructions/summary/items/:OrderId" exact component={InstructionDetail}/>
-                    <Route path="/work-instructions/summary/worksheets" exact component={WorkProgressTable}/>
+                    <Route path="/work-instructions/summary/worksheets/:OrderId" exact component={WorkProgressTable}/>
                 </Switch>
             </div>
         </div>
