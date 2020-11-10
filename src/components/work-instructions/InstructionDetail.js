@@ -90,10 +90,10 @@ const InstructionDetail = () => {
 		params.api.sizeColumnsToFit();
 	};
 
-	useUpdateEffect(() => {
+	/* useUpdateEffect(() => {
 		gridApi.sizeColumnsToFit();
 		update();
-	}, [width]);
+	}, [width]); */
 
 	return (
 		<Fragment>
@@ -108,6 +108,7 @@ const InstructionDetail = () => {
 						immuntableData={ true }
 						getRowNodeId={ (data) => data.id }
 						onGridReady={ onGridReady }
+						onGridSizeChanged={params => params.api.sizeColumnsToFit()}
 					/>
 				</div>
 			</Container>

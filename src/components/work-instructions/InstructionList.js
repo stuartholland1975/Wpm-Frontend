@@ -149,7 +149,7 @@ const InstructionList = () => {
 		}
 	}
 
-	useEffect(() => {
+	/* useEffect(() => {
 		if (isMounted) {
 			console.log(gridOptions);
 			if (gridApi) {
@@ -157,7 +157,7 @@ const InstructionList = () => {
 				update();
 			}
 		}
-	}, [width]);
+	}, [width]); */
 
 	useEffect(() => {
 		if (isMounted) {
@@ -167,7 +167,7 @@ const InstructionList = () => {
 				}
 			}
 		}
-	}, [selectedNode]);
+	}, [gridOptions.api, isMounted, selectedNode]);
 
 	return (
 		<Fragment>
@@ -179,6 +179,7 @@ const InstructionList = () => {
 					immutableData={ true }
 					getRowNodeId={ (data) => data.id }
 					onGridReady={ onGridReady }
+					onGridSizeChanged={params => params.api.sizeColumnsToFit()}
 				/>
 			</div>
 		</Fragment>

@@ -151,10 +151,10 @@ const LocationList = (props) => {
 		params.api.sizeColumnsToFit();
 	};
 
-	useUpdateEffect(() => {
+	/* useUpdateEffect(() => {
 		gridApi.sizeColumnsToFit();
 		update();
-	}, [width]);
+	}, [width]); */
 
 	function rowSelected() {
 		const selectedNode = gridOptions.api.getSelectedNodes();
@@ -216,6 +216,7 @@ const LocationList = (props) => {
 						immuntableData={ true }
 						getRowNodeId={ (data) => data.id }
 						onGridReady={ onGridReady }
+						onGridSizeChanged={params => params.api.sizeColumnsToFit()}
 						rowDataChangeDetectionStrategy={ ChangeDetectionStrategyType.IdentityCheck }
 					/>
 				</div>

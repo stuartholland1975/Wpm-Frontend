@@ -12,6 +12,17 @@ export const fetchOrderSummaryInfo = createAsyncThunk(
 	}
 );
 
+export const fetchSupervisors = createAsyncThunk(
+	"supervisors/fetchAll",
+	async () => {
+		const supervisors = await axiosInstance.get(
+			`/wpm/api/supervisors/`
+		);
+
+		return supervisors.data;
+	}
+);
+
 export const fetchWorkInstructions = createAsyncThunk(
 	"workInstructions/fetchAll",
 	async () => {

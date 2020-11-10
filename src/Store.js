@@ -13,6 +13,7 @@ import LocationsReducer from "./components/locations/locationData";
 import InstructionDetailSlice from "./components/work-instructions/instructionDetailData";
 import ImagesReducer from "./components/images/ImageData"
 import { InstructionHeaderSlice } from "./services/thunks"
+import {SupervisorsSlice} from "./components/supervisors/SupervisorsData";
 
 const rootReducer = combineReducers({
 	workInstructions: WorkInstructionsReducer,
@@ -29,6 +30,7 @@ const rootReducer = combineReducers({
 	gridData: gridReducer,
 	instructionHeader: InstructionHeaderSlice.reducer,
 	editedRow: SelectedRowSlice.reducer,
+	supervisors: SupervisorsSlice.reducer
 
 });
 

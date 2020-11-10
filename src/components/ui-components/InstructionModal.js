@@ -6,6 +6,8 @@ import DocumentImages from "../documents/DocumentsList";
 import LocationImages from "../images/LocationImages";
 import LocationForm from "../locations/LocationForm";
 import InstructionForm from "../work-instructions/InstructionForm";
+import WorksheetForm from "../worksheets/WorksheetForm"
+
 
 const InstructionModal = (props) => {
 	const {show, handleHide, title, content, formType} = props;
@@ -17,6 +19,7 @@ const InstructionModal = (props) => {
 		documentsList: <DocumentImages handleHide={ handleHide }/>,
 		locationImages: <LocationImages handleHide={ handleHide } sizeClass="d-block w-100"/>,
 		locationForm: <LocationForm handleHide={ handleHide } formType={ formType }/>,
+		worksheetForm: <WorksheetForm handleHide={ handleHide } formType={ formType } />
 	};
 
 	return (

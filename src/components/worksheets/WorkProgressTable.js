@@ -9,6 +9,9 @@ import { setEditedRow } from "../grid/gridData";
 import SimpleEditor from "../grid/SimpleEditor";
 import { selectAllInstructionDetails, updateGridOrderItem } from "../work-instructions/instructionDetailData";
 import InstructionSummary from "../work-instructions/InstructionSummary";
+import {fetchSupervisors} from "../../services/thunks";
+import { useEffectOnce } from "react-use";
+
 
 function formatNumber(params) {
 	return params.value && params.value.toLocaleString(undefined, {
@@ -35,6 +38,10 @@ const WorkProgressTable = (props) => {
 	const rowData = useSelector(dataSelector);
 	const confirm = useConfirm();
 	const dispatch = useDispatch();
+
+	useEffectOnce(() => {
+		dispatch(fetchSupervisors())
+	})
 
 	let columnDefs = [
 		{headerName: "ID", field: "id", hide: true},
@@ -137,12 +144,7 @@ const WorkProgressTable = (props) => {
 		//gridOptions.api.setFocusedCell(0, "qty_to_complete");
 	};
 
-	let newFormData = [];
 
-	function onCellChangedHandler(event) {
-
-		dispatch(dispatch(setEditedRow({...event.data, qty_to_complete: Number(event.newValue)})));
-	}
 
 
 	/*function onCellChangedHandler2(event) {
