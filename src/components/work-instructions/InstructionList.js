@@ -22,11 +22,9 @@ const formatNumber = (params) =>
 const InstructionList = () => {
 	const dispatch = useDispatch(), workInstructions = useSelector(selectAllWorkInstructions),
 		documents = useSelector(selectAllDocuments),
-		latestDocs = useLatest(documents), [gridApi, setGridApi] = useState(), [, setColumnApi] = useState(),
+		latestDocs = useLatest(documents), [, setGridApi] = useState(),
 		isMounted = useMountedState(),
-		selectedNode = useSelector((state) => state.gridData.selectedRow), {width, height} = useWindowSize(),
-
-		update = useUpdate(), ColumnDefs = [
+		selectedNode = useSelector((state) => state.gridData.selectedRow), ColumnDefs = [
 			{headerName: "ID", field: "id", hide: true},
 			{
 				headerName: "Select",

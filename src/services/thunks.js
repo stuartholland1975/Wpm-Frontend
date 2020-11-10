@@ -65,7 +65,17 @@ export const deleteWorkInstruction = createAsyncThunk(
 export const updateInstructionDetail = createAsyncThunk(
 	"instructionDetail/upsertOne",
 	async (apiObject) => {
-		const response = await axiosInstance.put(
+		const response = await axiosInstance.patch(
+			`/wpm/api/orderdetail/${ apiObject.id }/`, apiObject
+		);
+		return response.data;
+	}
+);
+
+export const updateInstructionDetailStatus = createAsyncThunk(
+	"instructionDetail/upsertOne",
+	async (apiObject) => {
+		const response = await axiosInstance.patch(
 			`/wpm/api/orderdetail/${ apiObject.id }/`, apiObject
 		);
 		return response.data;
@@ -90,6 +100,17 @@ export const deleteInstructionDetail = createAsyncThunk(
 			`/wpm/api/siteinstructionDetail/${ itemId }/`
 		);
 		return itemId;
+	}
+);
+
+export const newWorksheet = createAsyncThunk(
+	"worksheet/addOne",
+	async (apiObject) => {
+		const response = await axiosInstance.post(
+			`/wpm/api/worksheet/`,
+			apiObject
+		);
+		return response.data;
 	}
 );
 
@@ -173,6 +194,8 @@ export const InstructionHeaderSlice = createSlice({
 		}));
 	}
 });
+
+export const {selectAll: selectAllInstructionHeaders} = instructionHeaderAdapter.getSelectors((state) => state.instructionHeader)
 
 export const LocationsSlice = createSlice({
 	name: "test",

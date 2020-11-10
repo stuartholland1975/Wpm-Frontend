@@ -12,6 +12,7 @@ export const SelectedRowSlice = createSlice({
 })
 
 export const {setEditedRow, resetEditedRow} = SelectedRowSlice.actions
+export const  {selectAll: selectAllEditedRows} = editedRowAdapter.getSelectors((state) => state.editedRow);
 
 const gridDataSlice = createSlice(({
 	name: "gridData",
