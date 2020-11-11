@@ -11,17 +11,27 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useParams, withRouter } from "react-router-dom";
 import { show } from "redux-modal";
-import { deleteWorkInstruction, deleteLocation, deleteInstructionDetail } from "../../services/thunks";
 import {
-  setClickedLocation, setSelectedBillItem,
+  deleteWorkInstruction,
+  deleteLocation,
+  deleteInstructionDetail,
+} from "../../services/thunks";
+import {
+  setClickedLocation,
+  setSelectedBillItem,
   setSelectedLocation,
   setSelectedRow,
 } from "../grid/gridData";
 import LetterM from "../icons/letter-m.png";
 import LetterP from "../icons/letter-p.png";
 import LetterW from "../icons/letter-w.png";
-import { BlueButton, GreenButton, PurpleButton, RedButton } from "../ui-components/Buttons";
-import Slide from '@material-ui/core/Slide';
+import {
+  BlueButton,
+  GreenButton,
+  PurpleButton,
+  RedButton,
+} from "../ui-components/Buttons";
+import Slide from "@material-ui/core/Slide";
 
 const drawerWidth = 240;
 
@@ -97,8 +107,8 @@ const NavDrawer = (props) => {
           disabled: true,
           hidden: true,
         },
-        confirmationButtonProps:{
-          variant: 'contained'
+        confirmationButtonProps: {
+          variant: "contained",
         },
       }).then(() => dispatch(setSelectedRow(false)));
     }
@@ -120,8 +130,8 @@ const NavDrawer = (props) => {
           disabled: true,
           hidden: true,
         },
-        confirmationButtonProps:{
-          variant: 'contained'
+        confirmationButtonProps: {
+          variant: "contained",
         },
       }).then(() => dispatch(setSelectedLocation(false)));
     }
@@ -149,8 +159,8 @@ const NavDrawer = (props) => {
           disabled: true,
           hidden: true,
         },
-        confirmationButtonProps:{
-          variant: 'contained'
+        confirmationButtonProps: {
+          variant: "contained",
         },
       }).then(() => dispatch(setSelectedRow(false)));
     }
@@ -178,8 +188,8 @@ const NavDrawer = (props) => {
           disabled: true,
           hidden: true,
         },
-        confirmationButtonProps:{
-          variant: 'contained'
+        confirmationButtonProps: {
+          variant: "contained",
         },
       }).then(() => dispatch(setSelectedBillItem(false)));
     }
@@ -208,8 +218,8 @@ const NavDrawer = (props) => {
           disabled: true,
           hidden: true,
         },
-        confirmationButtonProps:{
-          variant: 'contained'
+        confirmationButtonProps: {
+          variant: "contained",
         },
       }).then(() => dispatch(setSelectedLocation(false)));
     }
@@ -224,16 +234,16 @@ const NavDrawer = (props) => {
     } else {
       confirm({
         title: "NO WORK INSTRUCTION SELECTED",
-        confirmationButtonProps:{
-          variant: 'contained'
+        confirmationButtonProps: {
+          variant: "contained",
         },
         cancellationButtonProps: {
           disabled: true,
           hidden: true,
         },
         dialogProps: {
-          TransitionComponent: Slide
-        }
+          TransitionComponent: Slide,
+        },
       });
     }
   };
@@ -263,8 +273,8 @@ const NavDrawer = (props) => {
           disabled: true,
           hidden: true,
         },
-        confirmationButtonProps:{
-          variant: 'contained'
+        confirmationButtonProps: {
+          variant: "contained",
         },
       }).then(() => dispatch(setSelectedLocation(false)));
     }
@@ -412,11 +422,15 @@ const NavDrawer = (props) => {
       },
       {
         component: (
-          <GreenButton type="button" fullWidth onClick={handleOpenCreate(
+          <GreenButton
+            type="button"
+            fullWidth
+            onClick={handleOpenCreate(
               "instruction-modal",
               "documentForm",
               "UPLOAD NEW DOCUMENT"
-            )}>
+            )}
+          >
             UPLOAD DOCUMENT
           </GreenButton>
         ),
@@ -431,7 +445,11 @@ const NavDrawer = (props) => {
           <GreenButton
             type="button"
             fullWidth
-            onClick={handleOpenCreate("instruction-modal", "billItemForm", "CREATE BILL ITEM")}
+            onClick={handleOpenCreate(
+              "instruction-modal",
+              "billItemForm",
+              "CREATE BILL ITEM"
+            )}
           >
             CREATE BILL ITEM
           </GreenButton>
@@ -450,7 +468,11 @@ const NavDrawer = (props) => {
       },
       {
         component: (
-          <RedButton type="button" fullWidth onClick={handleDeleteInstructionDetail}>
+          <RedButton
+            type="button"
+            fullWidth
+            onClick={handleDeleteInstructionDetail}
+          >
             DELETE BILL ITEM
           </RedButton>
         ),
@@ -516,12 +538,8 @@ const NavDrawer = (props) => {
         ),
       },
       {
-      component: (
-          <BlueButton
-            type="button"
-            fullWidth
-            onClick={history.goBack}
-          >
+        component: (
+          <BlueButton type="button" fullWidth onClick={history.goBack}>
             GO BACK
           </BlueButton>
         ),
