@@ -1,6 +1,17 @@
 import { createAsyncThunk, createEntityAdapter, createSlice, } from "@reduxjs/toolkit";
 import axiosInstance from "./axiosApi";
 
+
+export const fetchActivities = createAsyncThunk(
+	"activities/fetchAll",
+	async () => {
+		const activities = await axiosInstance.get(
+			"/wpm/api/activity"
+		);
+		return activities.data;
+	}
+);
+
 export const fetchOrderSummaryInfo = createAsyncThunk(
 	"orderSummary/fetchAll",
 	async (orderId) => {
@@ -89,7 +100,7 @@ export const newInstructionDetail = createAsyncThunk(
 			`/wpm/api/orderdetail/`,
 			apiObject
 		);
-		return response.data;
+		return ({...response.data, qty_complete: 0, value_complete: 0, qty_applied: 0, value_applied: 0, qty_os: 0});
 	}
 );
 
@@ -97,7 +108,7 @@ export const deleteInstructionDetail = createAsyncThunk(
 	"instructionDetails/deleteOne",
 	async (itemId) => {
 		const response = await axiosInstance.delete(
-			`/wpm/api/siteinstructionDetail/${ itemId }/`
+			`/wpm/api/orderdetail/${ itemId }/`
 		);
 		return itemId;
 	}
@@ -128,6 +139,17 @@ export const fetchDocuments = createAsyncThunk(
 	"documents/fetchAll",
 	async () => {
 		const response = await axiosInstance.get("/wpm/api/documents/");
+		return response.data;
+	}
+);
+
+export const newDocument = createAsyncThunk(
+	"worksheet/addOne",
+	async (apiObject) => {
+		const response = await axiosInstance.post(
+			`/wpm/api/documents/`,
+			apiObject
+		);
 		return response.data;
 	}
 );
@@ -195,7 +217,7 @@ export const InstructionHeaderSlice = createSlice({
 	}
 });
 
-export const {selectAll: selectAllInstructionHeaders} = instructionHeaderAdapter.getSelectors((state) => state.instructionHeader)
+export const {selectAll: selectAllInstructionHeaders} = instructionHeaderAdapter.getSelectors((state) => state.instructionHeader);
 
 export const LocationsSlice = createSlice({
 	name: "test",

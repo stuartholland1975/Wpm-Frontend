@@ -5,7 +5,7 @@ import { selectAllDocuments } from "./documentsDataReducer";
 
 const DocumentImages = (props) => {
 	const documents = useSelector(selectAllDocuments);
-	const selectedInstruction = useSelector(state => state.gridData.selectedNode.id);
+	const selectedInstruction = useSelector(state => state.gridData.selectedRow.id);
 	const modalDocuments = documents.filter(obj => obj.work_instruction === selectedInstruction);
 
 	return (

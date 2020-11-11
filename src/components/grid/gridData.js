@@ -22,6 +22,7 @@ const gridDataSlice = createSlice(({
 		selectedLocation: false,
 		editedRow: [],
 		deleteGridRow: false,
+		selectedBillItem: false,
 	},
 	reducers: {
 		setSelectedRow: (state, action) => {
@@ -42,8 +43,11 @@ const gridDataSlice = createSlice(({
 		resetGridRow: (state) => {
 			state.selectedNode = false;
 		},
+		setSelectedBillItem: (state, action) => {
+			state.selectedBillItem = action.payload
+		}
 	}
 }));
 
-export const {setSelectedRow, setDeleteGridRow, resetGridRow, setClickedLocation, setSelectedLocation} = gridDataSlice.actions;
+export const {setSelectedRow, setDeleteGridRow, resetGridRow, setClickedLocation, setSelectedLocation, setSelectedBillItem} = gridDataSlice.actions;
 export default gridDataSlice.reducer;

@@ -11,16 +11,16 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useParams, withRouter } from "react-router-dom";
 import { show } from "redux-modal";
-import { deleteWorkInstruction, deleteLocation } from "../../services/thunks";
+import { deleteWorkInstruction, deleteLocation, deleteInstructionDetail } from "../../services/thunks";
 import {
-  setClickedLocation,
+  setClickedLocation, setSelectedBillItem,
   setSelectedLocation,
   setSelectedRow,
 } from "../grid/gridData";
 import LetterM from "../icons/letter-m.png";
 import LetterP from "../icons/letter-p.png";
 import LetterW from "../icons/letter-w.png";
-import { GreenButton, PurpleButton, RedButton } from "../ui-components/Buttons";
+import { BlueButton, GreenButton, PurpleButton, RedButton } from "../ui-components/Buttons";
 
 const drawerWidth = 240;
 
@@ -63,6 +63,9 @@ const NavDrawer = (props) => {
   const selectedRow = useSelector((state) => state.gridData.selectedRow);
   const selectedLocation = useSelector(
     (state) => state.gridData.selectedLocation
+  );
+  const selectedBillItem = useSelector(
+    (state) => state.gridData.selectedBillItem
   );
   const confirm = useConfirm();
   const params = useParams();
@@ -140,6 +143,32 @@ const NavDrawer = (props) => {
           hidden: true,
         },
       }).then(() => dispatch(setSelectedRow(false)));
+    }
+  };
+
+  const handleDeleteInstructionDetail = () => {
+    if (selectedRow) {
+      confirm({
+        title: `DELETE BILL ITEM ${selectedBillItem.item_number}`,
+        description: "Do you Want to Save These Changes ?",
+        confirmationButtonProps: {
+          variant: "contained",
+          color: "primary",
+        },
+        cancellationButtonProps: {
+          variant: "contained",
+        },
+      })
+        .then(() => dispatch(deleteInstructionDetail(selectedBillItem.id)))
+        .catch(() => dispatch(setSelectedBillItem(false)));
+    } else {
+      confirm({
+        title: "NO BILL ITEM SELECTED",
+        cancellationButtonProps: {
+          disabled: true,
+          hidden: true,
+        },
+      }).then(() => dispatch(setSelectedBillItem(false)));
     }
   };
 
@@ -358,7 +387,11 @@ const NavDrawer = (props) => {
       },
       {
         component: (
-          <GreenButton type="button" fullWidth>
+          <GreenButton type="button" fullWidth onClick={handleOpenCreate(
+              "instruction-modal",
+              "documentForm",
+              "UPLOAD NEW DOCUMENT"
+            )}>
             UPLOAD DOCUMENT
           </GreenButton>
         ),
@@ -373,7 +406,7 @@ const NavDrawer = (props) => {
           <GreenButton
             type="button"
             fullWidth
-            onClick={handleOpenCreate("instruction-modal", "itemForm")}
+            onClick={handleOpenCreate("instruction-modal", "billItemForm", "CREATE BILL ITEM")}
           >
             CREATE BILL ITEM
           </GreenButton>
@@ -392,7 +425,7 @@ const NavDrawer = (props) => {
       },
       {
         component: (
-          <RedButton type="button" fullWidth onClick={handleDeleteInstruction}>
+          <RedButton type="button" fullWidth onClick={handleDeleteInstructionDetail}>
             DELETE BILL ITEM
           </RedButton>
         ),
@@ -455,6 +488,17 @@ const NavDrawer = (props) => {
           >
             SAVE WORK PROGRESS
           </GreenButton>
+        ),
+      },
+      {
+      component: (
+          <BlueButton
+            type="button"
+            fullWidth
+            onClick={history.goBack}
+          >
+            GO BACK
+          </BlueButton>
         ),
       },
     ],

@@ -14,10 +14,11 @@ import InstructionDetailSlice from "./components/work-instructions/instructionDe
 import ImagesReducer from "./components/images/ImageData"
 import { InstructionHeaderSlice } from "./services/thunks"
 import {SupervisorsSlice} from "./components/supervisors/SupervisorsData";
+import ActivitiesReducer from "./components/activities/activityData"
 
 const rootReducer = combineReducers({
 	workInstructions: WorkInstructionsReducer,
-	activities: "",
+	activities: ActivitiesReducer,
 	locations: LocationsReducer,
 	instructionDetails: InstructionDetailSlice,
 	workTypes: WorkTypeReducer,

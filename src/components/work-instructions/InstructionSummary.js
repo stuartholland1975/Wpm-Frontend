@@ -4,6 +4,8 @@ import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import SummaryCard from "../ui-components/SummaryCard";
 import { selectAllInstructionDetails } from "./instructionDetailData";
+import Loader from 'react-loader-spinner';
+
 
 const numFormat = (num) => {
 	return num.toLocaleString(undefined, {
@@ -36,7 +38,6 @@ const InstructionSummary = (props) => {
 	return (
 		<Fragment>
 			<div className="grid-title">{ projectTitle }</div>
-			<div className="grid-title">{ "" }</div>
 			<CardDeck>
 				<SummaryCard
 					cardTitle="Original Order Value:"

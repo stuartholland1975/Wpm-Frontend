@@ -63,6 +63,7 @@
     ]
   },
   "devDependencies": {
+    "@babel/plugin-proposal-pipeline-operator": "^7.12.1",
     "@hookform/devtools": "^2.2.1",
     "@rooks/use-on-window-resize": "^3.6.0",
     "react-redux-modal-provider": "^2.2.0",

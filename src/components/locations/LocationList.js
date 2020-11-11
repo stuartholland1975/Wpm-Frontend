@@ -12,6 +12,7 @@ import { setClickedLocation, setSelectedLocation } from "../grid/gridData";
 import { selectAllImages } from "../images/ImageData";
 import InstructionSummary from "../work-instructions/InstructionSummary";
 import { selectAllLocations } from "./locationData";
+import Loader from 'react-loader-spinner';
 
 const LocationList = (props) => {
 	const {OrderId} = useParams();
@@ -127,10 +128,10 @@ const LocationList = (props) => {
 		},
 		noRowsOverlayComponent: "customNoRowsOverlay",
 		noRowsOverlayComponentParams: {
-			noRowsMessageFunc: function () {
-				return "PLEASE WAIT DATA IS LOADING......";
-			},
-		},
+            noRowsMessageFunc: function () {
+                return <Loader style={{ textAlign: "center" }} type={"ThreeDots"} color={"Blue"} />
+            },
+        },
 		isRowSelectable: function (rowNode) {
 			const {item_count, items_complete} = rowNode.data;
 			return rowNode.data ? item_count - items_complete > 0 || item_count === 0 : true;
@@ -142,7 +143,7 @@ const LocationList = (props) => {
 	});
 
 	useUpdateEffect(() => {
-		gridApi.redrawRows(locations);
+		gridApi.redrawRows();
 	}, [images]);
 
 	const onGridReady = (params) => {
