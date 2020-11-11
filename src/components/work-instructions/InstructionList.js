@@ -147,15 +147,6 @@ const InstructionList = () => {
 		}
 	}
 
-	/* useEffect(() => {
-		if (isMounted) {
-			console.log(gridOptions);
-			if (gridApi) {
-				gridApi.sizeColumnsToFit();
-				update();
-			}
-		}
-	}, [width]); */
 
 	useEffect(() => {
 		if (isMounted) {
@@ -171,6 +162,7 @@ const InstructionList = () => {
 		<Fragment>
 			<div className="ag-theme-custom-react" style={ {width: "100%"} }>
 				<div className="grid-title">WORK INSTRUCTION LISTING:</div>
+				<hr/>
 				<AgGridReact
 					gridOptions={ gridOptions }
 					rowData={ workInstructions }

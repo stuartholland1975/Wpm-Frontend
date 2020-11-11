@@ -38,6 +38,7 @@ const InstructionSummary = (props) => {
 	return (
 		<Fragment>
 			<div className="grid-title">{ projectTitle }</div>
+			<hr/>
 			<CardDeck>
 				<SummaryCard
 					cardTitle="Original Order Value:"

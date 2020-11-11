@@ -21,6 +21,7 @@ import LetterM from "../icons/letter-m.png";
 import LetterP from "../icons/letter-p.png";
 import LetterW from "../icons/letter-w.png";
 import { BlueButton, GreenButton, PurpleButton, RedButton } from "../ui-components/Buttons";
+import Slide from '@material-ui/core/Slide';
 
 const drawerWidth = 240;
 
@@ -96,6 +97,9 @@ const NavDrawer = (props) => {
           disabled: true,
           hidden: true,
         },
+        confirmationButtonProps:{
+          variant: 'contained'
+        },
       }).then(() => dispatch(setSelectedRow(false)));
     }
   };
@@ -115,6 +119,9 @@ const NavDrawer = (props) => {
         cancellationButtonProps: {
           disabled: true,
           hidden: true,
+        },
+        confirmationButtonProps:{
+          variant: 'contained'
         },
       }).then(() => dispatch(setSelectedLocation(false)));
     }
@@ -142,12 +149,15 @@ const NavDrawer = (props) => {
           disabled: true,
           hidden: true,
         },
+        confirmationButtonProps:{
+          variant: 'contained'
+        },
       }).then(() => dispatch(setSelectedRow(false)));
     }
   };
 
   const handleDeleteInstructionDetail = () => {
-    if (selectedRow) {
+    if (selectedBillItem) {
       confirm({
         title: `DELETE BILL ITEM ${selectedBillItem.item_number}`,
         description: "Do you Want to Save These Changes ?",
@@ -167,6 +177,9 @@ const NavDrawer = (props) => {
         cancellationButtonProps: {
           disabled: true,
           hidden: true,
+        },
+        confirmationButtonProps:{
+          variant: 'contained'
         },
       }).then(() => dispatch(setSelectedBillItem(false)));
     }
@@ -195,6 +208,9 @@ const NavDrawer = (props) => {
           disabled: true,
           hidden: true,
         },
+        confirmationButtonProps:{
+          variant: 'contained'
+        },
       }).then(() => dispatch(setSelectedLocation(false)));
     }
   };
@@ -208,10 +224,16 @@ const NavDrawer = (props) => {
     } else {
       confirm({
         title: "NO WORK INSTRUCTION SELECTED",
+        confirmationButtonProps:{
+          variant: 'contained'
+        },
         cancellationButtonProps: {
           disabled: true,
           hidden: true,
         },
+        dialogProps: {
+          TransitionComponent: Slide
+        }
       });
     }
   };
@@ -240,6 +262,9 @@ const NavDrawer = (props) => {
         cancellationButtonProps: {
           disabled: true,
           hidden: true,
+        },
+        confirmationButtonProps:{
+          variant: 'contained'
         },
       }).then(() => dispatch(setSelectedLocation(false)));
     }
