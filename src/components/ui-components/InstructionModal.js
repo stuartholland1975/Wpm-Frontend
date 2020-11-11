@@ -9,6 +9,8 @@ import InstructionForm from "../work-instructions/InstructionForm";
 import WorksheetForm from "../worksheets/WorksheetForm"
 import DocumentForm from "../documents/DocumentForm";
 import BillItemForm from "../bill-items/BillItemForm";
+import ImageForm from "../images/ImageForm";
+
 
 
 const InstructionModal = (props) => {
@@ -23,7 +25,8 @@ const InstructionModal = (props) => {
 		locationForm: <LocationForm handleHide={ handleHide } formType={ formType }/>,
 		worksheetForm: <WorksheetForm handleHide={ handleHide } formType={ formType } />,
 		documentForm: <DocumentForm handleHide={ handleHide } formType={ formType }/>,
-		billItemForm: <BillItemForm handleHide={ handleHide} fromType={formType}/>
+		billItemForm: <BillItemForm handleHide={ handleHide} fromType={formType}/>,
+		imageForm: <ImageForm handleHide={ handleHide} fromType={formType}/>,
 	};
 
 	return (

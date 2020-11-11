@@ -38,7 +38,7 @@ const InstructionDetail = () => {
 			{headerName: "Item Ref", field: "item_number", sort: "asc"},
 			{headerName: "Item Type", field: "item_type"},
 			{headerName: "Location", field: "site_location"},
-			{headerName: "Qty Ordered", field: "qty_ordered", type: "numericColumn"},
+			{headerName: "Qty Ordered", field: "qty_ordered", type: "numericColumn", valueFormatter: niceNumber,},
 			{headerName: "Activity Code", field: "activity_code"},
 			{
 				headerName: "Activity Description",
@@ -54,6 +54,7 @@ const InstructionDetail = () => {
 				headerName: "Qty Complete",
 				field: "qty_complete",
 				type: "numericColumn",
+				valueFormatter: niceNumber,
 			},
 			{
 				headerName: "Value Complete",
@@ -65,6 +66,7 @@ const InstructionDetail = () => {
 				headerName: "Qty Applied For",
 				field: "qty_applied",
 				type: "numericColumn",
+				valueFormatter: niceNumber,
 			},
 			{
 				headerName: "Value Applied For",

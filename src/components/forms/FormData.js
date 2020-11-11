@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const formDataSlice = createSlice(({
 	name: "formData",
 	initialState: {
-		formData: [],
+		formData: {},
 		initialData: {},
 	},
 	reducers: {

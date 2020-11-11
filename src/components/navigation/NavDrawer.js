@@ -248,6 +248,24 @@ const NavDrawer = (props) => {
     }
   };
 
+  const handleUploadImage = (name, content, title) => {
+    if (selectedLocation) {
+      dispatch(show(name, { title: title, content: content }));
+    } else {
+      confirm({
+        title: "NO LOCATION SELECTED",
+        cancellationButtonProps: {
+          disabled: true,
+          hidden: true,
+        },
+        confirmationButtonProps: {
+          variant: "contained",
+        },
+      })
+    }
+  };
+
+
   const handleViewOnly = (name, content, title) => () => {
     dispatch(show(name, { title: title, content: content }));
     dispatch(setClickedLocation(false));
@@ -415,10 +433,14 @@ const NavDrawer = (props) => {
     actionButtons: [
       {
         component: (
-          <GreenButton type="button" fullWidth>
+          <GreenButton type="button" fullWidth onClick={() => handleUploadImage(
+            "instruction-modal",
+            "imageForm",
+            "UPLOAD NEW IMAGE"
+          )}>
             UPLOAD IMAGE
           </GreenButton>
-        ),
+        )
       },
       {
         component: (

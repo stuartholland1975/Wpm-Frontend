@@ -6,7 +6,7 @@ export const fetchActivities = createAsyncThunk(
 	"activities/fetchAll",
 	async () => {
 		const activities = await axiosInstance.get(
-			"/wpm/api/activity"
+			"/wpm/api/activity/"
 		);
 		return activities.data;
 	}
