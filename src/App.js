@@ -28,16 +28,11 @@ const App = (props) => {
     const classes = useStyles();
     return (
         <div className={classes.container}>
-
             <NavDrawer/>
             <WpmModal/>
-
             <div className={classes.content}>
-
-
                 <Switch>
                     <Route exact from="/" render={(props) => <Home {...props} />}/>
-
                     <Route path="/work-instructions" exact component={InstructionList}/>
                     <Route path="/activities" exact component={ActivityList}/>
                     <Route path="/test" exact component={Test}/>

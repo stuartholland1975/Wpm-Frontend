@@ -63,11 +63,11 @@ const InstructionList = () => {
         headerName: "Area",
         field: "area_description",
       },
-      
+
       {
         headerName: "Docs",
         type: "numericColumn",
-        field: "document_count"
+        field: "document_count",
       },
       {
         headerName: "Item Count",
@@ -124,16 +124,13 @@ const InstructionList = () => {
 
   useEffectOnce(() => {
     dispatch(fetchWorkInstructions());
-    
     dispatch(fetchAreas());
     dispatch(fetchWorkTypes());
     dispatch(resetLocations());
     dispatch(resetInstructionDetails());
-    
     dispatch(resetImages());
     dispatch(resetGridRow());
   });
-
 
   function nodeSelected() {
     const selectedNode = gridOptions.api.getSelectedNodes();
@@ -155,9 +152,8 @@ const InstructionList = () => {
 
   return (
     <Fragment>
-      
-      <div className="ag-theme-custom-react" style={{width: '100%'}}>
-      <hr />
+      <div className="ag-theme-custom-react" style={{ width: "100%" }}>
+        <hr />
         <div className="grid-title">WORK INSTRUCTION LISTING:</div>
         <hr />
         <AgGridReact

@@ -62,9 +62,9 @@ const useStyles = makeStyles((theme) => ({
   },
   actions: {
     display: "flex",
-    alignItems: "center",
+    flexDirection: "column",
+    //alignItems: "center",
     justifyContent: "center",
-    padding: theme.spacing(0, 1),
     verticalAlign: "middle",
   },
 }));
@@ -82,7 +82,6 @@ const NavDrawer = (props) => {
     (state) => state.gridData.selectedBillItem
   );
   const confirm = useConfirm();
-  const params = useParams();
 
   const handleOpenCreate = (name, content, title) => () => {
     dispatch(
@@ -112,6 +111,11 @@ const NavDrawer = (props) => {
         },
         confirmationButtonProps: {
           variant: "contained",
+          autoFocus: true,
+        },
+        dialogProps: {
+          TransitionComponent: Slide,
+          disableBackdropClick: true,
         },
       }).then(() => dispatch(setSelectedRow(false)));
     }
@@ -135,6 +139,11 @@ const NavDrawer = (props) => {
         },
         confirmationButtonProps: {
           variant: "contained",
+          autoFocus: true,
+        },
+        dialogProps: {
+          TransitionComponent: Slide,
+          disableBackdropClick: true,
         },
       }).then(() => dispatch(setSelectedLocation(false)));
     }
@@ -151,6 +160,11 @@ const NavDrawer = (props) => {
         },
         cancellationButtonProps: {
           variant: "contained",
+          autoFocus: true,
+        },
+        dialogProps: {
+          TransitionComponent: Slide,
+          disableBackdropClick: true,
         },
       })
         .then(() => dispatch(deleteWorkInstruction(selectedRow.id)))
@@ -164,6 +178,11 @@ const NavDrawer = (props) => {
         },
         confirmationButtonProps: {
           variant: "contained",
+          autoFocus: true,
+        },
+        dialogProps: {
+          TransitionComponent: Slide,
+          disableBackdropClick: true,
         },
       }).then(() => dispatch(setSelectedRow(false)));
     }
@@ -180,6 +199,11 @@ const NavDrawer = (props) => {
         },
         cancellationButtonProps: {
           variant: "contained",
+          autoFocus: true,
+        },
+        dialogProps: {
+          TransitionComponent: Slide,
+          disableBackdropClick: true,
         },
       })
         .then(() => dispatch(deleteInstructionDetail(selectedBillItem.id)))
@@ -193,6 +217,11 @@ const NavDrawer = (props) => {
         },
         confirmationButtonProps: {
           variant: "contained",
+          autoFocus: true,
+        },
+        dialogProps: {
+          TransitionComponent: Slide,
+          disableBackdropClick: true,
         },
       }).then(() => dispatch(setSelectedBillItem(false)));
     }
@@ -209,6 +238,11 @@ const NavDrawer = (props) => {
         },
         cancellationButtonProps: {
           variant: "contained",
+          autoFocus: true,
+        },
+        dialogProps: {
+          TransitionComponent: Slide,
+          disableBackdropClick: true,
         },
       })
         .then(() => dispatch(deleteLocation(selectedLocation.id)))
@@ -223,6 +257,11 @@ const NavDrawer = (props) => {
         },
         confirmationButtonProps: {
           variant: "contained",
+          autoFocus: true,
+        },
+        dialogProps: {
+          TransitionComponent: Slide,
+          disableBackdropClick: true,
         },
       }).then(() => dispatch(setSelectedLocation(false)));
     }
@@ -239,6 +278,7 @@ const NavDrawer = (props) => {
         title: "NO WORK INSTRUCTION SELECTED",
         confirmationButtonProps: {
           variant: "contained",
+          autoFocus: true,
         },
         cancellationButtonProps: {
           disabled: true,
@@ -246,6 +286,7 @@ const NavDrawer = (props) => {
         },
         dialogProps: {
           TransitionComponent: Slide,
+          disableBackdropClick: true,
         },
       });
     }
@@ -263,6 +304,11 @@ const NavDrawer = (props) => {
         },
         confirmationButtonProps: {
           variant: "contained",
+          autoFocus: true,
+        },
+        dialogProps: {
+          TransitionComponent: Slide,
+          disableBackdropClick: true,
         },
       });
     }
@@ -295,6 +341,7 @@ const NavDrawer = (props) => {
         },
         confirmationButtonProps: {
           variant: "contained",
+          autoFocus: true,
         },
       }).then(() => dispatch(setSelectedLocation(false)));
     }
@@ -321,7 +368,7 @@ const NavDrawer = (props) => {
       {
         component: (
           <GreenButton
-          id={uuidv4()}
+            id={uuidv4()}
             type="button"
             fullWidth
             onClick={handleOpenEdit("instruction-modal", "instructionForm")}
@@ -332,7 +379,12 @@ const NavDrawer = (props) => {
       },
       {
         component: (
-          <RedButton id={uuidv4()} type="button" onClick={handleDeleteInstruction} fullWidth>
+          <RedButton
+            id={uuidv4()}
+            type="button"
+            onClick={handleDeleteInstruction}
+            fullWidth
+          >
             DELETE INSTRUCTION
           </RedButton>
         ),
@@ -341,7 +393,12 @@ const NavDrawer = (props) => {
     navButtons: [
       {
         component: (
-          <PurpleButton id={uuidv4()} type="button" onClick={handleViewSummary} fullWidth>
+          <PurpleButton
+            id={uuidv4()}
+            type="button"
+            onClick={handleViewSummary}
+            fullWidth
+          >
             VIEW INSTRUCTION SUMMARY
           </PurpleButton>
         ),
@@ -354,7 +411,7 @@ const NavDrawer = (props) => {
       {
         component: (
           <GreenButton
-          id={uuidv4()}
+            id={uuidv4()}
             type="button"
             onClick={handleOpenCreate(
               "instruction-modal",
@@ -370,7 +427,7 @@ const NavDrawer = (props) => {
       {
         component: (
           <GreenButton
-          id={uuidv4()}
+            id={uuidv4()}
             type="button"
             onClick={handleOpenEditLocation(
               "instruction-modal",
@@ -384,23 +441,38 @@ const NavDrawer = (props) => {
       },
       {
         component: (
-          <GreenButton id={uuidv4()} type="button" fullWidth onClick={handleViewWorksheets}>
-            UPDATE WORK PROGRESS
-          </GreenButton>
+          <RedButton
+            id={uuidv4()}
+            type="button"
+            onClick={handleDeleteLocation}
+            fullWidth
+          >
+            DELETE LOCATION
+          </RedButton>
         ),
       },
       {
         component: (
-          <RedButton id={uuidv4()} type="button" onClick={handleDeleteLocation} fullWidth>
-            DELETE LOCATION
-          </RedButton>
+          <GreenButton
+            id={uuidv4()}
+            type="button"
+            fullWidth
+            onClick={handleViewWorksheets}
+          >
+            UPDATE WORK PROGRESS
+          </GreenButton>
         ),
       },
     ],
     navButtons: [
       {
         component: (
-          <PurpleButton id={uuidv4()} type="button" fullWidth onClick={handleViewItems}>
+          <PurpleButton
+            id={uuidv4()}
+            type="button"
+            fullWidth
+            onClick={handleViewItems}
+          >
             VIEW ITEMS
           </PurpleButton>
         ),
@@ -408,7 +480,7 @@ const NavDrawer = (props) => {
       {
         component: (
           <PurpleButton
-          id={uuidv4()}
+            id={uuidv4()}
             type="button"
             fullWidth
             onClick={handleViewOnly(
@@ -424,7 +496,7 @@ const NavDrawer = (props) => {
       {
         component: (
           <PurpleButton
-          id={uuidv4()}
+            id={uuidv4()}
             type="button"
             fullWidth
             onClick={handleViewOnly(
@@ -442,7 +514,7 @@ const NavDrawer = (props) => {
       {
         component: (
           <GreenButton
-          id={uuidv4()}
+            id={uuidv4()}
             type="button"
             fullWidth
             onClick={() =>
@@ -460,7 +532,7 @@ const NavDrawer = (props) => {
       {
         component: (
           <GreenButton
-          id={uuidv4()}
+            id={uuidv4()}
             type="button"
             fullWidth
             onClick={handleOpenCreate(
@@ -481,7 +553,7 @@ const NavDrawer = (props) => {
       {
         component: (
           <GreenButton
-          id={uuidv4()}
+            id={uuidv4()}
             type="button"
             fullWidth
             onClick={handleOpenCreate(
@@ -497,7 +569,7 @@ const NavDrawer = (props) => {
       {
         component: (
           <GreenButton
-          id={uuidv4()}
+            id={uuidv4()}
             type="button"
             fullWidth
             onClick={handleOpenEdit("instruction-modal", "itemForm")}
@@ -509,7 +581,7 @@ const NavDrawer = (props) => {
       {
         component: (
           <RedButton
-          id={uuidv4()}
+            id={uuidv4()}
             type="button"
             fullWidth
             onClick={handleDeleteInstructionDetail}
@@ -522,7 +594,12 @@ const NavDrawer = (props) => {
     navButtons: [
       {
         component: (
-          <PurpleButton id={uuidv4()} fullWidth type="button" onClick={handleViewSummary}>
+          <PurpleButton
+            id={uuidv4()}
+            fullWidth
+            type="button"
+            onClick={handleViewSummary}
+          >
             VIEW LOCATIONS
           </PurpleButton>
         ),
@@ -530,7 +607,7 @@ const NavDrawer = (props) => {
       {
         component: (
           <PurpleButton
-          id={uuidv4()}
+            id={uuidv4()}
             type="button"
             fullWidth
             onClick={handleViewOnly("instruction-modal", "documentsList")}
@@ -542,7 +619,7 @@ const NavDrawer = (props) => {
       {
         component: (
           <PurpleButton
-          id={uuidv4()}
+            id={uuidv4()}
             type="button"
             fullWidth
             onClick={handleViewOnly("instruction-modal", "locationImages")}
@@ -568,7 +645,7 @@ const NavDrawer = (props) => {
       {
         component: (
           <GreenButton
-          id={uuidv4()}
+            id={uuidv4()}
             type="button"
             fullWidth
             onClick={handleOpenCreate(
@@ -583,7 +660,12 @@ const NavDrawer = (props) => {
       },
       {
         component: (
-          <BlueButton id={uuidv4()} type="button" fullWidth onClick={history.goBack}>
+          <BlueButton
+            id={uuidv4()}
+            type="button"
+            fullWidth
+            onClick={history.goBack}
+          >
             GO BACK
           </BlueButton>
         ),
@@ -601,8 +683,6 @@ const NavDrawer = (props) => {
   const atWorksheets = location.pathname.startsWith(
     "/work-instructions/summary/worksheets/"
   );
-
-  const atSummary = location.pathname.startsWith("/work-instructions/summary/");
 
   const itemsList = [
     {
@@ -630,11 +710,9 @@ const NavDrawer = (props) => {
       onClick: () => console.log("APPS"),
     },
     {
-      /*
       text: "TEST",
       icon: <ListIcon />,
       onClick: () => history.push("/test"),
-   */
     },
   ];
 
@@ -694,111 +772,89 @@ const NavDrawer = (props) => {
         </List>
         <Divider />
         <div className={classes.actions}>
-          <List>
-            {atWorkInstructions &&
-              instructionBarButtons.crudButtons.map((item) => {
-                const { component } = item;
-                return (
-                  <ListItem key={uuidv4()}>
-                    {component}
-                  </ListItem>
-                );
-              })}
-          </List>
-          <List>
-            {atLocations &&
-              locationsBarButtons.crudButtons.map((item) => {
-                const { component } = item;
-                return (
-                  <ListItem key={uuidv4()}>
-                    {component}
-                  </ListItem>
-                );
-              })}
-          </List>
-          <List>
-            {atItemDetail &&
-              itemDetailsBarButtons.crudButtons.map((item) => {
-                const { component } = item;
-                return (
-                  <ListItem key={uuidv4()}>
-                    {component}
-                  </ListItem>
-                );
-              })}
-          </List>
+          {atWorkInstructions &&
+            instructionBarButtons.crudButtons.map((item) => {
+              const { component } = item;
+              return (
+                <List>
+                  <ListItem key={uuidv4()}>{component}</ListItem>
+                </List>
+              );
+            })}
+          {atLocations &&
+            locationsBarButtons.crudButtons.map((item) => {
+              const { component } = item;
+              return (
+                <List>
+                  <ListItem key={uuidv4()}>{component}</ListItem>
+                </List>
+              );
+            })}
+          {atItemDetail &&
+            itemDetailsBarButtons.crudButtons.map((item) => {
+              const { component } = item;
+              return (
+                <List>
+                  <ListItem key={uuidv4()}>{component}</ListItem>
+                </List>
+              );
+            })}
+          {atWorkInstructions &&
+            instructionBarButtons.navButtons.map((item) => {
+              const { component } = item;
+              return (
+                <List>
+                  <ListItem key={uuidv4()}>{component}</ListItem>
+                </List>
+              );
+            })}
+          {atItemDetail &&
+            itemDetailsBarButtons.navButtons.map((item) => {
+              const { component } = item;
+              return (
+                <List>
+                  <ListItem key={uuidv4()}>{component}</ListItem>
+                </List>
+              );
+            })}
+          {atLocations &&
+            locationsBarButtons.navButtons.map((item) => {
+              const { component } = item;
+              return (
+                <List>
+                  <ListItem key={uuidv4()}>{component}</ListItem>
+                </List>
+              );
+            })}
+          <Divider />
+          {atLocations &&
+            locationsBarButtons.actionButtons.map((item) => {
+              const { component } = item;
+              return (
+                <List>
+                  <ListItem key={uuidv4()}>{component}</ListItem>
+                </List>
+              );
+            })}
+          {atItemDetail &&
+            itemDetailsBarButtons.actionButtons.map((item) => {
+              const { component } = item;
+              return (
+                <List>
+                  <ListItem key={uuidv4()}>{component}</ListItem>
+                </List>
+              );
+            })}
+          {atWorksheets &&
+            worksheetBarButtons.actionButtons.map((item) => {
+              const { component } = item;
+              return (
+                <List>
+                  <ListItem key={uuidv4()}>{component}</ListItem>
+                </List>
+              );
+            })}
         </div>
-        <Divider />
-        <div className={classes.actions}>
-          <List>
-            {atWorkInstructions &&
-              instructionBarButtons.navButtons.map((item) => {
-                const { component } = item;
-                return (
-                  <ListItem key={uuidv4()}>
-                    {component}
-                  </ListItem>
-                );
-              })}
-          </List>
-          <List>
-            {atItemDetail &&
-              itemDetailsBarButtons.navButtons.map((item) => {
-                const { component } = item;
-                return (
-                  <ListItem key={uuidv4()}>
-                    {component}
-                  </ListItem>
-                );
-              })}
-          </List>
-
-          <List>
-            {atLocations &&
-              locationsBarButtons.navButtons.map((item) => {
-                const { component } = item;
-                return (
-                  <ListItem key={uuidv4()}>
-                    {component}
-                  </ListItem>
-                );
-              })}
-          </List>
-        </div>
-        <Divider />
-        <div className={classes.actions}>
-          <List>
-            {atLocations &&
-              locationsBarButtons.actionButtons.map((item) => {
-                const { component } = item;
-                return (
-                  <ListItem key={uuidv4()}>
-                    {component}
-                  </ListItem>
-                );
-              })}
-            {atItemDetail &&
-              itemDetailsBarButtons.actionButtons.map((item) => {
-                const { component } = item;
-                return (
-                  <ListItem key={uuidv4()}>
-                    {component}
-                  </ListItem>
-                );
-              })}
-            {atWorksheets &&
-              worksheetBarButtons.actionButtons.map((item) => {
-                const { component } = item;
-                return (
-                  <ListItem key={uuidv4()}>
-                    {component}
-                  </ListItem>
-                );
-              })}
-          </List>
-        </div>
-        <Divider />
-        
       </Drawer>
     </div>
   );
