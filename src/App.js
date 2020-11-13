@@ -37,8 +37,9 @@ const App = (props) => {
 
                 <Switch>
                     <Route exact from="/" render={(props) => <Home {...props} />}/>
-                    <Route path="/activities" exact component={ActivityList}/>
+
                     <Route path="/work-instructions" exact component={InstructionList}/>
+                    <Route path="/activities" exact component={ActivityList}/>
                     <Route path="/test" exact component={Test}/>
                     <Route path="/login" exact component={Login}/>
                     <Route path="/work-instructions/summary/locations/:OrderId" exact component={LocationList}/>

@@ -1,24 +1,18 @@
 import { AgGridReact } from "ag-grid-react";
-import React, { Fragment, useEffect, useState } from "react";
+import React, { useState, Fragment } from "react";
+import { Container } from "react-bootstrap";
 import Loader from "react-loader-spinner";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  useEffectOnce,
-  useLatest,
-  useMountedState,
-  useUpdate,
-  useWindowSize,
-} from "react-use";
+import { useEffectOnce, useLatest, useUpdateEffect } from "react-use";
 import CustomNoRowsOverlay from "../../CustomNoRowsOverlay";
 import {
-  fetchWorkInstructions,
   fetchAreas,
   fetchDocuments,
+  fetchWorkInstructions,
 } from "../../services/thunks";
-import {} from "../areas/areaDataReducer";
 import {
-  selectAllDocuments,
   resetDocuments,
+  selectAllDocuments,
 } from "../documents/documentsDataReducer";
 import { resetGridRow, setSelectedRow } from "../grid/gridData";
 import { resetImages } from "../images/ImageData";
@@ -37,8 +31,7 @@ const InstructionList = () => {
     workInstructions = useSelector(selectAllWorkInstructions),
     documents = useSelector(selectAllDocuments),
     latestDocs = useLatest(documents),
-    [, setGridApi] = useState(),
-    isMounted = useMountedState(),
+    [gridApi, setGridApi] = useState(),
     selectedNode = useSelector((state) => state.gridData.selectedRow),
     ColumnDefs = [
       { headerName: "ID", field: "id", hide: true },
@@ -46,7 +39,6 @@ const InstructionList = () => {
         headerName: "Select",
         colId: "select",
         checkboxSelection: true,
-        maxWidth: 80,
       },
       {
         headerName: "Work Instruction",
@@ -56,7 +48,7 @@ const InstructionList = () => {
       {
         headerName: "Project Title",
         field: "project_title",
-        minWidth: 400,
+        minWidth: 450,
       },
       {
         headerName: "Date Issued",
@@ -70,21 +62,17 @@ const InstructionList = () => {
       {
         headerName: "Area",
         field: "area_description",
-        editable: true,
-        maxWidth: 100,
       },
+      
       {
         headerName: "Docs",
-        colId: "docs",
         type: "numericColumn",
-        maxWidth: 100,
-        valueGetter: getDocumentCount,
+        field: "document_count"
       },
       {
         headerName: "Item Count",
         field: "item_count",
         type: "numericColumn",
-        maxWidth: 110,
       },
       {
         headerName: "Order Value",
@@ -136,26 +124,16 @@ const InstructionList = () => {
 
   useEffectOnce(() => {
     dispatch(fetchWorkInstructions());
-    dispatch(fetchDocuments());
+    
     dispatch(fetchAreas());
     dispatch(fetchWorkTypes());
     dispatch(resetLocations());
     dispatch(resetInstructionDetails());
-    dispatch(resetDocuments());
+    
     dispatch(resetImages());
     dispatch(resetGridRow());
   });
 
-  const onGridReady = (params) => {
-    setGridApi(params.api);
-    params.api.sizeColumnsToFit();
-  };
-
-  function getDocumentCount(params) {
-    return latestDocs.current.filter(
-      (obj) => obj["work_instruction"] === params.data.id
-    ).length;
-  }
 
   function nodeSelected() {
     const selectedNode = gridOptions.api.getSelectedNodes();
@@ -164,19 +142,22 @@ const InstructionList = () => {
     }
   }
 
-  useEffect(() => {
-    if (isMounted) {
-      if (gridOptions.api) {
-        if (!selectedNode) {
-          gridOptions.api.deselectAll();
-        }
-      }
+  useUpdateEffect(() => {
+    if (!selectedNode) {
+      gridApi.deselectAll();
     }
-  }, [gridOptions.api, isMounted, selectedNode]);
+  }, [selectedNode]);
+
+  function onGridReady(params) {
+    setGridApi(params.api);
+    params.api.sizeColumnsToFit();
+  }
 
   return (
     <Fragment>
-      <div className="ag-theme-custom-react" style={{ width: "100%" }}>
+      
+      <div className="ag-theme-custom-react" style={{width: '100%'}}>
+      <hr />
         <div className="grid-title">WORK INSTRUCTION LISTING:</div>
         <hr />
         <AgGridReact

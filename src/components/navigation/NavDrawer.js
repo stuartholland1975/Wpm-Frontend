@@ -5,6 +5,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import HomeIcon from "@material-ui/icons/Home";
 import ListIcon from "@material-ui/icons/List";
+import { faPoundSign } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import LockOpenIcon from "@material-ui/icons/LockOpen";
 import { useConfirm } from "material-ui-confirm";
 import React from "react";
@@ -32,8 +34,9 @@ import {
   RedButton,
 } from "../ui-components/Buttons";
 import Slide from "@material-ui/core/Slide";
+import { v4 as uuidv4 } from "uuid";
 
-const drawerWidth = 240;
+const drawerWidth = 260;
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -261,10 +264,9 @@ const NavDrawer = (props) => {
         confirmationButtonProps: {
           variant: "contained",
         },
-      })
+      });
     }
   };
-
 
   const handleViewOnly = (name, content, title) => () => {
     dispatch(show(name, { title: title, content: content }));
@@ -303,6 +305,7 @@ const NavDrawer = (props) => {
       {
         component: (
           <GreenButton
+            id={uuidv4()}
             type="button"
             onClick={handleOpenCreate(
               "instruction-modal",
@@ -318,6 +321,7 @@ const NavDrawer = (props) => {
       {
         component: (
           <GreenButton
+          id={uuidv4()}
             type="button"
             fullWidth
             onClick={handleOpenEdit("instruction-modal", "instructionForm")}
@@ -328,7 +332,7 @@ const NavDrawer = (props) => {
       },
       {
         component: (
-          <RedButton type="button" onClick={handleDeleteInstruction} fullWidth>
+          <RedButton id={uuidv4()} type="button" onClick={handleDeleteInstruction} fullWidth>
             DELETE INSTRUCTION
           </RedButton>
         ),
@@ -337,7 +341,7 @@ const NavDrawer = (props) => {
     navButtons: [
       {
         component: (
-          <PurpleButton type="button" onClick={handleViewSummary} fullWidth>
+          <PurpleButton id={uuidv4()} type="button" onClick={handleViewSummary} fullWidth>
             VIEW INSTRUCTION SUMMARY
           </PurpleButton>
         ),
@@ -350,6 +354,7 @@ const NavDrawer = (props) => {
       {
         component: (
           <GreenButton
+          id={uuidv4()}
             type="button"
             onClick={handleOpenCreate(
               "instruction-modal",
@@ -365,6 +370,7 @@ const NavDrawer = (props) => {
       {
         component: (
           <GreenButton
+          id={uuidv4()}
             type="button"
             onClick={handleOpenEditLocation(
               "instruction-modal",
@@ -378,14 +384,14 @@ const NavDrawer = (props) => {
       },
       {
         component: (
-          <GreenButton type="button" fullWidth onClick={handleViewWorksheets}>
+          <GreenButton id={uuidv4()} type="button" fullWidth onClick={handleViewWorksheets}>
             UPDATE WORK PROGRESS
           </GreenButton>
         ),
       },
       {
         component: (
-          <RedButton type="button" onClick={handleDeleteLocation} fullWidth>
+          <RedButton id={uuidv4()} type="button" onClick={handleDeleteLocation} fullWidth>
             DELETE LOCATION
           </RedButton>
         ),
@@ -394,7 +400,7 @@ const NavDrawer = (props) => {
     navButtons: [
       {
         component: (
-          <PurpleButton type="button" fullWidth onClick={handleViewItems}>
+          <PurpleButton id={uuidv4()} type="button" fullWidth onClick={handleViewItems}>
             VIEW ITEMS
           </PurpleButton>
         ),
@@ -402,6 +408,7 @@ const NavDrawer = (props) => {
       {
         component: (
           <PurpleButton
+          id={uuidv4()}
             type="button"
             fullWidth
             onClick={handleViewOnly(
@@ -417,6 +424,7 @@ const NavDrawer = (props) => {
       {
         component: (
           <PurpleButton
+          id={uuidv4()}
             type="button"
             fullWidth
             onClick={handleViewOnly(
@@ -433,18 +441,26 @@ const NavDrawer = (props) => {
     actionButtons: [
       {
         component: (
-          <GreenButton type="button" fullWidth onClick={() => handleUploadImage(
-            "instruction-modal",
-            "imageForm",
-            "UPLOAD NEW IMAGE"
-          )}>
+          <GreenButton
+          id={uuidv4()}
+            type="button"
+            fullWidth
+            onClick={() =>
+              handleUploadImage(
+                "instruction-modal",
+                "imageForm",
+                "UPLOAD NEW IMAGE"
+              )
+            }
+          >
             UPLOAD IMAGE
           </GreenButton>
-        )
+        ),
       },
       {
         component: (
           <GreenButton
+          id={uuidv4()}
             type="button"
             fullWidth
             onClick={handleOpenCreate(
@@ -465,6 +481,7 @@ const NavDrawer = (props) => {
       {
         component: (
           <GreenButton
+          id={uuidv4()}
             type="button"
             fullWidth
             onClick={handleOpenCreate(
@@ -480,6 +497,7 @@ const NavDrawer = (props) => {
       {
         component: (
           <GreenButton
+          id={uuidv4()}
             type="button"
             fullWidth
             onClick={handleOpenEdit("instruction-modal", "itemForm")}
@@ -491,6 +509,7 @@ const NavDrawer = (props) => {
       {
         component: (
           <RedButton
+          id={uuidv4()}
             type="button"
             fullWidth
             onClick={handleDeleteInstructionDetail}
@@ -503,7 +522,7 @@ const NavDrawer = (props) => {
     navButtons: [
       {
         component: (
-          <PurpleButton fullWidth type="button" onClick={handleViewSummary}>
+          <PurpleButton id={uuidv4()} fullWidth type="button" onClick={handleViewSummary}>
             VIEW LOCATIONS
           </PurpleButton>
         ),
@@ -511,6 +530,7 @@ const NavDrawer = (props) => {
       {
         component: (
           <PurpleButton
+          id={uuidv4()}
             type="button"
             fullWidth
             onClick={handleViewOnly("instruction-modal", "documentsList")}
@@ -522,6 +542,7 @@ const NavDrawer = (props) => {
       {
         component: (
           <PurpleButton
+          id={uuidv4()}
             type="button"
             fullWidth
             onClick={handleViewOnly("instruction-modal", "locationImages")}
@@ -534,7 +555,7 @@ const NavDrawer = (props) => {
     actionButtons: [
       {
         component: (
-          <GreenButton type="button" fullWidth>
+          <GreenButton id={uuidv4()} type="button" fullWidth>
             UPLOAD DOCUMENT
           </GreenButton>
         ),
@@ -547,6 +568,7 @@ const NavDrawer = (props) => {
       {
         component: (
           <GreenButton
+          id={uuidv4()}
             type="button"
             fullWidth
             onClick={handleOpenCreate(
@@ -561,7 +583,7 @@ const NavDrawer = (props) => {
       },
       {
         component: (
-          <BlueButton type="button" fullWidth onClick={history.goBack}>
+          <BlueButton id={uuidv4()} type="button" fullWidth onClick={history.goBack}>
             GO BACK
           </BlueButton>
         ),
@@ -584,34 +606,47 @@ const NavDrawer = (props) => {
 
   const itemsList = [
     {
+      id: uuidv4(),
       text: "Home",
       icon: <HomeIcon />,
       onClick: () => history.push("/"),
     },
     {
+      id: uuidv4(),
       text: "Work Instructions",
       icon: <ListIcon />,
       onClick: () => history.push("/work-instructions"),
     },
     {
+      id: uuidv4(),
       text: "Activities",
       icon: <ListIcon />,
       onClick: () => history.push("/activities"),
     },
     {
+      id: uuidv4(),
+      text: "Applications",
+      icon: <FontAwesomeIcon icon={faPoundSign} />,
+      onClick: () => console.log("APPS"),
+    },
+    {
+      /*
       text: "TEST",
       icon: <ListIcon />,
       onClick: () => history.push("/test"),
+   */
     },
   ];
 
   const authList = [
     {
+      id: uuidv4(),
       text: "LOG OUT",
       icon: <ExitToAppIcon />,
       onClick: () => history.push("/"),
     },
     {
+      id: uuidv4(),
       text: "LOG IN",
       icon: <LockOpenIcon />,
       onClick: () => history.push("/login"),
@@ -636,9 +671,9 @@ const NavDrawer = (props) => {
         <Divider />
         <List>
           {itemsList.map((item) => {
-            const { text, icon, onClick } = item;
+            const { id, text, icon, onClick } = item;
             return (
-              <ListItem button key={text} onClick={onClick}>
+              <ListItem button key={uuidv4()} onClick={onClick}>
                 {icon && <ListItemIcon>{icon}</ListItemIcon>}
                 <ListItemText primary={text} />
               </ListItem>
@@ -648,9 +683,9 @@ const NavDrawer = (props) => {
         <Divider />
         <List>
           {authList.map((item) => {
-            const { text, icon, onClick } = item;
+            const { id, text, icon, onClick } = item;
             return (
-              <ListItem button key={text} onClick={onClick}>
+              <ListItem button key={uuidv4()} onClick={onClick}>
                 {icon && <ListItemIcon>{icon}</ListItemIcon>}
                 <ListItemText primary={text} />
               </ListItem>
@@ -664,7 +699,7 @@ const NavDrawer = (props) => {
               instructionBarButtons.crudButtons.map((item) => {
                 const { component } = item;
                 return (
-                  <ListItem key={component.props.children}>
+                  <ListItem key={uuidv4()}>
                     {component}
                   </ListItem>
                 );
@@ -675,7 +710,7 @@ const NavDrawer = (props) => {
               locationsBarButtons.crudButtons.map((item) => {
                 const { component } = item;
                 return (
-                  <ListItem key={component.props.children}>
+                  <ListItem key={uuidv4()}>
                     {component}
                   </ListItem>
                 );
@@ -686,7 +721,7 @@ const NavDrawer = (props) => {
               itemDetailsBarButtons.crudButtons.map((item) => {
                 const { component } = item;
                 return (
-                  <ListItem key={component.props.children}>
+                  <ListItem key={uuidv4()}>
                     {component}
                   </ListItem>
                 );
@@ -700,7 +735,7 @@ const NavDrawer = (props) => {
               instructionBarButtons.navButtons.map((item) => {
                 const { component } = item;
                 return (
-                  <ListItem key={component.props.children}>
+                  <ListItem key={uuidv4()}>
                     {component}
                   </ListItem>
                 );
@@ -711,7 +746,7 @@ const NavDrawer = (props) => {
               itemDetailsBarButtons.navButtons.map((item) => {
                 const { component } = item;
                 return (
-                  <ListItem key={component.props.children}>
+                  <ListItem key={uuidv4()}>
                     {component}
                   </ListItem>
                 );
@@ -723,7 +758,7 @@ const NavDrawer = (props) => {
               locationsBarButtons.navButtons.map((item) => {
                 const { component } = item;
                 return (
-                  <ListItem key={component.props.children}>
+                  <ListItem key={uuidv4()}>
                     {component}
                   </ListItem>
                 );
@@ -737,7 +772,7 @@ const NavDrawer = (props) => {
               locationsBarButtons.actionButtons.map((item) => {
                 const { component } = item;
                 return (
-                  <ListItem key={component.props.children}>
+                  <ListItem key={uuidv4()}>
                     {component}
                   </ListItem>
                 );
@@ -746,7 +781,7 @@ const NavDrawer = (props) => {
               itemDetailsBarButtons.actionButtons.map((item) => {
                 const { component } = item;
                 return (
-                  <ListItem key={component.props.children}>
+                  <ListItem key={uuidv4()}>
                     {component}
                   </ListItem>
                 );
@@ -755,7 +790,7 @@ const NavDrawer = (props) => {
               worksheetBarButtons.actionButtons.map((item) => {
                 const { component } = item;
                 return (
-                  <ListItem key={component.props.children}>
+                  <ListItem key={uuidv4()}>
                     {component}
                   </ListItem>
                 );
@@ -763,6 +798,7 @@ const NavDrawer = (props) => {
           </List>
         </div>
         <Divider />
+        
       </Drawer>
     </div>
   );

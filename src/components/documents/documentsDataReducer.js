@@ -1,6 +1,6 @@
 import { createAsyncThunk, createEntityAdapter, createSlice, } from "@reduxjs/toolkit";
 import axiosInstance from "../../services/axiosApi";
-import { fetchDocuments, updateDocument } from "../../services/thunks";
+import { fetchDocuments, updateDocument, fetchOrderSummaryInfo } from "../../services/thunks";
 
 
 
@@ -16,7 +16,9 @@ const documentsSlice = createSlice({
 		resetDocuments: documentsAdapter.removeAll,
 	},
 	extraReducers: (builder) => {
-		builder.addCase(fetchDocuments.fulfilled, documentsAdapter.upsertMany);
+		builder.addCase(fetchOrderSummaryInfo.fulfilled, ((state, action) => {
+			return documentsAdapter.setAll(state, action.payload.Document);
+		}));
 		builder.addCase(updateDocument.fulfilled, (state, {payload}) => {
 			const {id, ...changes} = payload;
 			documentsAdapter.updateOne(state, {id, changes});

@@ -17,7 +17,7 @@ const InstructionModal = (props) => {
 	const {show, handleHide, title, content, formType} = props;
 	const history = useHistory();
 	const params = useParams();
-//TODO FILTER DOCS AND IMAGES BY ORDER AND LOCATION
+
 	const components = {
 		instructionForm: <InstructionForm handleHide={ handleHide } formType={ formType }/>,
 		documentsList: <DocumentImages handleHide={ handleHide }/>,
