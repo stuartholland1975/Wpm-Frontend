@@ -22,15 +22,7 @@ import Loader from "react-loader-spinner";
 const LocationList = () => {
   const { OrderId } = useParams();
   const dispatch = useDispatch();
-  const [] = useState({
-    title: "",
-    content: "",
-    image: null,
-    image_type: [],
-    date_image: "",
-    location: [],
-    image_file: [],
-  });
+  
 
   const locations = useSelector(selectAllLocations);
   const images = useSelector(selectAllImages);

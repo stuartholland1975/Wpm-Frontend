@@ -1,6 +1,5 @@
 import React, { Fragment } from "react";
 import { AgGridReact } from "ag-grid-react";
-import Container from "react-bootstrap/Container";
 import { selectAllWorkInstructions } from "../work-instructions/InstructionData";
 import { setSelectedInstruction } from "../grid/gridData";
 import { useSelector, useDispatch } from "react-redux";
@@ -30,7 +29,6 @@ const numFormatGrid = (params) => {
 
 const ApplicationInstructionsList = (props) => {
   const appInstructions = useSelector(getAppInstructions);
-  const appWorksheets = useSelector(selectAllAvailableWorksheets);
   const dispatch = useDispatch();
   const columnDefs = [
     /* {
