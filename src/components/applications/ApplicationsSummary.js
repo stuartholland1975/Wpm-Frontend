@@ -11,6 +11,7 @@ import { selectAllApplications } from "./ApplicationData";
 import {useHistory} from "react-router-dom";
 import {removeAllWorksheets}from "../worksheets/WorksheetData";
 import {removeAllWorkInstructions} from "../work-instructions/InstructionData";
+import { setSelectedInstruction } from "../grid/gridData";
 
 
 function formatDate(date) {
@@ -33,6 +34,7 @@ const ApplicationsSummary = () => {
 		dispatch(fetchApplications());
 		dispatch(fetchAvailableWorksheets(`?applied=False`));
 		dispatch(fetchWorkInstructions())
+		dispatch(setSelectedInstruction(false))
 	});
 
 	function handleViewAppSummary(e, {app_number}) {

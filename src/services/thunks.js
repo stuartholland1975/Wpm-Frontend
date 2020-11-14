@@ -245,6 +245,14 @@ export const deleteLocation = createAsyncThunk(
   }
 );
 
+export const fetchAppLocations = createAsyncThunk(
+  'appLocations/fetchAll',
+  async (appId) => {
+    const response = await axiosInstance.get(`/wpm/api/sitelocation/?worksheet__application_number=${appId}`)
+    return response.data
+  }
+)
+
 export const fetchAvailableWorksheets = createAsyncThunk(
   "availableWorksheets/fetchAll",
   async (search) => {

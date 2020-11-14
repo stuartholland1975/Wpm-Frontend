@@ -1,6 +1,5 @@
-import { createAsyncThunk, createEntityAdapter, createSlice, } from "@reduxjs/toolkit";
-import axiosInstance from "../../services/axiosApi";
-import { createLocation, deleteLocation, fetchOrderSummaryInfo, updateLocation } from "../../services/thunks";
+import { createEntityAdapter, createSlice, } from "@reduxjs/toolkit";
+import { createLocation, deleteLocation, fetchOrderSummaryInfo, updateLocation, fetchAppLocations } from "../../services/thunks";
 
 
 
@@ -24,6 +23,7 @@ export const LocationsSlice = createSlice({
 		builder.addCase(updateLocation.fulfilled, locationsAdapter.upsertOne);
 		builder.addCase(createLocation.fulfilled, locationsAdapter.addOne);
 		builder.addCase(deleteLocation.fulfilled, locationsAdapter.removeOne);
+		builder.addCase(fetchAppLocations.fulfilled, locationsAdapter.setAll)
 	},
 });
 

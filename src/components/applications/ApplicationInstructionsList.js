@@ -2,7 +2,8 @@ import React, { Fragment } from "react";
 import { AgGridReact } from "ag-grid-react";
 import Container from "react-bootstrap/Container";
 import { selectAllWorkInstructions } from "../work-instructions/InstructionData";
-import { useSelector } from "react-redux";
+import { setSelectedInstruction } from "../grid/gridData";
+import { useSelector, useDispatch } from "react-redux";
 import CustomNoRowsOverlay from "../grid/CustomNoRowsOverlay";
 import { selectAllAvailableWorksheets } from "../worksheets/WorksheetData";
 import { createSelector } from "@reduxjs/toolkit";
@@ -30,13 +31,14 @@ const numFormatGrid = (params) => {
 const ApplicationInstructionsList = (props) => {
   const appInstructions = useSelector(getAppInstructions);
   const appWorksheets = useSelector(selectAllAvailableWorksheets);
+  const dispatch = useDispatch();
   const columnDefs = [
-    {
+    /* {
       headerName: "Select",
       colId: "select",
       checkboxSelection: true,
       maxWidth: 80,
-    },
+    }, */
     { headerName: "Work Instruction", field: "work_instruction", sort: "asc" },
     { headerName: "Project Title", field: "project_title" },
     {
@@ -63,7 +65,7 @@ const ApplicationInstructionsList = (props) => {
     domLayout: "autoHeight",
     rowSelection: "single",
     rowDeselection: true,
-    //onRowSelected: rowSelectHandler,
+    onRowSelected: selectedRow,
     suppressNoRowsOverlay: false,
     frameworkComponents: {
       //customLoadingOverlay: CustomLoadingOverlay,
@@ -82,6 +84,12 @@ const ApplicationInstructionsList = (props) => {
       },
     },
   };
+
+  function selectedRow(event) {
+    if (event.node.isSelected()) {
+      dispatch(setSelectedInstruction(event.data));
+    }
+  }
 
   return (
     <Fragment>

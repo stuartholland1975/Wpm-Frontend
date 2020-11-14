@@ -8,9 +8,7 @@ import {
   useEffectOnce,
   useLatest,
   useMountedState,
-  useUpdate,
   useUpdateEffect,
-  useWindowSize,
 } from "react-use";
 import { show } from "redux-modal";
 import { fetchOrderSummaryInfo } from "../../services/thunks";
@@ -21,7 +19,7 @@ import InstructionSummary from "../work-instructions/InstructionSummary";
 import { selectAllLocations } from "./locationData";
 import Loader from "react-loader-spinner";
 
-const LocationList = (props) => {
+const LocationList = () => {
   const { OrderId } = useParams();
   const dispatch = useDispatch();
   const [] = useState({
@@ -39,8 +37,6 @@ const LocationList = (props) => {
   const latestImages = useLatest(images);
   const [gridApi, setGridApi] = useState();
   const [, setColumnApi] = useState();
-  const { width } = useWindowSize();
-  const update = useUpdate();
   const isMounted = useMountedState();
   const selectedLocation = useSelector(
     (state) => state.gridData.selectedLocation

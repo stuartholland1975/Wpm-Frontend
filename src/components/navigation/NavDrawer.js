@@ -5,7 +5,12 @@ import { makeStyles } from "@material-ui/core/styles";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import HomeIcon from "@material-ui/icons/Home";
 import ListIcon from "@material-ui/icons/List";
+import DashboardIcon from '@material-ui/icons/Dashboard';
+import BuildIcon from '@material-ui/icons/Build';
+import Icon from '@material-ui/core/Icon';
+
 import { faPoundSign } from "@fortawesome/free-solid-svg-icons";
+import { faHardHat } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import LockOpenIcon from "@material-ui/icons/LockOpen";
 import { useConfirm } from "material-ui-confirm";
@@ -751,20 +756,26 @@ const NavDrawer = (props) => {
     },
     {
       id: uuidv4(),
+      text: "DashBoard",
+      icon: <DashboardIcon />,
+      onClick: () => history.push("/"),
+    },
+    {
+      id: uuidv4(),
       text: "Work Instructions",
-      icon: <ListIcon />,
+      icon: <FontAwesomeIcon icon={faHardHat} size="lg" />,
       onClick: () => history.push("/work-instructions"),
     },
     {
       id: uuidv4(),
       text: "Activities",
-      icon: <ListIcon />,
+      icon: <BuildIcon/>,
       onClick: () => history.push("/activities"),
     },
     {
       id: uuidv4(),
       text: "Applications",
-      icon: <FontAwesomeIcon icon={faPoundSign} />,
+      icon: <FontAwesomeIcon icon={faPoundSign} size='lg' />,
       onClick: () => history.push("/commercial/applications/summary"),
     },
     {
