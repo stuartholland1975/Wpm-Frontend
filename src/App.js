@@ -12,6 +12,7 @@ import LocationList from './components/locations/LocationList';
 import InstructionDetail from './components/work-instructions/InstructionDetail';
 import WorkProgressTable from "./components/worksheets/WorkProgressTable";
 import ApplicationsSummary from "./components/applications/ApplicationsSummary";
+import ApplicationDetail from "./components/applications/ApplicationDetail"
 
 
 const useStyles = makeStyles({
@@ -42,6 +43,7 @@ const App = (props) => {
                     <Route path="/work-instructions/summary/items/:OrderId" exact component={InstructionDetail}/>
                     <Route path="/work-instructions/summary/worksheets/:OrderId" exact component={WorkProgressTable}/>
                     <Route path="/commercial/applications/summary/" exact component={ApplicationsSummary}/>
+                    <Route path="/commercial/applications/detail/:appId" exact component={ApplicationDetail}/>
                 </Switch>
             </div>
         </div>

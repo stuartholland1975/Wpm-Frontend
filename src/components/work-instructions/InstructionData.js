@@ -3,7 +3,8 @@ import {
     deleteWorkInstruction,
     fetchWorkInstructions,
     newWorkInstruction,
-    updateWorkInstruction
+	updateWorkInstruction,
+	fetchAppInstructions
 } from "../../services/thunks";
 
 
@@ -35,8 +36,14 @@ export const workInstructionsSlice = createSlice({
 			deleteWorkInstruction.fulfilled,
 			workInstructionsAdapter.removeOne,
 		);
+		builder.addCase(
+			fetchAppInstructions.fulfilled,
+			workInstructionsAdapter.setAll,
+		);
 	},
 });
+
+export const {removeAllWorkInstructions} = workInstructionsSlice.actions
 
 export const {
 	selectById: selectWorkInstructionById,

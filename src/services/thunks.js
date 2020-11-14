@@ -33,12 +33,20 @@ export const fetchSupervisors = createAsyncThunk(
   }
 );
 
+export const fetchAppInstructions = createAsyncThunk(
+  "appInstructions/fetchAll",
+  async (appNumber) => {
+    const appInstructions = await axiosInstance.get(`/wpm/api/orderheader/?orderdetail__worksheet__application_number=${appNumber}`)
+    return appInstructions.data
+  }
+)
+
 export const fetchWorkInstructions = createAsyncThunk(
   "workInstructions/fetchAll",
   async () => {
     const headers = await axiosInstance.get("/wpm/api/orderheader/");
     const documents = await axiosInstance.get("/wpm/api/documents/");
-    const instructionData = headers.data.map((element, index) => {
+    const instructionData = headers.data.map((element) => {
       return {
         ...element,
         document_count: documents.data.filter(
@@ -239,9 +247,9 @@ export const deleteLocation = createAsyncThunk(
 
 export const fetchAvailableWorksheets = createAsyncThunk(
   "availableWorksheets/fetchAll",
-  async () => {
+  async (search) => {
     const worksheetData = await axiosInstance.get(
-      "/wpm/api/worksheet/?applied=False"
+      `/wpm/api/worksheet/${search}`
     );
     return worksheetData.data;
   }

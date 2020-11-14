@@ -20,6 +20,8 @@ const WorksheetSlice = createSlice({
 
 });
 
+export const {removeAllWorksheets} = WorksheetSlice.actions
+
 export const {selectAll: selectAllAvailableWorksheets} = worksheetAdapter.getSelectors(state => state.worksheets)
 
 export default WorksheetSlice.reducer

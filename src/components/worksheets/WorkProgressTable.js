@@ -34,7 +34,6 @@ const dataSelector = createSelector(
 );
 
 const WorkProgressTable = (props) => {
-	let cellDefs = [];
 	const rowData = useSelector(dataSelector);
 	const confirm = useConfirm();
 	const dispatch = useDispatch();

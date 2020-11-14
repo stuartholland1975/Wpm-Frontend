@@ -8,6 +8,9 @@ import AvailableOrderList from "../commercial/AvailableOrderList";
 import AvailableWorksheetsList from "../commercial/AvailableWorksheetsList";
 import CommercialCard from "../ui-components/CommercialCard";
 import { selectAllApplications } from "./ApplicationData";
+import {useHistory} from "react-router-dom";
+import {removeAllWorksheets}from "../worksheets/WorksheetData";
+import {removeAllWorkInstructions} from "../work-instructions/InstructionData";
 
 
 function formatDate(date) {
@@ -21,16 +24,23 @@ const numFormat = (num) => {
 };
 
 const ApplicationsSummary = () => {
-
+	const history = useHistory()
 	const dispatch = useDispatch();
 	const applications = useSelector(selectAllApplications).sort(function (a, b) {
             return a["app_number"] - b["app_number"];
         });
 	useEffectOnce(() => {
 		dispatch(fetchApplications());
-		dispatch(fetchAvailableWorksheets());
+		dispatch(fetchAvailableWorksheets(`?applied=False`));
 		dispatch(fetchWorkInstructions())
 	});
+
+	function handleViewAppSummary(e, {app_number}) {
+		e.preventDefault()
+		dispatch(removeAllWorksheets())
+		dispatch(removeAllWorkInstructions())
+        history.push({pathname: `/commercial/applications/detail/${app_number}`})
+    }
 	return (
 		<Container fluid>
 
@@ -51,7 +61,7 @@ const ApplicationsSummary = () => {
 								textValueMid={ numFormat(application_value) }
 								textLabelBtm="STATUS:"
 								textValueBtm={ app_current ? "OPEN" : "CLOSED" }
-								footer={ <a href="#" onClick={ (e) => console.log(e, item) }>View
+								footer={ <a href="#"onClick={(e) => handleViewAppSummary(e, item)}>View
 									Application</a> }
 								titleStyle={ app_current ? {color: "navy", textAlign: "center"} : {
 									color: "",
