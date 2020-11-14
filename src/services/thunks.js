@@ -5,7 +5,6 @@ import {
 } from "@reduxjs/toolkit";
 import axiosInstance from "./axiosApi";
 
-
 export const fetchActivities = createAsyncThunk(
   "activities/fetchAll",
   async () => {
@@ -39,11 +38,16 @@ export const fetchWorkInstructions = createAsyncThunk(
   async () => {
     const headers = await axiosInstance.get("/wpm/api/orderheader/");
     const documents = await axiosInstance.get("/wpm/api/documents/");
-	const instructionData = headers.data.map((element, index) => { 
-		return {...element, document_count:documents.data.filter(obj => obj.work_instruction === element.id).length}
-	});
-	
-    return instructionData
+    const instructionData = headers.data.map((element, index) => {
+      return {
+        ...element,
+        document_count: documents.data.filter(
+          (obj) => obj.work_instruction === element.id
+        ).length,
+      };
+    });
+
+    return instructionData;
   }
 );
 
@@ -129,11 +133,30 @@ export const deleteInstructionDetail = createAsyncThunk(
   }
 );
 
+export const fetchApplications = createAsyncThunk(
+  "applications/fetchAll",
+  async () => {
+    const applications = await axiosInstance.get("/wpm/api/applications/");
+    return applications.data;
+  }
+);
+
 export const newWorksheet = createAsyncThunk(
   "worksheet/addOne",
   async (apiObject) => {
     const response = await axiosInstance.post(`/wpm/api/worksheet/`, apiObject);
     return response.data;
+  }
+);
+
+export const updateWorksheet = createAsyncThunk(
+  "worksheet/updateOne",
+  async (apiObject) => {
+    const response = await axiosInstance.patch(
+      `/wpm/api/worksheet/${apiObject.id}/`,
+      apiObject
+    );
+    return response.data.id;
   }
 );
 
@@ -211,6 +234,16 @@ export const deleteLocation = createAsyncThunk(
       `/wpm/api/sitelocation/${locationId}/`
     );
     return locationId;
+  }
+);
+
+export const fetchAvailableWorksheets = createAsyncThunk(
+  "availableWorksheets/fetchAll",
+  async () => {
+    const worksheetData = await axiosInstance.get(
+      "/wpm/api/worksheet/?applied=False"
+    );
+    return worksheetData.data;
   }
 );
 

@@ -11,6 +11,7 @@ import WpmModal from './components/ui-components/InstructionModal';
 import LocationList from './components/locations/LocationList';
 import InstructionDetail from './components/work-instructions/InstructionDetail';
 import WorkProgressTable from "./components/worksheets/WorkProgressTable";
+import ApplicationsSummary from "./components/applications/ApplicationsSummary";
 
 
 const useStyles = makeStyles({
@@ -40,6 +41,7 @@ const App = (props) => {
                     <Route path="/work-instructions/summary/locations/:OrderId" exact component={LocationList}/>
                     <Route path="/work-instructions/summary/items/:OrderId" exact component={InstructionDetail}/>
                     <Route path="/work-instructions/summary/worksheets/:OrderId" exact component={WorkProgressTable}/>
+                    <Route path="/commercial/applications/summary/" exact component={ApplicationsSummary}/>
                 </Switch>
             </div>
         </div>

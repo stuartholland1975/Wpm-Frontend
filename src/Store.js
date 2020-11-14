@@ -15,6 +15,9 @@ import ImagesReducer from "./components/images/ImageData"
 import { InstructionHeaderSlice } from "./services/thunks"
 import {SupervisorsSlice} from "./components/supervisors/SupervisorsData";
 import ActivitiesReducer from "./components/activities/activityData"
+import ApplicationsReducer from "./components/applications/ApplicationData";
+import WorksheetsReducer from "./components/worksheets/WorksheetData";
+
 
 const rootReducer = combineReducers({
 	workInstructions: WorkInstructionsReducer,
@@ -31,7 +34,9 @@ const rootReducer = combineReducers({
 	gridData: gridReducer,
 	instructionHeader: InstructionHeaderSlice.reducer,
 	editedRow: SelectedRowSlice.reducer,
-	supervisors: SupervisorsSlice.reducer
+	supervisors: SupervisorsSlice.reducer,
+	applications: ApplicationsReducer,
+	worksheets: WorksheetsReducer,
 
 });
 

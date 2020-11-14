@@ -132,9 +132,9 @@ const InstructionList = () => {
     dispatch(resetGridRow());
   });
 
-  function nodeSelected() {
+  function nodeSelected(event) {
     const selectedNode = gridOptions.api.getSelectedNodes();
-    if (selectedNode.length > 0) {
+    if (event.node.isSelected()) {
       dispatch(setSelectedRow(selectedNode[0].data));
     }
   }

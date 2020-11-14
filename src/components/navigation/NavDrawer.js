@@ -17,12 +17,15 @@ import {
   deleteWorkInstruction,
   deleteLocation,
   deleteInstructionDetail,
+  updateWorksheet,
+  fetchApplications,
 } from "../../services/thunks";
 import {
   setClickedLocation,
   setSelectedBillItem,
   setSelectedLocation,
   setSelectedRow,
+  selectAllEditedRows,
 } from "../grid/gridData";
 import LetterM from "../icons/letter-m.png";
 import LetterP from "../icons/letter-p.png";
@@ -35,6 +38,7 @@ import {
 } from "../ui-components/Buttons";
 import Slide from "@material-ui/core/Slide";
 import { v4 as uuidv4 } from "uuid";
+import { selectAllApplications } from "../applications/ApplicationData";
 
 const drawerWidth = 260;
 
@@ -74,7 +78,9 @@ const NavDrawer = (props) => {
   const { history } = props;
   const location = useLocation();
   const dispatch = useDispatch();
+  const applications = useSelector(selectAllApplications);
   const selectedRow = useSelector((state) => state.gridData.selectedRow);
+  const editedRows = useSelector(selectAllEditedRows);
   const selectedLocation = useSelector(
     (state) => state.gridData.selectedLocation
   );
@@ -82,6 +88,37 @@ const NavDrawer = (props) => {
     (state) => state.gridData.selectedBillItem
   );
   const confirm = useConfirm();
+
+  const postNewWorksheet = () => {
+    if (editedRows.length > 0) {
+      const currentApp = applications.filter((obj) => obj.app_current === true);
+      editedRows.map((item) =>
+        dispatch(
+          updateWorksheet({
+            ...item,
+            application_number: currentApp[0].app_number,
+            applied: true,
+          })
+        ).then(() => dispatch(fetchApplications()))
+      );
+    } else {
+      confirm({
+        title: "NO WORKSHEET SELECTED",
+        cancellationButtonProps: {
+          disabled: true,
+          hidden: true,
+        },
+        confirmationButtonProps: {
+          variant: "contained",
+          autoFocus: true,
+        },
+        dialogProps: {
+          TransitionComponent: Slide,
+          disableBackdropClick: true,
+        },
+      });
+    }
+  };
 
   const handleOpenCreate = (name, content, title) => () => {
     dispatch(
@@ -673,6 +710,23 @@ const NavDrawer = (props) => {
     ],
   };
 
+  const applicationsBarButtons = {
+    actionButtons: [
+      {
+        component: (
+          <GreenButton
+            id={uuidv4()}
+            type="button"
+            fullWidth
+            onClick={postNewWorksheet}
+          >
+            ADD ITEMS TO APPLICATION
+          </GreenButton>
+        ),
+      },
+    ],
+  };
+
   const atWorkInstructions = location.pathname === "/work-instructions";
   const atLocations = location.pathname.startsWith(
     "/work-instructions/summary/locations/"
@@ -682,6 +736,10 @@ const NavDrawer = (props) => {
   );
   const atWorksheets = location.pathname.startsWith(
     "/work-instructions/summary/worksheets/"
+  );
+
+  const atApplications = location.pathname.startsWith(
+    "/commercial/applications/summary"
   );
 
   const itemsList = [
@@ -707,7 +765,7 @@ const NavDrawer = (props) => {
       id: uuidv4(),
       text: "Applications",
       icon: <FontAwesomeIcon icon={faPoundSign} />,
-      onClick: () => console.log("APPS"),
+      onClick: () => history.push("/commercial/applications/summary"),
     },
     {
       text: "TEST",
@@ -833,6 +891,16 @@ const NavDrawer = (props) => {
               return (
                 <List>
                   <ListItem key={uuidv4()}>{component}</ListItem>
+                </List>
+              );
+            })}
+
+          {atApplications &&
+            applicationsBarButtons.actionButtons.map((item) => {
+              const { component } = item;
+              return (
+                <List>
+                  <ListItem>{component}</ListItem>
                 </List>
               );
             })}

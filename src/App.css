@@ -14,3 +14,11 @@
   vertical-align: middle;
   padding: 0px;
 }
+
+.wpm-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  text-transform: uppercase;
+  vertical-align: middle;
+}
