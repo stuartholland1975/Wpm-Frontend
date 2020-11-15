@@ -63,7 +63,7 @@ const ApplicationsSummary = () => {
 								textValueMid={ numFormat(application_value) }
 								textLabelBtm="STATUS:"
 								textValueBtm={ app_current ? "OPEN" : "CLOSED" }
-								footer={ <a href="#"onClick={(e) => handleViewAppSummary(e, item)}>View
+								footer={ <a href="#" onClick={(e) => handleViewAppSummary(e, item)}>View
 									Application</a> }
 								titleStyle={ app_current ? {color: "navy", textAlign: "center"} : {
 									color: "",
