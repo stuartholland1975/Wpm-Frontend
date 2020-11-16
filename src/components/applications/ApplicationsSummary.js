@@ -12,6 +12,7 @@ import {useHistory} from "react-router-dom";
 import {removeAllWorksheets}from "../worksheets/WorksheetData";
 import {removeAllWorkInstructions} from "../work-instructions/InstructionData";
 import { setSelectedInstruction } from "../grid/gridData";
+import {GreyButton} from "../ui-components/Buttons"
 
 
 function formatDate(date) {
@@ -37,8 +38,8 @@ const ApplicationsSummary = () => {
 		dispatch(setSelectedInstruction(false))
 	});
 
-	function handleViewAppSummary(e, {app_number}) {
-		e.preventDefault()
+	function handleViewAppSummary({app_number}) {
+		
 		dispatch(removeAllWorksheets())
 		dispatch(removeAllWorkInstructions())
         history.push({pathname: `/commercial/applications/detail/${app_number}`})
@@ -63,8 +64,7 @@ const ApplicationsSummary = () => {
 								textValueMid={ numFormat(application_value) }
 								textLabelBtm="STATUS:"
 								textValueBtm={ app_current ? "OPEN" : "CLOSED" }
-								footer={ <a href="#" onClick={(e) => handleViewAppSummary(e, item)}>View
-									Application</a> }
+								footer={ <GreyButton onClick={() => handleViewAppSummary(item)} fullWidth>View Applcation</GreyButton> }
 								titleStyle={ app_current ? {color: "navy", textAlign: "center"} : {
 									color: "",
 									textAlign: "center"

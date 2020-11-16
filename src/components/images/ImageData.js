@@ -1,6 +1,6 @@
 import { createAsyncThunk, createEntityAdapter, createSlice, } from "@reduxjs/toolkit";
 import axiosInstance from "../../services/axiosApi";
-import { fetchOrderSummaryInfo } from "../../services/thunks";
+import { fetchOrderSummaryInfo, fetchSelectedImages } from "../../services/thunks";
 
 export const updateImage = createAsyncThunk(
 	"images/upsertOne",
@@ -49,6 +49,24 @@ export const ImagesSlice = createSlice({
 		builder.addCase(fetchOrderSummaryInfo.fulfilled, ((state, action) => {
 			return imagesAdapter.setAll(state,
 				action.payload.Image.map(({construction_image, image_type, title, id, site_location, gps_lat, gps_long, gps_date, exif, location}) => {
+					const container = {};
+					container.title = title;
+					container.construction_image = construction_image;
+					container.imageType = image_type;
+					container.id = id;
+					container.imageTypeDescription = image_type + "  Construction Image";
+					container.locationRef = site_location;
+					container.gps_lat = gps_lat;
+					container.gps_long = gps_long;
+					container.gps_date = gps_date;
+					container.exif = exif;
+					container.location = location;
+					return container;
+				}));
+		}));
+		builder.addCase(fetchSelectedImages.fulfilled, ((state, action) => {
+			return imagesAdapter.setAll(state,
+				action.payload.map(({construction_image, image_type, title, id, site_location, gps_lat, gps_long, gps_date, exif, location}) => {
 					const container = {};
 					container.title = title;
 					container.construction_image = construction_image;

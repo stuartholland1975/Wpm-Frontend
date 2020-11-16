@@ -62,7 +62,7 @@ const ApplicationInstructionsList = (props) => {
     paginationPageSize: 15,
     domLayout: "autoHeight",
     rowSelection: "single",
-    rowDeselection: true,
+    // rowDeselection: true,
     onRowSelected: selectedRow,
     suppressNoRowsOverlay: false,
     frameworkComponents: {

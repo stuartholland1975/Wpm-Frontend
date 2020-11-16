@@ -7,8 +7,9 @@ import HomeIcon from "@material-ui/icons/Home";
 import ListIcon from "@material-ui/icons/List";
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import BuildIcon from '@material-ui/icons/Build';
-import Icon from '@material-ui/core/Icon';
-
+import SaveIcon from '@material-ui/icons/Save';
+import CloudUploadIcon from '@material-ui/icons/CloudUpload';
+import DeleteIcon from '@material-ui/icons/Delete';
 import { faPoundSign } from "@fortawesome/free-solid-svg-icons";
 import { faHardHat } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -31,6 +32,7 @@ import {
   setSelectedLocation,
   setSelectedRow,
   selectAllEditedRows,
+  setSelectedInstruction,
 } from "../grid/gridData";
 import LetterM from "../icons/letter-m.png";
 import LetterP from "../icons/letter-p.png";
@@ -104,7 +106,10 @@ const NavDrawer = (props) => {
             application_number: currentApp[0].app_number,
             applied: true,
           })
-        ).then(() => dispatch(fetchApplications()))
+        ).then(() => {
+          dispatch(fetchApplications())
+          dispatch(setSelectedInstruction(false))
+        })
       );
     } else {
       confirm({
@@ -426,6 +431,7 @@ const NavDrawer = (props) => {
             type="button"
             onClick={handleDeleteInstruction}
             fullWidth
+            startIcon={<DeleteIcon />}
           >
             DELETE INSTRUCTION
           </RedButton>
@@ -488,6 +494,7 @@ const NavDrawer = (props) => {
             type="button"
             onClick={handleDeleteLocation}
             fullWidth
+            startIcon={<DeleteIcon />}
           >
             DELETE LOCATION
           </RedButton>
@@ -566,6 +573,7 @@ const NavDrawer = (props) => {
                 "UPLOAD NEW IMAGE"
               )
             }
+            startIcon={<CloudUploadIcon />}
           >
             UPLOAD IMAGE
           </GreenButton>
@@ -582,6 +590,7 @@ const NavDrawer = (props) => {
               "documentForm",
               "UPLOAD NEW DOCUMENT"
             )}
+            startIcon={<CloudUploadIcon />}
           >
             UPLOAD DOCUMENT
           </GreenButton>
@@ -627,6 +636,7 @@ const NavDrawer = (props) => {
             type="button"
             fullWidth
             onClick={handleDeleteInstructionDetail}
+            startIcon={<DeleteIcon />}
           >
             DELETE BILL ITEM
           </RedButton>
@@ -674,7 +684,7 @@ const NavDrawer = (props) => {
     actionButtons: [
       {
         component: (
-          <GreenButton id={uuidv4()} type="button" fullWidth>
+          <GreenButton id={uuidv4()} type="button" fullWidth startIcon={<CloudUploadIcon />}>
             UPLOAD DOCUMENT
           </GreenButton>
         ),
@@ -695,6 +705,7 @@ const NavDrawer = (props) => {
               "worksheetForm",
               "SAVE WORK PROGRESS"
             )}
+            startIcon={<SaveIcon />}
           >
             SAVE WORK PROGRESS
           </GreenButton>
