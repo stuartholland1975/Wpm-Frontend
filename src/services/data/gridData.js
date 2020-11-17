@@ -1,5 +1,5 @@
 import { createSlice, createEntityAdapter } from "@reduxjs/toolkit";
-import { updateWorksheet } from "../../services/thunks";
+import { updateWorksheet } from "../thunks";
 
 const editedRowAdapter = createEntityAdapter();
 

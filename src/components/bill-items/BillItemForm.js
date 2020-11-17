@@ -8,10 +8,10 @@ import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffectOnce } from "react-use";
 import { fetchActivities, newInstructionDetail, selectAllInstructionHeaders } from "../../services/thunks";
-import { selectAllActivities } from "../activities/activityData";
-import { selectAllLocations } from "../locations/locationData";
+import { selectAllActivities } from "../../services/data/activityData";
+import { selectAllLocations } from "../../services/data/locationData";
 import { BlueButton, GreyButton } from "../ui-components/Buttons";
-import { selectAllInstructionDetails } from "../work-instructions/instructionDetailData";
+import { selectAllInstructionDetails } from "../../services/data/instructionDetailData";
 
 //TODO EDIT BILL ITEM
 

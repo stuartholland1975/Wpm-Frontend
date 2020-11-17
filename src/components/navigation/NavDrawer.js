@@ -33,7 +33,7 @@ import {
   setSelectedRow,
   selectAllEditedRows,
   setSelectedInstruction,
-} from "../grid/gridData";
+} from "../../services/data/gridData";
 import LetterM from "../icons/letter-m.png";
 import LetterP from "../icons/letter-p.png";
 import LetterW from "../icons/letter-w.png";
@@ -45,7 +45,7 @@ import {
 } from "../ui-components/Buttons";
 import Slide from "@material-ui/core/Slide";
 import { v4 as uuidv4 } from "uuid";
-import { selectAllApplications } from "../applications/ApplicationData";
+import { selectAllApplications } from "../../services/data/ApplicationData";
 
 const drawerWidth = 260;
 

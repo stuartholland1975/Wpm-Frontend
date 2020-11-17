@@ -1,9 +1,9 @@
 import { createSelector } from "@reduxjs/toolkit";
-import { selectAllAvailableWorksheets } from "../components/worksheets/WorksheetData";
-import { selectAllImages } from "../components/images/ImageData";
-import { selectAllLocations } from "../components/locations/locationData";
-import { selectAllWorkInstructions } from "../components/work-instructions/InstructionData";
-import { selectAllInstructionDetails } from "../components/work-instructions/instructionDetailData";
+import { selectAllAvailableWorksheets } from "./data/WorksheetData";
+import { selectAllImages } from "./data/ImageData";
+import { selectAllLocations } from "./data/locationData";
+import { selectAllWorkInstructions } from "./data/InstructionData";
+import { selectAllInstructionDetails } from "./data/instructionDetailData";
 
 const selectedOrder = (state) => state.gridData.selectedInstruction;
 

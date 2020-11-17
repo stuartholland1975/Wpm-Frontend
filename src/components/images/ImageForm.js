@@ -7,10 +7,10 @@ import FocusLock from "react-focus-lock";
 import { useForm } from "react-hook-form";
 import Resizer from "react-image-file-resizer";
 import { useDispatch, useSelector } from "react-redux";
-import { setFormData } from "../forms/FormData";
-import { setSelectedLocation } from "../grid/gridData";
+import { setFormData } from "../../services/data/FormData";
+import { setSelectedLocation } from "../../services/data/gridData";
 import { BlueButton, GreyButton } from "../ui-components/Buttons";
-import { newImage, updateImage } from "./ImageData";
+import { newImage, updateImage } from "../../services/data/ImageData";
 
 const useStyles = makeStyles((theme) => ({
 	root: {

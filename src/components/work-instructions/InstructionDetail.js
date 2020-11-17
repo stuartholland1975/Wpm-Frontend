@@ -2,8 +2,8 @@ import { AgGridReact } from "ag-grid-react";
 import React, { Fragment, useState } from "react";
 import { Container } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { setSelectedBillItem } from "../grid/gridData";
-import { selectAllInstructionDetails } from "./instructionDetailData";
+import { setSelectedBillItem } from "../../services/data/gridData";
+import { selectAllInstructionDetails } from "../../services/data/instructionDetailData";
 import InstructionSummary from "./InstructionSummary";
 import { ChangeDetectionStrategyType } from "ag-grid-react/lib/changeDetectionService";
 

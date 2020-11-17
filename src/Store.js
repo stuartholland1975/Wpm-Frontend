@@ -2,21 +2,21 @@ import { combineReducers } from "redux";
 import { configureStore } from "@reduxjs/toolkit";
 import logger from "redux-logger";
 import { reducer as modal } from "redux-modal";
-import WorkInstructionsReducer from "./components/work-instructions/InstructionData";
-import WorkTypeReducer from "./components/worktypes/workTypesDataReducer";
-import AreasReducer from "./components/areas/areaDataReducer";
-import DocumentsReducer from "./components/documents/documentsDataReducer";
-import formDataReducer from "./components/forms/FormData";
+import WorkInstructionsReducer from "./services/data/InstructionData";
+import WorkTypeReducer from "./services/data/workTypesData";
+import AreasReducer from "./services/data/areaData";
+import DocumentsReducer from "./services/data/documentsData";
+import formDataReducer from "./services/data/FormData";
 import componentsReducer from "./components/ui-components/componentsReducer";
-import gridReducer, {SelectedRowSlice} from "./components/grid/gridData";
-import LocationsReducer from "./components/locations/locationData";
-import InstructionDetailSlice from "./components/work-instructions/instructionDetailData";
-import ImagesReducer from "./components/images/ImageData"
+import gridReducer, {SelectedRowSlice} from "./services/data/gridData";
+import LocationsReducer from "./services/data/locationData";
+import InstructionDetailSlice from "./services/data/instructionDetailData";
+import ImagesReducer from "./services/data/ImageData"
 import { InstructionHeaderSlice } from "./services/thunks"
-import {SupervisorsSlice} from "./components/supervisors/SupervisorsData";
-import ActivitiesReducer from "./components/activities/activityData"
-import ApplicationsReducer from "./components/applications/ApplicationData";
-import WorksheetsReducer from "./components/worksheets/WorksheetData";
+import {SupervisorsSlice} from "./services/data/SupervisorsData";
+import ActivitiesReducer from "./services/data/activityData"
+import ApplicationsReducer from "./services/data/ApplicationData";
+import WorksheetsReducer from "./services/data/WorksheetData";
 
 
 const rootReducer = combineReducers({

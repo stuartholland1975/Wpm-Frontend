@@ -1,5 +1,5 @@
 import { createEntityAdapter, createSlice, } from "@reduxjs/toolkit";
-import { createLocation, deleteLocation, fetchOrderSummaryInfo, updateLocation, fetchAppLocations } from "../../services/thunks";
+import { createLocation, deleteLocation, fetchOrderSummaryInfo, updateLocation, fetchAppLocations } from "../thunks";
 
 
 

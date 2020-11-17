@@ -13,10 +13,10 @@ import {
 import { show } from "redux-modal";
 import { fetchOrderSummaryInfo } from "../../services/thunks";
 import CustomNoRowsOverlay from "../grid/CustomNoRowsOverlay";
-import { setClickedLocation, setSelectedLocation } from "../grid/gridData";
-import { selectAllImages } from "../images/ImageData";
+import { setClickedLocation, setSelectedLocation } from "../../services/data/gridData";
+import { selectAllImages } from "../../services/data/ImageData";
 import InstructionSummary from "../work-instructions/InstructionSummary";
-import { selectAllLocations } from "./locationData";
+import { selectAllLocations } from "../../services/data/locationData";
 import Loader from "react-loader-spinner";
 
 const LocationList = () => {

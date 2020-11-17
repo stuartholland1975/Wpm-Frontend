@@ -7,11 +7,11 @@ import { fetchApplications, fetchAvailableWorksheets, fetchWorkInstructions } fr
 import AvailableOrderList from "../commercial/AvailableOrderList";
 import AvailableWorksheetsList from "../commercial/AvailableWorksheetsList";
 import CommercialCard from "../ui-components/CommercialCard";
-import { selectAllApplications } from "./ApplicationData";
+import { selectAllApplications } from "../../services/data/ApplicationData";
 import {useHistory} from "react-router-dom";
-import {removeAllWorksheets}from "../worksheets/WorksheetData";
-import {removeAllWorkInstructions} from "../work-instructions/InstructionData";
-import { setSelectedInstruction } from "../grid/gridData";
+import {removeAllWorksheets}from "../../services/data/WorksheetData";
+import {removeAllWorkInstructions} from "../../services/data/InstructionData";
+import { setSelectedInstruction } from "../../services/data/gridData";
 import {GreyButton} from "../ui-components/Buttons"
 
 

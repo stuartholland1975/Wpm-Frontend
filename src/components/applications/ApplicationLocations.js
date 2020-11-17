@@ -3,7 +3,7 @@ import { AgGridReact } from "ag-grid-react";
 import { useSelector, useDispatch } from "react-redux";
 import CustomNoRowsOverlay from "../grid/CustomNoRowsOverlay";
 import { ChangeDetectionStrategyType } from "ag-grid-react/lib/changeDetectionService";
-import { setClickedLocation } from "../grid/gridData";
+import { setClickedLocation } from "../../services/data/gridData";
 import { show } from "redux-modal";
 import {appOrderLocations} from "../../services/selectors"
 

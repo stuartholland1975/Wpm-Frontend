@@ -1,5 +1,5 @@
 import { createEntityAdapter, createSlice } from "@reduxjs/toolkit";
-import { fetchAvailableWorksheets, updateWorksheet } from "../../services/thunks";
+import { fetchAvailableWorksheets, updateWorksheet } from "../thunks";
 
 
 const worksheetAdapter = createEntityAdapter();

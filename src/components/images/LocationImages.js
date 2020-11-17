@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { Carousel } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useUnmount } from "react-use";
-import { setClickedLocation } from "../grid/gridData";
+import { setClickedLocation } from "../../services/data/gridData";
 import { GreyButton } from "../ui-components/Buttons";
-import { selectAllImages } from "./ImageData";
+import { selectAllImages } from "../../services/data/ImageData";
 
 const LocationImages = (props) => {
   const dispatch = useDispatch();

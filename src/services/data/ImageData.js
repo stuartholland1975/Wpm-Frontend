@@ -1,6 +1,6 @@
 import { createAsyncThunk, createEntityAdapter, createSlice, } from "@reduxjs/toolkit";
-import axiosInstance from "../../services/axiosApi";
-import { fetchOrderSummaryInfo, fetchSelectedImages } from "../../services/thunks";
+import axiosInstance from "../axiosApi";
+import { fetchOrderSummaryInfo, fetchSelectedImages } from "../thunks";
 
 export const updateImage = createAsyncThunk(
 	"images/upsertOne",

@@ -3,7 +3,7 @@ import { CardDeck } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import SummaryCard from "../ui-components/SummaryCard";
-import { selectAllInstructionDetails } from "./instructionDetailData";
+import { selectAllInstructionDetails } from "../../services/data/instructionDetailData";
 import Loader from 'react-loader-spinner';
 
 

@@ -12,7 +12,7 @@ import { useParams } from "react-router-dom";
 import ApplicationInstructionList from "./ApplicationInstructionsList";
 import Container from "react-bootstrap/Container";
 import ApplicationLocations from "./ApplicationLocations";
-import { setSelectedInstruction } from "../grid/gridData";
+import { setSelectedInstruction } from "../../services/data/gridData";
 import { unwrapResult } from "@reduxjs/toolkit";
 import ApplicationBillItems from "./ApplicationBillItems";
 

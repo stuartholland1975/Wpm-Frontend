@@ -3,7 +3,7 @@ import React, { Fragment } from "react";
 import Loader from "react-loader-spinner";
 import { useDispatch, useSelector } from "react-redux";
 import CustomNoRowsOverlay from "../grid/CustomNoRowsOverlay";
-import { setSelectedInstruction } from "../grid/gridData";
+import { setSelectedInstruction } from "../../services/data/gridData";
 import { getAvailableValues } from "../../services/selectors";
 
 const numFormatGrid = (params) => {

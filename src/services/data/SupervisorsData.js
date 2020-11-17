@@ -1,4 +1,4 @@
-import {fetchSupervisors} from "../../services/thunks";
+import {fetchSupervisors} from "../thunks";
 import {createEntityAdapter, createSlice} from "@reduxjs/toolkit";
 
 const supervisorsAdapter = createEntityAdapter()

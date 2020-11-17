@@ -5,7 +5,7 @@ import {
     newWorkInstruction,
 	updateWorkInstruction,
 	fetchAppInstructions
-} from "../../services/thunks";
+} from "../thunks";
 
 
 export const workInstructionsAdapter = createEntityAdapter();

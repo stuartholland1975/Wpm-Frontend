@@ -1,6 +1,5 @@
 import { AgGridReact } from "ag-grid-react";
 import React, { useState, Fragment } from "react";
-import { Container } from "react-bootstrap";
 import Loader from "react-loader-spinner";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffectOnce, useLatest, useUpdateEffect } from "react-use";
@@ -13,13 +12,13 @@ import {
 import {
   resetDocuments,
   selectAllDocuments,
-} from "../documents/documentsDataReducer";
-import { resetGridRow, setSelectedRow } from "../grid/gridData";
-import { resetImages } from "../images/ImageData";
-import { resetLocations } from "../locations/locationData";
-import { fetchWorkTypes } from "../worktypes/workTypesDataReducer";
-import { selectAllWorkInstructions } from "./InstructionData";
-import { resetInstructionDetails } from "./instructionDetailData";
+} from "../../services/data/documentsData";
+import { resetGridRow, setSelectedRow } from "../../services/data/gridData";
+import { resetImages } from "../../services/data/ImageData";
+import { resetLocations } from "../../services/data/locationData";
+import { fetchWorkTypes } from "../../services/data/workTypesData";
+import { selectAllWorkInstructions } from "../../services/data/InstructionData";
+import { resetInstructionDetails } from "../../services/data/instructionDetailData";
 
 const formatNumber = (params) =>
   Math.floor(params.value)

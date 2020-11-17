@@ -4,8 +4,8 @@ import _ from "lodash/fp";
 import React from "react";
 import { Controller } from "react-hook-form";
 import { useSelector } from "react-redux";
-import { selectAllAreas } from "../areas/areaDataReducer";
-import { selectAllWorkTypes } from "../worktypes/workTypesDataReducer";
+import { selectAllAreas } from "../../services/data/areaData";
+import { selectAllWorkTypes } from "../../services/data/workTypesData";
 
 export default function AreaSelect({control, data}) {
 	const areas = useSelector(selectAllAreas);

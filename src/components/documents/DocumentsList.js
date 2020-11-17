@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { GreyButton } from "../ui-components/Buttons";
-import { selectAllDocuments } from "./documentsDataReducer";
+import { selectAllDocuments } from "../../services/data/documentsData";
 
 const DocumentImages = (props) => {
 	const documents = useSelector(selectAllDocuments);

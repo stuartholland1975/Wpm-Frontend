@@ -1,6 +1,6 @@
 import { createAsyncThunk, createEntityAdapter, createSlice, } from "@reduxjs/toolkit";
-import axiosInstance from "../../services/axiosApi";
-import { fetchDocuments, updateDocument, fetchOrderSummaryInfo } from "../../services/thunks";
+import axiosInstance from "../axiosApi";
+import { fetchDocuments, updateDocument, fetchOrderSummaryInfo } from "../thunks";
 
 
 

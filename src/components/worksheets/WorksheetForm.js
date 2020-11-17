@@ -14,8 +14,8 @@ import {
 	selectAllInstructionHeaders,
 	updateInstructionDetailStatus
 } from "../../services/thunks";
-import { resetEditedRow, selectAllEditedRows } from "../grid/gridData";
-import { selectAllSupervisors } from "../supervisors/SupervisorsData";
+import { resetEditedRow, selectAllEditedRows } from "../../services/data/gridData";
+import { selectAllSupervisors } from "../../services/data/SupervisorsData";
 import { BlueButton, GreyButton } from "../ui-components/Buttons";
 
 

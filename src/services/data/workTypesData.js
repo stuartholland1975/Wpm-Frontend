@@ -1,5 +1,5 @@
 import { createAsyncThunk, createEntityAdapter, createSlice, } from "@reduxjs/toolkit";
-import axiosInstance from "../../services/axiosApi";
+import axiosInstance from "../axiosApi";
 
 export const fetchWorkTypes = createAsyncThunk(
 	"workTypes/fetchAll",

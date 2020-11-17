@@ -2,7 +2,7 @@ import { AgGridReact } from "ag-grid-react";
 import moment from "moment";
 import React, { Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { removeEditedRow, setEditedRow } from "../grid/gridData";
+import { removeEditedRow, setEditedRow } from "../../services/data/gridData";
 import { availableWorksheets } from "../../services/selectors";
 
 function formatDate(params) {

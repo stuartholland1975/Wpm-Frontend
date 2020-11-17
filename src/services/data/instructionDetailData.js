@@ -3,7 +3,7 @@ import {
   createEntityAdapter,
   createSlice,
 } from "@reduxjs/toolkit";
-import axiosInstance from "../../services/axiosApi";
+import axiosInstance from "../axiosApi";
 import {
   deleteInstructionDetail,
   fetchOrderSummaryInfo,
@@ -11,7 +11,7 @@ import {
   updateInstructionDetail,
   fetchAppItems,
   fetchAppInstructions,
-} from "../../services/thunks";
+} from "../thunks";
 
 export const instructionDetailAdapter = createEntityAdapter();
 

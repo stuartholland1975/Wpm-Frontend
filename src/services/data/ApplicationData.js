@@ -1,5 +1,5 @@
 import { createEntityAdapter, createSlice } from "@reduxjs/toolkit";
-import {fetchApplications} from "../../services/thunks";
+import {fetchApplications} from "../thunks";
 
 
 const applicationsAdapter = createEntityAdapter();

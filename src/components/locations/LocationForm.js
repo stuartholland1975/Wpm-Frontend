@@ -5,7 +5,7 @@ import React from "react";
 import FocusLock from "react-focus-lock";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { setSelectedLocation } from "../grid/gridData";
+import { setSelectedLocation } from "../../services/data/gridData";
 import { BlueButton, GreyButton } from "../ui-components/Buttons";
 import { createLocation, updateLocation, deleteLocation } from "../../services/thunks";
 

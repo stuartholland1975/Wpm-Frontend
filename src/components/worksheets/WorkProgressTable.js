@@ -6,9 +6,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffectOnce } from "react-use";
 import { fetchSupervisors } from "../../services/thunks";
 import CustomNoRowsOverlay from "../grid/CustomNoRowsOverlay";
-import { setEditedRow } from "../grid/gridData";
+import { setEditedRow } from "../../services/data/gridData";
 import SimpleEditor from "../grid/SimpleEditor";
-import { updateGridOrderItem } from "../work-instructions/instructionDetailData";
+import { updateGridOrderItem } from "../../services/data/instructionDetailData";
 import InstructionSummary from "../work-instructions/InstructionSummary";
 import { inCompleteItems } from "../../services/selectors";
 

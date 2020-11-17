@@ -8,11 +8,11 @@ import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { useRendersCount } from "react-use";
 import { newWorkInstruction, updateWorkInstruction } from "../../services/thunks";
-import { selectAllAreas } from "../areas/areaDataReducer";
-import { updateData } from "../forms/FormData";
-import { setSelectedRow } from "../grid/gridData";
+import { selectAllAreas } from "../../services/data/areaData";
+import { updateData } from "../../services/data/FormData";
+import { setSelectedRow } from "../../services/data/gridData";
 import { BlueButton, GreyButton } from "../ui-components/Buttons";
-import { selectAllWorkTypes } from "../worktypes/workTypesDataReducer";
+import { selectAllWorkTypes } from "../../services/data/workTypesData";
 
 
 //TODO: AREA AND WORKTYPE DEFAULTS CLEAR ON FIRST RERENDER

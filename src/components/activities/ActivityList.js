@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffectOnce } from "react-use";
 import { fetchActivities } from "../../services/thunks";
 import CustomNoRowsOverlay from "../grid/CustomNoRowsOverlay";
-import { selectAllActivities } from "./activityData";
+import { selectAllActivities } from "../../services/data/activityData";
 
 function niceNumber(params = 0.0) {
   return params.value.toLocaleString(undefined, {
