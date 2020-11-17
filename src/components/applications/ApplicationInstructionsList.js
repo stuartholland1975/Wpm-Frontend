@@ -1,24 +1,10 @@
 import React, { Fragment } from "react";
 import { AgGridReact } from "ag-grid-react";
-import { selectAllWorkInstructions } from "../work-instructions/InstructionData";
 import { setSelectedInstruction } from "../grid/gridData";
 import { useSelector, useDispatch } from "react-redux";
 import CustomNoRowsOverlay from "../grid/CustomNoRowsOverlay";
-import { selectAllAvailableWorksheets } from "../worksheets/WorksheetData";
-import { createSelector } from "@reduxjs/toolkit";
 import Loader from "react-loader-spinner";
-
-const getAppInstructions = createSelector(
-  [selectAllAvailableWorksheets, selectAllWorkInstructions],
-  (worksheets, instructions) =>
-    instructions.map((item) => ({
-      ...item,
-      applied_value: worksheets
-        .filter((obj) => obj.order_ref === item.work_instruction)
-        .map((item) => item.value_complete)
-        .reduce((acc, item) => acc + item, 0),
-    }))
-);
+import { appInstructions } from "../../services/selectors";
 
 const numFormatGrid = (params) => {
   return params.value.toLocaleString(undefined, {
@@ -27,18 +13,25 @@ const numFormatGrid = (params) => {
   });
 };
 
-const ApplicationInstructionsList = (props) => {
-  const appInstructions = useSelector(getAppInstructions);
+const ApplicationInstructionsList = () => {
+  const instructions = useSelector(appInstructions);
   const dispatch = useDispatch();
   const columnDefs = [
-    /* {
-      headerName: "Select",
-      colId: "select",
-      checkboxSelection: true,
-      maxWidth: 80,
-    }, */
     { headerName: "Work Instruction", field: "work_instruction", sort: "asc" },
     { headerName: "Project Title", field: "project_title" },
+    {
+      headerName: "Application Labour",
+      field: "applied_labour",
+      type: "numericColumn",
+      valueFormatter: numFormatGrid,
+    },
+    {
+      headerName: "Application Materials",
+      field: "applied_materials",
+      type: "numericColumn",
+
+      valueFormatter: numFormatGrid,
+    },
     {
       headerName: "Application Value",
       field: "applied_value",
@@ -97,7 +90,7 @@ const ApplicationInstructionsList = (props) => {
       <div className="ag-theme-custom-react2">
         <AgGridReact
           gridOptions={gridOptions}
-          rowData={appInstructions}
+          rowData={instructions}
           onGridReady={(params) => params.api.sizeColumnsToFit()}
           immutableData={true}
           getRowNodeId={(data) => data.id}

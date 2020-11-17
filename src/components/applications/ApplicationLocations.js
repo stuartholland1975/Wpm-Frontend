@@ -2,15 +2,10 @@ import React, { Fragment } from "react";
 import { AgGridReact } from "ag-grid-react";
 import { useSelector, useDispatch } from "react-redux";
 import CustomNoRowsOverlay from "../grid/CustomNoRowsOverlay";
-import Loader from "react-loader-spinner";
-import Container from "react-bootstrap/Container";
-import { selectAllImages } from "../images/ImageData";
 import { ChangeDetectionStrategyType } from "ag-grid-react/lib/changeDetectionService";
-import { selectAllLocations } from "../locations/locationData";
-import { createSelector } from "@reduxjs/toolkit";
-import { selectAllAvailableWorksheets } from "../worksheets/WorksheetData";
-import { setClickedLocation, setSelectedLocation } from "../grid/gridData";
+import { setClickedLocation } from "../grid/gridData";
 import { show } from "redux-modal";
+import {appOrderLocations} from "../../services/selectors"
 
 function numFormatGrid(params) {
   return params.value.toLocaleString(undefined, {
@@ -18,37 +13,7 @@ function numFormatGrid(params) {
     maximumFractionDigits: 2,
   });
 }
-const selectedOrder = (state) => state.gridData.selectedInstruction;
 
-const appOrderLocations = createSelector(
-  [
-    selectAllLocations,
-    selectedOrder,
-    selectAllAvailableWorksheets,
-    selectAllImages,
-  ],
-  (locations, order, worksheets, images) => {
-    const orderLocations = locations.filter(
-      (obj) => obj.work_instruction === order.work_instruction
-    );
-    return orderLocations.map((item) => ({
-      ...item,
-      application_value: worksheets
-        .filter((obj) => obj.worksheet_ref === item.id)
-        .map((item) => item.value_complete)
-        .reduce((acc, item) => acc + item, 0),
-      pre_construction_images: images
-        .filter((obj) => obj.location === item.id && obj.imageType === "PRE")
-        .map((item) => item.id).length,
-      post_construction_images: images
-        .filter((obj) => obj.location === item.id && obj.imageType === "POST")
-        .map((item) => item.id).length,
-      misc_construction_images: images
-        .filter((obj) => obj.location === item.id && obj.imageType === "MISC")
-        .map((item) => item.id).length,
-    }));
-  }
-);
 
 export default function ApplicationLocations() {
   const locations = useSelector(appOrderLocations);
@@ -84,15 +49,22 @@ export default function ApplicationLocations() {
       },
     },
     {
+      headerName: "Application Labour",
+      type: "numericColumn",
+      field: "application_labour",
+      valueFormatter: numFormatGrid,
+    },
+    {
+      headerName: "Application Materials",
+      type: "numericColumn",
+      field: "application_materials",
+      valueFormatter: numFormatGrid,
+    },
+    {
       headerName: "Application Value",
       type: "numericColumn",
       field: "application_value",
       cellStyle: { fontWeight: "bold" },
-      /* valueGetter: function (params) {
-
-            const appLocationValue = worksheetsStateRef.current.filter(({worksheet_ref}) => worksheet_ref === params.data.location_ref).map(item => item.value_complete).reduce((acc, item) => acc + item, 0)
-            return (appLocationValue)
-        }, */
       valueFormatter: numFormatGrid,
     },
   ];
@@ -115,11 +87,11 @@ export default function ApplicationLocations() {
     defaultColDef: defaultColDef,
     columnTypes: columnTypes,
     pagination: true,
-    paginationPageSize: 20,
+    paginationPageSize: 5,
     domLayout: "autoHeight",
-    rowSelection: "single",
+
     suppressRowClickSelection: true,
-    // onRowSelected: rowSelected,
+
     suppressNoRowsOverlay: false,
     frameworkComponents: {
       customNoRowsOverlay: CustomNoRowsOverlay,
@@ -142,8 +114,10 @@ export default function ApplicationLocations() {
       link.innerText = params.value;
       link.addEventListener("click", (e) => {
         e.preventDefault();
-        console.log(params)
-        dispatch(setClickedLocation({...params.data, colId: params.colDef.colId}));
+        console.log(params);
+        dispatch(
+          setClickedLocation({ ...params.data, colId: params.colDef.colId })
+        );
         dispatch(
           show("instruction-modal", {
             title: "LOCATION IMAGES",
@@ -156,7 +130,7 @@ export default function ApplicationLocations() {
       link.style = `font-weight: bold; color:${colour}`;
       link.innerText = params.value;
     }
-    
+
     return link;
   }
 

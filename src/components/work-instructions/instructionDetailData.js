@@ -9,6 +9,8 @@ import {
   fetchOrderSummaryInfo,
   newInstructionDetail,
   updateInstructionDetail,
+  fetchAppItems,
+  fetchAppInstructions,
 } from "../../services/thunks";
 
 export const instructionDetailAdapter = createEntityAdapter();
@@ -38,6 +40,7 @@ export const InstructionDetailSlice = createSlice({
       deleteInstructionDetail.fulfilled,
       instructionDetailAdapter.removeOne
     );
+    builder.addCase(fetchAppItems.fulfilled, instructionDetailAdapter.setAll);
   },
 });
 

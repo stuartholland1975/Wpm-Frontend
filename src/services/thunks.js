@@ -253,6 +253,14 @@ export const fetchAppLocations = createAsyncThunk(
   }
 )
 
+export const fetchAppItems = createAsyncThunk(
+  'appItems/fetchAll',
+  async (appId) => {
+    const response = await axiosInstance.get(`/wpm/api/orderdetail/?worksheet__application_number=${appId}`)
+    return response.data
+  }
+)
+
 export const fetchSelectedImages = createAsyncThunk(
   'images/fetchAll',
   async (selection) => {
