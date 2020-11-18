@@ -1,5 +1,5 @@
 import { createEntityAdapter, createSlice } from "@reduxjs/toolkit";
-import { fetchActivities } from "../thunks";
+import { fetchActivities, fetchSelectedActivities } from "../thunks";
 
 const activitiesAdapter = createEntityAdapter();
 const initialState = activitiesAdapter.getInitialState();
@@ -10,6 +10,10 @@ const ActivitySlice = createSlice({
 	extraReducers: builder => {
 		builder.addCase(
 			fetchActivities.fulfilled,
+			activitiesAdapter.setAll
+		);
+		builder.addCase(
+			fetchSelectedActivities.fulfilled,
 			activitiesAdapter.setAll
 		);
 	}

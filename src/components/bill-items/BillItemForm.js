@@ -52,7 +52,9 @@ const BillItemForm = (props) => {
 	const itemTypeOptions = [
 		{id: "BOQ", description: "Original Bill Item"},
 		{id: "VARN", description: "Variation"},
-		{id: "Misc", description: "Misc"}
+		{id: "MISC", description: "Misc"},
+		{id: "FREE", description: "Free"},
+		{id: "DIRECT", description: "Direct"},
 	];
 
 	const activityOptions = useSelector(selectAllActivities);

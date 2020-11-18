@@ -1,9 +1,10 @@
 import React, { Fragment } from "react";
 
+
 const Test = (props) => {
 
 	return <Fragment>
-		TEST
+		<div>TEST</div>
 	</Fragment>;
 };
 export default Test;

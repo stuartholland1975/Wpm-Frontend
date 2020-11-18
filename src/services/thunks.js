@@ -269,6 +269,14 @@ export const fetchSelectedImages = createAsyncThunk(
   }
 )
 
+export const fetchSelectedActivities = createAsyncThunk(
+  'activities/fetchSelected',
+  async (selection) => {
+    const response = await axiosInstance.get(`wpm/api/activity/?activity_in=${selection}`)
+    return response.data
+  }
+)
+
 export const fetchAvailableWorksheets = createAsyncThunk(
   "availableWorksheets/fetchAll",
   async (search) => {

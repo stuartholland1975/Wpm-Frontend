@@ -17,7 +17,7 @@ import {SupervisorsSlice} from "./services/data/SupervisorsData";
 import ActivitiesReducer from "./services/data/activityData"
 import ApplicationsReducer from "./services/data/ApplicationData";
 import WorksheetsReducer from "./services/data/WorksheetData";
-
+import {ExcelSlice} from "./components/import-data/ImportInstructionData";
 
 const rootReducer = combineReducers({
 	workInstructions: WorkInstructionsReducer,
@@ -37,6 +37,7 @@ const rootReducer = combineReducers({
 	supervisors: SupervisorsSlice.reducer,
 	applications: ApplicationsReducer,
 	worksheets: WorksheetsReducer,
+	excelData: ExcelSlice.reducer,
 
 });
 

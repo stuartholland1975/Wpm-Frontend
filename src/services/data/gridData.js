@@ -53,7 +53,7 @@ const gridDataSlice = createSlice({
       state.editedRow = [...state.editedRow, ...action.payload];
     },
     resetGridRow: (state) => {
-      state.selectedNode = false;
+      state.selectedRow = false;
     },
     setSelectedBillItem: (state, action) => {
       state.selectedBillItem = action.payload;

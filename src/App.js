@@ -1,5 +1,6 @@
 import React from 'react';
 import {Route, Switch} from 'react-router-dom';
+import ImportInstructionData from "./components/import-data/ImportInstructionData";
 import InstructionList from './components/work-instructions/InstructionList';
 import ActivityList from './components/activities/ActivityList';
 import Home from './components/home/Home';
@@ -42,6 +43,7 @@ const App = (props) => {
                     <Route path="/work-instructions/summary/locations/:OrderId" exact component={LocationList}/>
                     <Route path="/work-instructions/summary/items/:OrderId" exact component={InstructionDetail}/>
                     <Route path="/work-instructions/summary/worksheets/:OrderId" exact component={WorkProgressTable}/>
+                    <Route path="/work-instructions/summary/import" exact component={ImportInstructionData}/>
                     <Route path="/commercial/applications/summary/" exact component={ApplicationsSummary}/>
                     <Route path="/commercial/applications/detail/:appId" exact component={ApplicationDetail}/>
                 </Switch>

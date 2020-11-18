@@ -32,7 +32,7 @@ import {
   setSelectedLocation,
   setSelectedRow,
   selectAllEditedRows,
-  setSelectedInstruction,
+  setSelectedInstruction, resetGridRow,
 } from "../../services/data/gridData";
 import LetterM from "../icons/letter-m.png";
 import LetterP from "../icons/letter-p.png";
@@ -131,6 +131,7 @@ const NavDrawer = (props) => {
   };
 
   const handleOpenCreate = (name, content, title) => () => {
+    dispatch(resetGridRow())
     dispatch(
       show(name, {
         title: title,
@@ -394,6 +395,30 @@ const NavDrawer = (props) => {
     }
   };
 
+  const handleUploadFromTemplate = () => {
+    if (selectedRow) {
+      history.push({
+        pathname: "/work-instructions/summary/import",
+      });
+    } else {
+      confirm({
+        title: "NO WORK INSTRUCTION SELECTED",
+        confirmationButtonProps: {
+          variant: "contained",
+          autoFocus: true,
+        },
+        cancellationButtonProps: {
+          disabled: true,
+          hidden: true,
+        },
+        dialogProps: {
+          TransitionComponent: Slide,
+          disableBackdropClick: true,
+        },
+      });
+    }
+  }
+
   const instructionBarButtons = {
     crudButtons: [
       {
@@ -452,6 +477,20 @@ const NavDrawer = (props) => {
         ),
       },
     ],
+    actionButtons: [
+      {
+         component: (
+          <BlueButton
+            id={uuidv4()}
+            type="button"
+            onClick={handleUploadFromTemplate}
+            fullWidth
+          >
+            UPLOAD FROM TEMPLATE
+          </BlueButton>
+        ),
+      }
+    ]
   };
 
   const locationsBarButtons = {
@@ -937,6 +976,15 @@ const NavDrawer = (props) => {
             })}
           {atWorksheets &&
             worksheetBarButtons.actionButtons.map((item) => {
+              const { component } = item;
+              return (
+                <List>
+                  <ListItem key={uuidv4()}>{component}</ListItem>
+                </List>
+              );
+            })}
+            {atWorkInstructions &&
+            instructionBarButtons.actionButtons.map((item) => {
               const { component } = item;
               return (
                 <List>

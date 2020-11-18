@@ -139,7 +139,7 @@ const InstructionList = () => {
   }
 
   useUpdateEffect(() => {
-    if (!selectedNode) {
+    if (!selectedNode && gridApi) {
       gridApi.deselectAll();
     }
   }, [selectedNode]);
