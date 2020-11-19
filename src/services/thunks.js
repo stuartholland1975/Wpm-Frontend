@@ -99,16 +99,7 @@ export const updateInstructionDetail = createAsyncThunk(
 	}
 );
 
-export const updateInstructionDetailStatus = createAsyncThunk(
-	"instructionDetail/upsertOne",
-	async (apiObject) => {
-		const response = await axiosInstance.patch(
-			`/wpm/api/orderdetail/${ apiObject.id }/`,
-			apiObject
-		);
-		return response.data;
-	}
-);
+
 
 export const newInstructionDetail = createAsyncThunk(
 	"instructionDetail/addOne",
@@ -149,7 +140,8 @@ export const fetchApplications = createAsyncThunk(
 export const newWorksheet = createAsyncThunk(
 	"worksheet/addOne",
 	async (apiObject) => {
-		const response = await axiosInstance.post(`/wpm/api/worksheet/`, apiObject);
+		const response = await axiosInstance.post(`/bulk/api/bulk-worksheets/`, apiObject);
+		// const response = await axiosInstance.post(`/wpm/api/worksheet/`, apiObject);
 		return response.data;
 	}
 );

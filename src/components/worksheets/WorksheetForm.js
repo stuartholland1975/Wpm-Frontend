@@ -8,14 +8,14 @@ import FocusLock from "react-focus-lock";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { resetEditedRow, selectAllEditedRows } from "../../services/data/gridData";
+import { selectAllSupervisors } from "../../services/data/SupervisorsData";
 import {
 	fetchOrderSummaryInfo,
 	newWorksheet,
-	selectAllInstructionHeaders,
-	updateInstructionDetailStatus
+	selectAllInstructionHeaders, updateInstructionDetail,
+
 } from "../../services/thunks";
-import { resetEditedRow, selectAllEditedRows } from "../../services/data/gridData";
-import { selectAllSupervisors } from "../../services/data/SupervisorsData";
 import { BlueButton, GreyButton } from "../ui-components/Buttons";
 
 
@@ -51,29 +51,49 @@ const WorksheetForm = (props) => {
 
 	const onSubmit = (data) => {
 		console.log(JSON.stringify(data));
+		const worksheetContainer = [];
+		const billItemContainer = [];
+
+
 		editedRows.forEach((item, index) => {
-			const apiObject = {};
-			apiObject.completed_by = value.id;
+			let worksheetObject = {};
+			let billItemObject = {};
+			worksheetObject.completed_by = value.id;
 			const {location_ref, qty_to_complete, unit_materials_payable, id, unit_labour_payable, unit_total_payable, qty_os} = item;
-			apiObject.worksheet_ref = location_ref;
-			apiObject.item_ref = id;
-			apiObject.date_work_done = data.work_done_date;
-			apiObject.qty_complete = qty_to_complete;
-			apiObject.value_complete = (
+			worksheetObject.worksheet_ref = location_ref;
+			worksheetObject.item_ref = id;
+			worksheetObject.date_work_done = data.work_done_date;
+			worksheetObject.qty_complete = qty_to_complete;
+			worksheetObject.value_complete = (
 				unit_total_payable * qty_to_complete
 			).toFixed(2);
-			apiObject.materials_complete = (
+			worksheetObject.materials_complete = (
 				unit_materials_payable * qty_to_complete
 			).toFixed(2);
-			apiObject.labour_complete = (
+			worksheetObject.labour_complete = (
 				unit_labour_payable * qty_to_complete
 			).toFixed(2);
-			if (qty_os - qty_to_complete === 0) {
-				dispatch(updateInstructionDetailStatus({id: id, item_status: "Closed", item_complete: true}));
+
+			worksheetContainer.push(worksheetObject);
+			console.log(worksheetObject, worksheetContainer);
+			/*if (qty_os - qty_to_complete === 0) {
+				billItemObject = {...item}
+				billItemObject.id = id;
+				billItemObject.item_status = "Closed";
+				billItemObject.item_complete = true;
+				billItemContainer.push(billItemObject);
 			}
-			dispatch(newWorksheet(apiObject));
+			console.log(billItemObject, billItemContainer);*/
+			if (qty_os - qty_to_complete === 0) {
+				dispatch(updateInstructionDetail({id: id, item_status: "Closed", item_complete: true}));
+			}
+
 		});
-		dispatch(fetchOrderSummaryInfo(instructionId));
+
+
+		dispatch(newWorksheet(worksheetContainer)).then(() => dispatch(fetchOrderSummaryInfo(instructionId)));
+
+
 		closeAndReset();
 	};
 
