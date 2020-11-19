@@ -138,7 +138,7 @@ export default function ApplicationLocations() {
     <Fragment>
       <hr />
       <div className="grid-title">APPLICATION LOCATIONS:</div>
-      <hr />
+
       <div className="ag-theme-custom-react2">
         <AgGridReact
           gridOptions={gridOptions}

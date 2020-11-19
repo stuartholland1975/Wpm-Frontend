@@ -30,7 +30,7 @@ const ApplicationsSummary = () => {
 	const dispatch = useDispatch();
 	const applications = useSelector(selectAllApplications).sort(function (a, b) {
             return a["app_number"] - b["app_number"];
-        });
+        }).slice(-5);
 	useEffectOnce(() => {
 		dispatch(fetchApplications());
 		dispatch(fetchAvailableWorksheets(`?applied=False`));
@@ -48,7 +48,7 @@ const ApplicationsSummary = () => {
 		<Container fluid>
 
 				<hr/>
-				<h4 >APPLICATIONS:</h4>
+				<div className="grid-title" >APPLICATIONS:</div>
 				<hr/>
 				<CardDeck>
 					{ applications.map(item => {

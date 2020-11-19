@@ -90,7 +90,7 @@ const AvailableWorksheetsList = () => {
     <Fragment>
       <hr />
       <div className="grid-title">WORKSHEETS AVAILABLE FOR APPLICATION:</div>
-      <hr />
+
       <div className="ag-theme-custom-react2">
         <AgGridReact
           gridOptions={gridOptions}

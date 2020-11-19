@@ -120,7 +120,7 @@ const AvailableOrderList = () => {
       <div className="grid-title">
         WORK INSTRUCTIONS AVAILABLE FOR APPLICATION:
       </div>
-      <hr />
+
       <div className="ag-theme-custom-react2">
         <AgGridReact
           gridOptions={gridOptions}

@@ -92,7 +92,7 @@ export default function ApplicationBillItems() {
     <Fragment>
       <hr />
       <div className="grid-title">APPLICATION ITEMS:</div>
-      <hr />
+
       <div className="ag-theme-custom-react2">
         <AgGridReact
           gridOptions={gridOptions}

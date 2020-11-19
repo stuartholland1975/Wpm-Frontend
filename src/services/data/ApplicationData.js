@@ -1,5 +1,5 @@
 import { createEntityAdapter, createSlice } from "@reduxjs/toolkit";
-import {fetchApplications} from "../thunks";
+import {fetchApplications, closeApplication} from "../thunks";
 
 
 const applicationsAdapter = createEntityAdapter();
@@ -10,7 +10,9 @@ const ApplicationsSlice = createSlice({
   initialState,
 
   extraReducers: (builder) => {
-    builder.addCase(fetchApplications.fulfilled, applicationsAdapter.setAll);
+    builder.addCase(fetchApplications.fulfilled, applicationsAdapter.setAll)
+    builder.addCase(closeApplication.fulfilled, applicationsAdapter.setAll)
+    ;
   },
 });
 

@@ -18,7 +18,7 @@ const InstructionSummary = (props) => {
 	const orderDetail = useSelector(selectAllInstructionDetails);
 	const projectTitle = useLocation().state;
 
-	const boqItems = orderDetail.filter(({item_type}) => item_type === "BOQ");
+	const boqItems = orderDetail.filter(({item_type}) => item_type === "BOQ" || item_type === "FREE" || item_type === "DIRECTS");
 	const varnItems = orderDetail.filter(({item_type}) => item_type === "VARN");
 	const totalLabourValue = orderDetail.map(item => item["labour_total"]).reduce((acc, item) => acc + item, 0);
 	const totalMaterialsValue = orderDetail.map(item => item["materials_total_incl_other_materials"]).reduce((acc, item) => acc + item, 0);
