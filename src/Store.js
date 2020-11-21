@@ -18,6 +18,7 @@ import ActivitiesReducer from "./services/data/activityData"
 import ApplicationsReducer from "./services/data/ApplicationData";
 import WorksheetsReducer from "./services/data/WorksheetData";
 import {ExcelSlice} from "./components/import-data/ImportInstructionData";
+import ApplicationDetails from "./services/data/ApplicationDetailsData";
 
 const rootReducer = combineReducers({
 	workInstructions: WorkInstructionsReducer,
@@ -38,6 +39,7 @@ const rootReducer = combineReducers({
 	applications: ApplicationsReducer,
 	worksheets: WorksheetsReducer,
 	excelData: ExcelSlice.reducer,
+	applicationDetail: ApplicationDetails,
 
 });
 

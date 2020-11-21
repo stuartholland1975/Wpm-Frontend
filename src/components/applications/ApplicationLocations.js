@@ -51,19 +51,19 @@ export default function ApplicationLocations() {
     {
       headerName: "Application Labour",
       type: "numericColumn",
-      field: "application_labour",
+      field: "labour_value",
       valueFormatter: numFormatGrid,
     },
     {
       headerName: "Application Materials",
       type: "numericColumn",
-      field: "application_materials",
+      field: "materials_value",
       valueFormatter: numFormatGrid,
     },
     {
       headerName: "Application Value",
       type: "numericColumn",
-      field: "application_value",
+      field: "applied_value",
       cellStyle: { fontWeight: "bold" },
       valueFormatter: numFormatGrid,
     },
@@ -120,8 +120,8 @@ export default function ApplicationLocations() {
         );
         dispatch(
           show("instruction-modal", {
-            title: "LOCATION IMAGES",
-            content: "locationImages",
+            title: "APPLICATION IMAGES",
+            content: "applicationImages",
           })
         );
       });

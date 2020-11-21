@@ -129,7 +129,7 @@ const NavDrawer = (props) => {
 	};
 
 	const handleOpenCreate = (name, content, title) => () => {
-		dispatch(resetGridRow());
+	//	dispatch(resetGridRow());
 		dispatch(
 			show(name, {
 				title: title,

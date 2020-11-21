@@ -100,7 +100,6 @@ export const updateInstructionDetail = createAsyncThunk(
 );
 
 
-
 export const newInstructionDetail = createAsyncThunk(
 	"instructionDetail/addOne",
 	async (apiObject) => {
@@ -276,29 +275,6 @@ export const fetchAvailableWorksheets = createAsyncThunk(
 	}
 );
 
-export const closeApplication = createAsyncThunk(
-	"application/Close&Create",
-	async () => {
-		const currentApp = await axiosInstance.get("/wpm/commercial/applications/current");
-		const closedApp = await axiosInstance.put(`/wpm/api/applications/${ currentApp.data[0].id }/`, {
-			...currentApp.data[0],
-			app_current: false,
-			app_open: false
-		});
-		const lastAppDate = moment(closedApp.data.app_date).add(7, "days").format('YYYY-MM-DD')
-		const newApp = {
-			app_number: closedApp.data.app_number + 1,
-			app_date: lastAppDate,
-			app_ref: `Application ${ closedApp.data.app_number + 1 } `,
-			app_open: true,
-			app_current: true,
-		};
-
-		const response = await axiosInstance.post(`/wpm/api/applications/`, newApp);
-		const applications = await axiosInstance.get("/wpm/api/applications/");
-		return applications.data;
-	}
-);
 
 const instructionHeaderAdapter = createEntityAdapter();
 const locationsAdapter = createEntityAdapter();
@@ -348,3 +324,35 @@ export const ImagesSlice = createSlice({
 		});
 	},
 });
+
+export const closeApplication = createAsyncThunk(
+	"application/Close&Create",
+	async () => {
+		const currentApp = await axiosInstance.get("/wpm/commercial/applications/current");
+		const closedApp = await axiosInstance.put(`/wpm/api/applications/${ currentApp.data[0].id }/`, {
+			...currentApp.data[0],
+			app_current: false,
+			app_open: false
+		});
+		const lastAppDate = moment(closedApp.data.app_date).add(7, "days").format("YYYY-MM-DD");
+		const newApp = {
+			app_number: closedApp.data.app_number + 1,
+			app_date: lastAppDate,
+			app_ref: `Application ${ closedApp.data.app_number + 1 } `,
+			app_open: true,
+			app_current: true,
+		};
+
+		const response = await axiosInstance.post(`/wpm/api/applications/`, newApp);
+		const applications = await axiosInstance.get("/wpm/api/applications/");
+		return applications.data;
+	}
+);
+
+export const fetchAppDetails = createAsyncThunk(
+	"applicationDetails/fetchAll",
+	async (appId) => {
+		const response = await axiosInstance.get(`wpm/commercial/application/detail/${ appId }`);
+		return response.data;
+	}
+);
