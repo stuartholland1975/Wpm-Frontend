@@ -6,6 +6,8 @@ import ListItemText from "@material-ui/core/ListItemText";
 import Slide from "@material-ui/core/Slide";
 import { makeStyles } from "@material-ui/core/styles";
 import BuildIcon from "@material-ui/icons/Build";
+import CancelIcon from "@material-ui/icons/Cancel";
+import CheckBoxIcon from "@material-ui/icons/CheckBox";
 import CloudUploadIcon from "@material-ui/icons/CloudUpload";
 import DashboardIcon from "@material-ui/icons/Dashboard";
 import DeleteIcon from "@material-ui/icons/Delete";
@@ -16,13 +18,13 @@ import LockOpenIcon from "@material-ui/icons/LockOpen";
 import SaveIcon from "@material-ui/icons/Save";
 import { useConfirm } from "material-ui-confirm";
 import React from "react";
+import { CSVDownload } from "react-csv";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, withRouter } from "react-router-dom";
 import { show } from "redux-modal";
 import { v4 as uuidv4 } from "uuid";
 import { selectAllApplications } from "../../services/data/ApplicationData";
 import {
-	resetGridRow,
 	selectAllEditedRows,
 	setClickedLocation,
 	setSelectedBillItem,
@@ -42,8 +44,7 @@ import LetterM from "../icons/letter-m.png";
 import LetterP from "../icons/letter-p.png";
 import LetterW from "../icons/letter-w.png";
 import { BlueButton, GreenButton, PurpleButton, RedButton, } from "../ui-components/Buttons";
-import CheckBoxIcon from '@material-ui/icons/CheckBox';
-import CancelIcon from '@material-ui/icons/Cancel';
+import {exportApplicationDetails} from '../../services/data/ApplicationDetailsData';
 
 const drawerWidth = 260;
 
@@ -92,6 +93,7 @@ const NavDrawer = (props) => {
 	const selectedBillItem = useSelector(
 		(state) => state.gridData.selectedBillItem
 	);
+
 	const confirm = useConfirm();
 
 	const postNewWorksheet = () => {
@@ -129,7 +131,7 @@ const NavDrawer = (props) => {
 	};
 
 	const handleOpenCreate = (name, content, title) => () => {
-	//	dispatch(resetGridRow());
+		//	dispatch(resetGridRow());
 		dispatch(
 			show(name, {
 				title: title,
@@ -423,12 +425,12 @@ const NavDrawer = (props) => {
 			description: "This Will Close The Current Application and Create the Next One in the Sequence",
 			confirmationButtonProps: {
 				variant: "contained",
-				startIcon:  <CheckBoxIcon/>
+				startIcon: <CheckBoxIcon/>
 			},
 			cancellationButtonProps: {
 				variant: "contained",
 				autoFocus: true,
-				startIcon:  <CancelIcon/>
+				startIcon: <CancelIcon/>
 			},
 			dialogProps: {
 				TransitionComponent: Slide,
@@ -813,6 +815,23 @@ const NavDrawer = (props) => {
 		],
 	};
 
+	const applicationDetailBarButtons = {
+		actionButtons: [
+			{
+				component: (
+					<GreenButton
+						id={ uuidv4() }
+						type="button"
+						fullWidth
+						onClick={() => dispatch(exportApplicationDetails(true))}
+					>
+						EXPORT APP TO CSV
+					</GreenButton>
+				),
+			},
+		],
+	};
+
 	const atWorkInstructions = location.pathname === "/work-instructions";
 	const atLocations = location.pathname.startsWith(
 		"/work-instructions/summary/locations/"
@@ -826,6 +845,10 @@ const NavDrawer = (props) => {
 
 	const atApplications = location.pathname.startsWith(
 		"/commercial/applications/summary"
+	);
+
+	const atApplicationDetail = location.pathname.startsWith(
+		"/commercial/applications/detail"
 	);
 
 	const itemsList = [
@@ -969,6 +992,14 @@ const NavDrawer = (props) => {
 					}) }
 					{ atLocations &&
 					locationsBarButtons.navButtons.map((item) => {
+						const {component} = item;
+						return (
+							<List>
+								<ListItem key={ uuidv4() }>{ component }</ListItem>
+							</List>
+						);
+					}) }
+					{ atApplicationDetail && applicationDetailBarButtons.actionButtons.map((item) => {
 						const {component} = item;
 						return (
 							<List>

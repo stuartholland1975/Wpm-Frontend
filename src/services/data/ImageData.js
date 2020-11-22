@@ -48,7 +48,7 @@ export const ImagesSlice = createSlice({
 	extraReducers: builder => {
 		builder.addCase(fetchOrderSummaryInfo.fulfilled, ((state, action) => {
 			return imagesAdapter.setAll(state,
-				action.payload.Image.map(({construction_image, image_type, title, id, site_location, gps_lat, gps_long, gps_date, exif, location}) => {
+				action.payload.Image.map(({construction_image, image_type, title, id, site_location, gps_lat, gps_long, gps_date, exif, location, gps_position, camera}) => {
 					const container = {};
 					container.title = title;
 					container.construction_image = construction_image;
@@ -58,7 +58,9 @@ export const ImagesSlice = createSlice({
 					container.locationRef = site_location;
 					container.gps_lat = gps_lat;
 					container.gps_long = gps_long;
+					container.gps_position = gps_position;
 					container.gps_date = gps_date;
+					container.camera = camera;
 					container.exif = exif;
 					container.location = location;
 					return container;

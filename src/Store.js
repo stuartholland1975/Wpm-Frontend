@@ -19,6 +19,7 @@ import ApplicationsReducer from "./services/data/ApplicationData";
 import WorksheetsReducer from "./services/data/WorksheetData";
 import {ExcelSlice} from "./components/import-data/ImportInstructionData";
 import ApplicationDetails from "./services/data/ApplicationDetailsData";
+import { save, load } from "redux-localstorage-simple";
 
 const rootReducer = combineReducers({
 	workInstructions: WorkInstructionsReducer,
@@ -45,5 +46,5 @@ const rootReducer = combineReducers({
 
 export const store = configureStore({
 	reducer: rootReducer,
-	middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
+	middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat([logger, save()]),
 });

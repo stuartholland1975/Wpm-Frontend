@@ -19,11 +19,8 @@ const applicationImages = state => state.applicationDetail.images;
 
 export const appOrderLocations = createSelector(
 	[
-		//selectAllLocations,
 		applicationLocations,
 		selectedOrder,
-		//selectAllAvailableWorksheets,
-		//selectAllImages,
 		applicationImages
 	],
 	(locations, order, images) => {
@@ -45,26 +42,6 @@ export const appOrderLocations = createSelector(
 		}));
 	}
 );
-
-/*export const appInstructions = createSelector(
-  [selectAllAvailableWorksheets, selectAllWorkInstructions],
-  (worksheets, instructions) =>
-    instructions.map((item) => ({
-      ...item,
-      applied_value: worksheets
-        .filter((obj) => obj.order_ref === item.work_instruction)
-        .map((item) => item.value_complete)
-        .reduce((acc, item) => acc + item, 0),
-      applied_labour: worksheets
-        .filter((obj) => obj.order_ref === item.work_instruction)
-        .map((item) => item.labour_complete)
-        .reduce((acc, item) => acc + item, 0),
-      applied_materials: worksheets
-        .filter((obj) => obj.order_ref === item.work_instruction)
-        .map((item) => item.materials_complete)
-        .reduce((acc, item) => acc + item, 0),
-    }))
-);*/
 
 const workInstruction = (state) => state.gridData.selectedRow.work_instruction;
 const spreadsheetData = (state) => state.excelData.rows;

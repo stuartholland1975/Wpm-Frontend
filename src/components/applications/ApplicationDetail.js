@@ -1,5 +1,6 @@
 import React from "react";
 import Container from "react-bootstrap/Container";
+import { CSVDownload } from "react-csv";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { useEffectOnce } from "react-use";
@@ -12,6 +13,10 @@ import ApplicationLocations from "./ApplicationLocations";
 
 const ApplicationDetail = () => {
 	const appOrders = useSelector(state => state.applicationDetail.orders);
+	const appItems = useSelector(state => state.applicationDetail.items);
+	const exportDataFlag = useSelector(state => state.applicationDetail.exportData);
+	const appExportData = useSelector(state => state.applicationDetail);
+
 	const dispatch = useDispatch();
 	const params = useParams();
 
@@ -33,6 +38,7 @@ const ApplicationDetail = () => {
 			<ApplicationInstructionList data={ appOrders }/>
 			<ApplicationLocations/>
 			<ApplicationBillItems/>
+			{ exportDataFlag && <CSVDownload data={ appItems }/> }
 		</Container>
 	);
 };
