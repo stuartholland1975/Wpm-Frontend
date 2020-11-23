@@ -77,7 +77,7 @@ const LocationForm = (props) => {
 								required: true,
 							}) }
 							name="location_ref"
-							label="Instruction Reference"
+							label="Location Reference"
 							variant="filled"
 							margin="normal"
 							fullWidth

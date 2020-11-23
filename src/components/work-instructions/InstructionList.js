@@ -115,7 +115,7 @@ const InstructionList = () => {
         <Loader
           style={{ textAlign: "center" }}
           type={"ThreeDots"}
-          color={"Blue"}
+          color="#366363"
         />
       ),
     },
