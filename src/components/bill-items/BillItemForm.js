@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
 const roundNumber = number => Math.round((number + Number.EPSILON) * 100) / 100;
 
 const BillItemForm = (props) => {
-	const nextItem = useSelector(selectAllInstructionDetails).map(item => item["item_number"]).reduce((a, b) => Math.max(a, b), -Infinity) + 1;
+	const nextItem = useSelector(selectAllInstructionDetails).map(item => item["item_number"]).reduce((a, b) => Math.max(a, b), 0) + 1;
 	const classes = useStyles();
 	const dispatch = useDispatch();
 	const {register, handleSubmit, reset} = useForm({

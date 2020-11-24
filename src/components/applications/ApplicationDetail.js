@@ -14,6 +14,7 @@ import ApplicationLocations from "./ApplicationLocations";
 const ApplicationDetail = () => {
 
 	const appItems = useSelector(state => state.applicationDetail.items);
+	const appOrders = useSelector(state => state.applicationDetail.orders)
 	const exportDataFlag = useSelector(state => state.applicationDetail.exportData);
 	const {orders, locations, items, images} = useSelector(state => state.applicationDetail);
 	const dispatch = useDispatch();
@@ -23,10 +24,10 @@ const ApplicationDetail = () => {
 
 	useEffectOnce(() => {
 		dispatch(fetchAppDetails(params.appId));
-		dispatch(setSelectedInstruction(false));
+		//dispatch(setSelectedInstruction(false));
 		return (() => {
 			dispatch(resetApplicationDetails());
-			dispatch(exportApplicationDetails(false))
+		//	dispatch(exportApplicationDetails(false))
 		});
 	});
 
@@ -39,7 +40,7 @@ const ApplicationDetail = () => {
 					fontWeight: "bolder",
 				} }
 			>{ `APPLICATION NUMBER  ${ params.appId }` }</h2>
-			<ApplicationInstructionList data={ orders }/>
+			<ApplicationInstructionList data={ appOrders }/>
 			<ApplicationLocations/>
 			<ApplicationBillItems/>
 			{ exportDataFlag && <CSVDownload data={ appItems }/> }
