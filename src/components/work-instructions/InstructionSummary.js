@@ -31,7 +31,7 @@ const InstructionSummary = (props) => {
 	const completedValue = orderDetail.map(item => item["value_complete"]).reduce((acc, item) => acc + item, 0);
 	const appliedValue = orderDetail.map(item => item["value_applied"]).reduce((acc, item) => acc + item, 0);
 	const totalPayable = totalLabourValue + totalMaterialsValue;
-	const valueToComplete = totalPayable + completedValue;
+	const valueToComplete = totalPayable - completedValue;
 	const valueToApply = completedValue - appliedValue;
 
 

@@ -1,5 +1,5 @@
 import { createSlice, createEntityAdapter } from "@reduxjs/toolkit";
-import { updateWorksheet } from "../thunks";
+import {addWorksheetToApplication } from "../thunks";
 
 const editedRowAdapter = createEntityAdapter();
 
@@ -12,7 +12,7 @@ export const SelectedRowSlice = createSlice({
     removeEditedRow: editedRowAdapter.removeOne,
   },
   extraReducers: (builder) => {
-    builder.addCase(updateWorksheet.fulfilled, editedRowAdapter.removeOne);
+    builder.addCase(addWorksheetToApplication.fulfilled, editedRowAdapter.removeOne);
   },
 });
 

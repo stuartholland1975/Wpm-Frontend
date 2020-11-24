@@ -42,7 +42,7 @@ const ApplicationsSummary = () => {
 		
 		dispatch(removeAllWorksheets())
 		dispatch(removeAllWorkInstructions())
-        history.push({pathname: `/commercial/applications/detail/${app_number}`})
+        history.push({pathname: `/commercial/applications/detail/${app_number}`, state:`${app_number}`})
     }
 	return (
 		<Container fluid>

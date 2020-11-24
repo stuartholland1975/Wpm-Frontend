@@ -3,9 +3,12 @@ import { AgGridReact } from "ag-grid-react";
 import { useSelector, useDispatch } from "react-redux";
 import CustomNoRowsOverlay from "../grid/CustomNoRowsOverlay";
 import { ChangeDetectionStrategyType } from "ag-grid-react/lib/changeDetectionService";
-import { setClickedLocation } from "../../services/data/gridData";
+import {
+  setClickedLocation,
+  setSelectedLocation,
+} from "../../services/data/gridData";
 import { show } from "redux-modal";
-import {appOrderLocations} from "../../services/selectors"
+import { appOrderLocations } from "../../services/selectors";
 
 function numFormatGrid(params) {
   return params.value.toLocaleString(undefined, {
@@ -14,12 +17,17 @@ function numFormatGrid(params) {
   });
 }
 
-
 export default function ApplicationLocations() {
   const locations = useSelector(appOrderLocations);
   const dispatch = useDispatch();
 
   let columnDefs = [
+    {
+      headerName: "Select",
+      colId: "select",
+      checkboxSelection: true,
+      maxWidth: 80,
+    },
     { headerName: "Worksheet Ref", field: "worksheet_ref", sort: "asc" },
     { headerName: "Location", field: "location_ref" },
     {
@@ -89,9 +97,9 @@ export default function ApplicationLocations() {
     pagination: true,
     paginationPageSize: 5,
     domLayout: "autoHeight",
-
+    rowSelection: "single",
     suppressRowClickSelection: true,
-
+    onRowSelected: selectedRow,
     suppressNoRowsOverlay: false,
     frameworkComponents: {
       customNoRowsOverlay: CustomNoRowsOverlay,
@@ -132,6 +140,16 @@ export default function ApplicationLocations() {
     }
 
     return link;
+  }
+
+  function selectedRow(event) {
+    console.log(event.api.getSelectedNodes())
+    if (event.node.isSelected()) {
+      
+      dispatch(setSelectedLocation(event.data));
+    }else if (event.api.getSelectedNodes().length === 0) {
+      dispatch(setSelectedLocation(false))
+    }
   }
 
   return (

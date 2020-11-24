@@ -12,7 +12,8 @@ const numFormat = (num) => {
 	});
 };
 
-const selectedOrder = (state) => state.gridData.selectedInstruction;
+export const selectedOrder = (state) => state.gridData.selectedInstruction;
+export const selectedLocation = (state) => state.gridData.selectedLocation;
 
 const applicationLocations = state => state.applicationDetail.locations;
 const applicationImages = state => state.applicationDetail.images;
@@ -136,7 +137,7 @@ export const availableWorksheets = createSelector(
 		worksheets.filter((obj) => obj.order_ref === instruction.work_instruction)
 );
 
-const selectedLocation = (state) => state.gridData.selectedLocation;
+
 
 export const inCompleteItems = createSelector(
 	[selectAllInstructionDetails, selectedLocation],

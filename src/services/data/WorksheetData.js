@@ -1,5 +1,5 @@
 import { createEntityAdapter, createSlice } from "@reduxjs/toolkit";
-import { fetchAvailableWorksheets, updateWorksheet } from "../thunks";
+import { fetchAvailableWorksheets, addWorksheetToApplication } from "../thunks";
 
 
 const worksheetAdapter = createEntityAdapter();
@@ -14,7 +14,7 @@ const WorksheetSlice = createSlice({
 	},
 	extraReducers: builder => {
 		builder.addCase(fetchAvailableWorksheets.fulfilled, worksheetAdapter.setAll);
-		builder.addCase(updateWorksheet.fulfilled, worksheetAdapter.removeOne)
+		builder.addCase(addWorksheetToApplication.fulfilled, worksheetAdapter.removeOne)
 	}
 
 

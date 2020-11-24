@@ -2,7 +2,7 @@ import { AgGridReact } from "ag-grid-react";
 import React, { Fragment } from "react";
 import Loader from "react-loader-spinner";
 import { useDispatch, useSelector } from "react-redux";
-import { setSelectedInstruction } from "../../services/data/gridData";
+import { setSelectedInstruction, setSelectedLocation } from "../../services/data/gridData";
 import CustomNoRowsOverlay from "../grid/CustomNoRowsOverlay";
 
 
@@ -10,6 +10,12 @@ const ApplicationInstructionsList = (props) => {
 	const appOrders = useSelector(state => state.applicationDetail.orders);
 	const dispatch = useDispatch();
 	const columnDefs = [
+		{
+			headerName: "Select",
+			colId: "select",
+			checkboxSelection: true,
+			maxWidth: 80,
+		  },
 		{headerName: "Work Instruction", field: "work_instruction", sort: "asc"},
 		{headerName: "Project Title", field: "project_title"},
 		{
@@ -79,6 +85,9 @@ const ApplicationInstructionsList = (props) => {
 	function selectedRow(event) {
 		if (event.node.isSelected()) {
 			dispatch(setSelectedInstruction(event.data));
+			dispatch(setSelectedLocation(false))
+		}else if (event.api.getSelectedNodes().length === 0) {
+			dispatch(setSelectedInstruction(false))
 		}
 	}
 

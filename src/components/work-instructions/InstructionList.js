@@ -47,7 +47,7 @@ const InstructionList = () => {
       {
         headerName: "Project Title",
         field: "project_title",
-        minWidth: 450,
+        minWidth: 400,
       },
       {
         headerName: "Date Issued",
