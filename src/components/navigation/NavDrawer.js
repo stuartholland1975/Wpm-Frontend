@@ -890,12 +890,14 @@ const NavDrawer = (props) => {
     "/commercial/applications/detail"
   );
 
+  const atHome = location.pathname.startsWith("/home")
+
   const itemsList = [
     {
       id: uuidv4(),
       text: "Home",
       icon: <HomeIcon />,
-      onClick: () => history.push("/"),
+      onClick: () => history.push("/home"),
     },
     {
       id: uuidv4(),
@@ -972,7 +974,7 @@ const NavDrawer = (props) => {
         </List>
         <Divider />
         <List>
-          {authList.map((item) => {
+          {atHome &&  authList.map((item) => {
             const { id, text, icon, onClick } = item;
             return (
               <ListItem button key={uuidv4()} onClick={onClick}>

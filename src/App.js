@@ -35,7 +35,7 @@ const App = (props) => {
             <WpmModal/>
             <div className={classes.content}>
                 <Switch>
-                    <Route exact from="/" render={(props) => <Home {...props} />}/>
+                    <Route exact from="/home" render={(props) => <Home {...props} />}/>
                     <Route path="/work-instructions" exact component={InstructionList}/>
                     <Route path="/activities" exact component={ActivityList}/>
                     <Route path="/test" exact component={Test}/>
