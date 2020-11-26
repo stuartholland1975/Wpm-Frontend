@@ -5,6 +5,7 @@ import InstructionList from './components/work-instructions/InstructionList';
 import ActivityList from './components/activities/ActivityList';
 import Home from './components/home/Home';
 import Test from './components/test/Test';
+import Workload from "./components/workload/Workload";
 import Login from './services/login';
 import NavDrawer from './components/navigation/NavDrawer';
 import {makeStyles} from '@material-ui/core/styles';
@@ -44,6 +45,7 @@ const App = (props) => {
                     <Route path="/work-instructions/summary/items/:OrderId" exact component={InstructionDetail}/>
                     <Route path="/work-instructions/summary/worksheets/:OrderId" exact component={WorkProgressTable}/>
                     <Route path="/work-instructions/summary/import" exact component={ImportInstructionData}/>
+                    <Route path="/work-instructions/workload" exact component={Workload}/>
                     <Route path="/commercial/applications/summary/" exact component={ApplicationsSummary}/>
                     <Route path="/commercial/applications/detail/:appId" exact component={ApplicationDetail}/>
                 </Switch>

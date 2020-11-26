@@ -37,6 +37,7 @@ const InstructionSummary = (props) => {
 
 	return (
 		<Fragment>
+			<hr/>
 			<div className="grid-title">{ projectTitle }</div>
 			<hr/>
 			<CardDeck>

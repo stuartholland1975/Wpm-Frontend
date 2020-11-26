@@ -36,7 +36,7 @@ const InstructionDetail = () => {
         },
         filter: false,
       },
-      { headerName: "Item Ref", field: "item_number", sort: "asc", flex: 1 },
+      { headerName: "Item Ref", field: "item_number", sort: "desc", flex: 1 },
       { headerName: "Item Type", field: "item_type", flex: 1 },
       { headerName: "Location", field: "site_location", minWidth: 250 },
       {

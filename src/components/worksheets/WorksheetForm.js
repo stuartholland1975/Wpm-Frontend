@@ -31,6 +31,11 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
+function toFixed(number, decimals) {
+	const x = Math.pow(10, Number(decimals) + 1);
+	return (Number(number) + 1 / x).toFixed(decimals);
+}
+
 const WorksheetForm = (props) => {
 	const {register, handleSubmit, reset} = useForm();
 	const supervisors = useSelector(selectAllSupervisors);
@@ -59,15 +64,9 @@ const WorksheetForm = (props) => {
 			worksheetObject.item_ref = id;
 			worksheetObject.date_work_done = data.work_done_date;
 			worksheetObject.qty_complete = qty_to_complete;
-			worksheetObject.value_complete = (
-				unit_total_payable * qty_to_complete
-			).toFixed(2);
-			worksheetObject.materials_complete = (
-				unit_materials_payable * qty_to_complete
-			).toFixed(2);
-			worksheetObject.labour_complete = (
-				unit_labour_payable * qty_to_complete
-			).toFixed(2);
+			worksheetObject.value_complete = toFixed((unit_total_payable * qty_to_complete),2);
+			worksheetObject.materials_complete = toFixed((unit_materials_payable * qty_to_complete),2)
+			worksheetObject.labour_complete = toFixed((unit_labour_payable * qty_to_complete),2)
 
 			worksheetContainer.push(worksheetObject);
 			console.log(worksheetObject, worksheetContainer);
