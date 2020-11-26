@@ -119,6 +119,7 @@ const WorkProgressTable = () => {
     singleClickEdit: true,
     editType: "fullRow",
     enableCellChangeFlash: true,
+	  stopEditingWhenGridLosesFocus: true,
     /*onRowValueChanged: function(event){
 			console.log("FIRED")
 			return dispatch(setEditedRow(event.data));

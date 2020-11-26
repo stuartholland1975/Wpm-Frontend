@@ -36,7 +36,7 @@ const InstructionModal = (props) => {
 			<Modal
 				show={ show }
 				onHide={ handleHide }
-				backdrop={ true }
+				backdrop={ false }
 				size="md"
 				autoFocus={ false }
 				centered={ false }

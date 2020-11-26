@@ -10,12 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { resetEditedRow, selectAllEditedRows } from "../../services/data/gridData";
 import { selectAllSupervisors } from "../../services/data/SupervisorsData";
-import {
-	fetchOrderSummaryInfo,
-	newWorksheet,
-	selectAllInstructionHeaders, updateInstructionDetail,
-
-} from "../../services/thunks";
+import { newWorksheet, selectAllInstructionHeaders, updateInstructionDetail, } from "../../services/thunks";
 import { BlueButton, GreyButton } from "../ui-components/Buttons";
 
 
@@ -91,10 +86,8 @@ const WorksheetForm = (props) => {
 		});
 
 
-		dispatch(newWorksheet(worksheetContainer)).then(() => dispatch(fetchOrderSummaryInfo(instructionId)));
-
-
-		closeAndReset();
+		dispatch(newWorksheet(worksheetContainer))//then(() => dispatch(fetchOrderSummaryInfo(instructionId)));
+			.then(() => closeAndReset());
 	};
 
 	const closeAndReset = () => {

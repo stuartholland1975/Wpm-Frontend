@@ -55,7 +55,7 @@ import {
 } from "../ui-components/Buttons";
 import { exportApplicationDetails } from "../../services/data/ApplicationDetailsData";
 
-const drawerWidth = 260;
+const drawerWidth = 280;
 
 const useStyles = makeStyles((theme) => ({
   root: {
