@@ -9,6 +9,7 @@ import {
   fetchSelectedActivities,
   newInstructionDetail,
   createBulkLocations,
+  createBulkBillItems,
 } from "../../services/thunks";
 
 export const ExcelSlice = createSlice({
@@ -73,12 +74,10 @@ const ImportInstructionData = () => {
       });
       //dispatch(createLocation({location_ref: value, location_description: value, work_instruction: workInstruction}));
     });
-    console.log(newLocations);
     dispatch(createBulkLocations(newLocations));
   };
 
   const createItems = () => {
-    console.log(activities, importDraft.rows);
     let newBillItems = [];
     importDraft.rows.forEach((item) => {
       const imported_activity_code = item[3];
@@ -89,16 +88,6 @@ const ImportInstructionData = () => {
       const imported_item_number = item[1];
       const matched_activity = activities.filter(
         (obj) => obj.activity_code === imported_activity_code
-      );
-
-      console.log(
-        imported_activity_code,
-        imported_qty,
-        imported_materials,
-        imported_item_type,
-        imported_pack_number,
-        imported_item_number,
-        matched_activity
       );
 
       let container = {};
@@ -112,11 +101,11 @@ const ImportInstructionData = () => {
       const materialsTotalExclOtherMaterials = parseFloat(
         imported_materials * 1.05
       );
-      const MaterialsOther = parseFloat(
+      const materialsOther = parseFloat(
         matched_activity.map((item) => item.materials_other)[0] * imported_qty
       );
       const materialsTotalInclOtherMaterials = parseFloat(
-        materialsTotalExclOtherMaterials + MaterialsOther
+        materialsTotalExclOtherMaterials + materialsOther
       );
       const unitMaterialsPayable = parseFloat(
         materialsTotalInclOtherMaterials / imported_qty
@@ -127,19 +116,19 @@ const ImportInstructionData = () => {
       const unitTotalPayable = parseFloat(totalPayable / imported_qty);
 
       container.work_instruction = workInstruction;
-      /*  container.location_ref = locations.filter(
+      container.location_ref = locations.filter(
         (obj) => obj.location_ref === item[0]
-      )[0].id; */
+      )[0].id;
       container.item_number = imported_item_number;
       container.item_type = imported_item_type.toUpperCase();
       container.activity_ref = matched_activity.map((item) => item.id)[0];
       container.qty_ordered = imported_qty;
 
-      container.labour_base = labourBase;
-      container.labour_uplift = labourUplift;
-      container.labour_total = labourTotal;
-      container.unit_labour_payable = labourTotal / imported_qty;
-      container.materials_base = imported_materials;
+      container.labour_base = labourBase.toFixed(2);
+      container.labour_uplift = labourUplift.toFixed(2);
+      container.labour_total = labourTotal.toFixed(2);
+      container.unit_labour_payable = (labourTotal / imported_qty).toFixed(2);
+      container.materials_base = imported_materials.toFixed(2);
       container.materials_uplift = (imported_materials * 0.05).toFixed(2);
       container.materials_total_excl_other_materials = materialsTotalExclOtherMaterials.toFixed(
         2
@@ -156,8 +145,8 @@ const ImportInstructionData = () => {
       container.pack_number = imported_pack_number;
       newBillItems.push(container);
     });
-    console.log(newBillItems);
-    //dispatch(newInstructionDetail(container))
+
+    dispatch(createBulkBillItems(newBillItems));
   };
 
   return (

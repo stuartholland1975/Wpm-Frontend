@@ -245,6 +245,16 @@ export const createBulkLocations = createAsyncThunk(
   }
 )
 
+export const createBulkBillItems = createAsyncThunk(
+  "billItemsBulk/addMany",
+  async (apiObject) => {
+    const response = await axiosInstance.post(
+      `/bulk/api/bulk-items/`, apiObject
+    )
+    return response.data
+  }
+)
+
 export const createLocation = createAsyncThunk(
   "locations/addOne",
   async (apiObject) => {
