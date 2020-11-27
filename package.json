@@ -19,6 +19,7 @@
     "axios": "^0.21.0",
     "axios-hooks": "^2.1.0",
     "bootstrap": "^4.5.3",
+    "chart.js": "^2.9.4",
     "install": "^0.13.0",
     "json2csv": "^5.0.5",
     "m": "^1.5.6",
@@ -28,6 +29,7 @@
     "node-sass": "^4.14.1",
     "react": "^17.0.1",
     "react-bootstrap": "^1.4.0",
+    "react-chartjs-2": "^2.11.1",
     "react-csv": "^2.0.3",
     "react-dom": "^17.0.1",
     "react-excel-renderer": "^1.1.0",
@@ -46,6 +48,7 @@
     "redux-form-material-ui": "^4.3.4",
     "redux-localstorage-simple": "^2.3.1",
     "redux-logger": "^3.0.6",
+    "redux-persist": "^6.0.0",
     "use-axios-hooks": "^1.0.4",
     "uuid": "^8.3.1",
     "web-vitals": "^0.2.4"

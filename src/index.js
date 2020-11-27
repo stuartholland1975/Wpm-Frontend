@@ -7,7 +7,8 @@ import "bootstrap/dist/css/bootstrap.css";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter as Router } from "react-router-dom";
 import { Provider } from "react-redux";
-import { store } from "./Store";
+import { store, persistor } from "./Store";
+import { PersistGate } from 'redux-persist/integration/react';
 import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-alpine.css";
 import "./GridStyles.scss";
@@ -20,9 +21,11 @@ function initialise() {
       <Router>
         <Provider store={store}>
           <CssBaseline />
-          <ConfirmProvider>
+           <PersistGate loading={null} persistor={persistor}>
+            <ConfirmProvider>
             <App />
           </ConfirmProvider>
+          </PersistGate>
         </Provider>
       </Router>,
 

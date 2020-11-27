@@ -415,3 +415,13 @@ export const fetchAppDetails = createAsyncThunk(
     return response.data;
   }
 );
+
+export const fetchRecentWorksheets = createAsyncThunk(
+  "worksheets/fetchAll",
+  async (date) => {
+    const response = await axiosInstance.get(
+      `wpm/api/worksheet/?work_done_gte=${date}`
+    );
+    return response.data;
+  }
+);
