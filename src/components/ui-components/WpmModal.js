@@ -66,4 +66,4 @@ const WpmModal = (props) => {
 		</div>
 	);
 };
-export default WpmModal;
+

@@ -6,7 +6,7 @@ import { setSelectedInstruction, setSelectedLocation } from "../../services/data
 import CustomNoRowsOverlay from "../grid/CustomNoRowsOverlay";
 
 
-const ApplicationInstructionsList = (props) => {
+const ApplicationInstructionsList = () => {
 	const appOrders = useSelector(state => state.applicationDetail.orders);
 	const dispatch = useDispatch();
 	const columnDefs = [

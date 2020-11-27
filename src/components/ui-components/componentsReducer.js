@@ -23,5 +23,5 @@ const componentSlice = createSlice({
 		}
 	}
 });
-export const {toggleModal, modalSettings, editRow} = componentSlice.actions;
+export const {toggleModal} = componentSlice.actions;
 export default componentSlice.reducer;
