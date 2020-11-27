@@ -66,7 +66,7 @@ const InstructionList = () => {
       {
         headerName: "Docs",
         type: "numericColumn",
-        field: "document_count",
+        field: "document_count.document_count",
       },
       {
         headerName: "Item Count",

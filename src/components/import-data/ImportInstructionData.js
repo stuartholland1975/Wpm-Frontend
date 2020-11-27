@@ -4,136 +4,187 @@ import { ExcelRenderer, OutTable } from "react-excel-renderer";
 import { useDispatch, useSelector } from "react-redux";
 import { selectAllActivities } from "../../services/data/activityData";
 import { selectAllLocations } from "../../services/data/locationData";
-import { createLocation, fetchSelectedActivities, newInstructionDetail } from "../../services/thunks";
+import {
+  createLocation,
+  fetchSelectedActivities,
+  newInstructionDetail,
+  createBulkLocations,
+} from "../../services/thunks";
 
 export const ExcelSlice = createSlice({
-	name: "ExcelImport",
-	initialState: {rows: [], cols: [], poles: []},
-	reducers: {
-		setImportedData: (state, action) => {
-			state.rows = action.payload.rows;
-			state.cols = action.payload.cols;
-		},
-	},
+  name: "ExcelImport",
+  initialState: { rows: [], cols: [], poles: [] },
+  reducers: {
+    setImportedData: (state, action) => {
+      state.rows = action.payload.rows;
+      state.cols = action.payload.cols;
+    },
+  },
 });
 
-export const {setImportedData} = ExcelSlice.actions;
+export const { setImportedData } = ExcelSlice.actions;
 
 const numFormat = (num) => {
-	return num.toLocaleString(undefined, {
-		minimumFractionDigits: 2,
-		maximumFractionDigits: 2,
-	});
+  return num.toLocaleString(undefined, {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
 };
 
 const ImportInstructionData = () => {
-	const dispatch = useDispatch();
-	const [data, setData] = useState({rows: [], cols: []});
-	const importDraft = useSelector(state => state.excelData);
-	const activities = useSelector(selectAllActivities);
-	const workInstruction = useSelector(state => state.gridData.selectedRow.work_instruction);
-	const locations = useSelector(selectAllLocations)
+  const dispatch = useDispatch();
+  const [data, setData] = useState({ rows: [], cols: [] });
+  const importDraft = useSelector((state) => state.excelData);
+  const activities = useSelector(selectAllActivities);
+  const workInstruction = useSelector(
+    (state) => state.gridData.selectedRow.work_instruction
+  );
+  const locations = useSelector(selectAllLocations);
 
-	const rowsRef = useRef([]);
-	//const apiObject = useSelector(createApiObject);
+  const rowsRef = useRef([]);
+  //const apiObject = useSelector(createApiObject);
 
-	const fileHandler = (event) => {
-		let fileObj = event.target.files[0];
-		//just pass the fileObj as parameter
-		ExcelRenderer(fileObj, (err, resp) => {
-			if (err) {
-				console.log(err);
-			} else {
-				resp.rows.shift();
-				dispatch(setImportedData({rows: resp.rows, cols: resp.cols}));
-				const uniqueActivities = [...new Set(resp.rows.map((item) => item[3]))];
-				dispatch(fetchSelectedActivities(uniqueActivities));
+  const fileHandler = (event) => {
+    let fileObj = event.target.files[0];
+    //just pass the fileObj as parameter
+    ExcelRenderer(fileObj, (err, resp) => {
+      if (err) {
+        console.log(err);
+      } else {
+        resp.rows.shift();
+        dispatch(setImportedData({ rows: resp.rows, cols: resp.cols }));
+        const uniqueActivities = [...new Set(resp.rows.map((item) => item[3]))];
+        console.log(uniqueActivities);
+        dispatch(fetchSelectedActivities(uniqueActivities));
+      }
+    });
+  };
 
-			}
-		});
-	};
+  const createLocations = () => {
+    let newLocations = [];
+    const uniqueLocations = [
+      ...new Set(importDraft.rows.map((item) => item[0])),
+    ];
+    uniqueLocations.forEach((value) => {
+      newLocations.push({
+        location_ref: value,
+        location_description: value,
+        work_instruction: workInstruction,
+      });
+      //dispatch(createLocation({location_ref: value, location_description: value, work_instruction: workInstruction}));
+    });
+    console.log(newLocations);
+    dispatch(createBulkLocations(newLocations));
+  };
 
+  const createItems = () => {
+    console.log(activities, importDraft.rows);
+    let newBillItems = [];
+    importDraft.rows.forEach((item) => {
+      const imported_activity_code = item[3];
+      const imported_qty = item[6];
+      const imported_materials = item[5];
+      const imported_item_type = item[2];
+      const imported_pack_number = item[4];
+      const imported_item_number = item[1];
+      const matched_activity = activities.filter(
+        (obj) => obj.activity_code === imported_activity_code
+      );
 
-	const createLocations = () => {
-		const uniqueLocations = [...new Set(importDraft.rows.map(item => item[0]))];
-		uniqueLocations.forEach(value => {
-			dispatch(createLocation({location_ref: value, location_description: value, work_instruction: workInstruction}));
-		});
-	};
+      console.log(
+        imported_activity_code,
+        imported_qty,
+        imported_materials,
+        imported_item_type,
+        imported_pack_number,
+        imported_item_number,
+        matched_activity
+      );
 
-	const createItems = () => {
-		let container = {};
-		importDraft.rows.forEach((item) => {
-      const labourBase =
-        activities.filter((obj) => obj.activity_code === item[3])[0]
-          .labour_base * item[15];
-      const labourUplift =
-        activities.filter((obj) => obj.activity_code === item[3])[0]
-          .labour_uplift * item[15];
+      let container = {};
+      const labourBase = parseFloat(
+        matched_activity.map((item) => item.labour_base)[0] * imported_qty
+      );
+      const labourUplift = parseFloat(
+        matched_activity.map((item) => item.labour_uplift)[0] * imported_qty
+      );
       const labourTotal = labourBase + labourUplift;
-      const materialsTotalExclOtherMaterials = parseFloat(item[8] * 1.05);
-      const MaterialsOther =
-        parseFloat(activities.filter((obj) => obj.activity_code === item[3])[0]
-          .materials_other * item[15]);
-      const materialsTotalInclOtherMaterials =
-        parseFloat(materialsTotalExclOtherMaterials + MaterialsOther);
-      const unitMaterialsPayable = parseFloat(materialsTotalInclOtherMaterials / item[15]);
-      const totalPayable = parseFloat(materialsTotalInclOtherMaterials + labourTotal);
-      const unitTotalPayable = parseFloat(totalPayable / item[15]);
+      const materialsTotalExclOtherMaterials = parseFloat(
+        imported_materials * 1.05
+      );
+      const MaterialsOther = parseFloat(
+        matched_activity.map((item) => item.materials_other)[0] * imported_qty
+      );
+      const materialsTotalInclOtherMaterials = parseFloat(
+        materialsTotalExclOtherMaterials + MaterialsOther
+      );
+      const unitMaterialsPayable = parseFloat(
+        materialsTotalInclOtherMaterials / imported_qty
+      );
+      const totalPayable = parseFloat(
+        materialsTotalInclOtherMaterials + labourTotal
+      );
+      const unitTotalPayable = parseFloat(totalPayable / imported_qty);
 
       container.work_instruction = workInstruction;
-      container.location_ref = locations.filter(
+      /*  container.location_ref = locations.filter(
         (obj) => obj.location_ref === item[0]
-      )[0].id;
-      container.item_number = item[1];
-      container.item_type = item[2].toUpperCase();
-      container.activity_ref = activities.filter(
-        (obj) => obj.activity_code === item[3]
-      )[0].id;
-      container.qty_ordered = item[15];
-      container.labour_base = item[7];
-      container.labour_uplift = (item[7] * 0.3745).toFixed(2);
-      container.labour_total = (item[7] * 1.3745).toFixed(2);
-      container.unit_labour_payable = (item[7] * 1.3745 / item[15]).toFixed(2);
-      container.materials_base = item[8].toFixed(2)
-      container.materials_uplift = (item[8] * 0.05).toFixed(2);
-      container.materials_total_excl_other_materials = (item[8] * 1.05).toFixed(2);
-      container.materials_other = item[13].toFixed(2);
-      container.materials_total_incl_other_materials = ((item[8] * 1.05) + item[13]).toFixed(2);
-      container.unit_materials_payable = (((item[8] * 1.05 + item[13]) / item[15])).toFixed(2);
-      container.total_payable = ((item[8] * 1.05 + item[13] + (item[7] * 1.3745))).toFixed(2);
-      container.unit_total_payable = ((item[8] * 1.05 + item[13] + (item[7] * 1.3745)) / item[15]).toFixed(2);
-      container.pack_number = item[6];
-      dispatch(newInstructionDetail(container))
+      )[0].id; */
+      container.item_number = imported_item_number;
+      container.item_type = imported_item_type.toUpperCase();
+      container.activity_ref = matched_activity.map((item) => item.id)[0];
+      container.qty_ordered = imported_qty;
+
+      container.labour_base = labourBase;
+      container.labour_uplift = labourUplift;
+      container.labour_total = labourTotal;
+      container.unit_labour_payable = labourTotal / imported_qty;
+      container.materials_base = imported_materials;
+      container.materials_uplift = (imported_materials * 0.05).toFixed(2);
+      container.materials_total_excl_other_materials = materialsTotalExclOtherMaterials.toFixed(
+        2
+      );
+      container.materials_other = materialsOther.toFixed(2);
+      container.materials_total_incl_other_materials = materialsTotalInclOtherMaterials.toFixed(
+        2
+      );
+      container.unit_materials_payable = materialsTotalInclOtherMaterials.toFixed(
+        2
+      );
+      container.total_payable = totalPayable.toFixed(2);
+      container.unit_total_payable = unitTotalPayable.toFixed(2);
+      container.pack_number = imported_pack_number;
+      newBillItems.push(container);
     });
+    console.log(newBillItems);
+    //dispatch(newInstructionDetail(container))
+  };
 
-	}
+  return (
+    <div>
+      <input type="file" onChange={fileHandler} style={{ padding: "10px" }} />
 
-	return (
-		<div>
-			<input type="file" onChange={ fileHandler } style={ {padding: "10px"} }/>
+      <input
+        type="button"
+        onClick={createLocations}
+        style={{ padding: "10px" }}
+        value="CREATE LOCATIONS"
+      />
 
-			<input
-				type="button"
-				onClick={ createLocations }
-				style={ {padding: "10px"} }
-				value="CREATE LOCATIONS"
-			/>
+      <input
+        type="button"
+        onClick={createItems}
+        style={{ padding: "10px" }}
+        value="CREATE ITEMS"
+      />
 
-			<input
-				type="button"
-				onClick={ createItems }
-				style={ {padding: "10px"} }
-				value="CREATE ITEMS"
-			/>
-
-			<OutTable
-				data={ importDraft.rows }
-				columns={ importDraft.cols }
-				tableClassName="ExcelTable2007"
-				tableHeaderRowClass="heading"
-			/>
-		</div>
-	);
+      <OutTable
+        data={importDraft.rows}
+        columns={importDraft.cols}
+        tableClassName="ExcelTable2007"
+        tableHeaderRowClass="heading"
+      />
+    </div>
+  );
 };
 export default ImportInstructionData;

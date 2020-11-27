@@ -4,6 +4,7 @@ import React, { Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { removeEditedRow, setEditedRow } from "../../services/data/gridData";
 import { availableWorksheets } from "../../services/selectors";
+import { ChangeDetectionStrategyType } from "ag-grid-react/lib/changeDetectionService";
 
 function formatDate(params) {
   return moment(params.value).format("DD/MM/YYYY");
@@ -97,6 +98,9 @@ const AvailableWorksheetsList = () => {
           rowData={orderWorksheets}
           onGridReady={(params) => params.api.sizeColumnsToFit()}
           onGridSizeChanged={(params) => params.api.sizeColumnsToFit()}
+          rowDataChangeDetectionStrategy={
+            ChangeDetectionStrategyType.IdentityCheck
+          }
         />
       </div>
     </Fragment>

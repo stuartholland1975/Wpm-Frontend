@@ -1,5 +1,5 @@
 import { createEntityAdapter, createSlice, } from "@reduxjs/toolkit";
-import { createLocation, deleteLocation, fetchOrderSummaryInfo, updateLocation, fetchAppLocations } from "../thunks";
+import { createLocation, deleteLocation, fetchOrderSummaryInfo, updateLocation, fetchAppLocations, createBulkLocations } from "../thunks";
 
 
 
@@ -24,6 +24,7 @@ export const LocationsSlice = createSlice({
 		builder.addCase(createLocation.fulfilled, locationsAdapter.addOne);
 		builder.addCase(deleteLocation.fulfilled, locationsAdapter.removeOne);
 		builder.addCase(fetchAppLocations.fulfilled, locationsAdapter.setAll)
+		builder.addCase(createBulkLocations.fulfilled, locationsAdapter.upsertMany)
 	},
 });
 

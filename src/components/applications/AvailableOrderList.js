@@ -4,7 +4,9 @@ import Loader from "react-loader-spinner";
 import { useDispatch, useSelector } from "react-redux";
 import CustomNoRowsOverlay from "../grid/CustomNoRowsOverlay";
 import { setSelectedInstruction } from "../../services/data/gridData";
-import { getAvailableValues } from "../../services/selectors";
+import { getAvailableOrders } from "../../services/selectors";
+import { Container } from "react-bootstrap";
+import { ChangeDetectionStrategyType } from "ag-grid-react/lib/changeDetectionService";
 
 const numFormatGrid = (params) => {
   return params.value.toLocaleString(undefined, {
@@ -16,7 +18,7 @@ const numFormatGrid = (params) => {
 const AvailableOrderList = () => {
   const dispatch = useDispatch();
 
-  const availableOrders = useSelector(getAvailableValues);
+  const availableOrders = useSelector(getAvailableOrders);
 
   const ColumnDefs = [
     { headerName: "ID", field: "id", hide: true },
@@ -59,10 +61,13 @@ const AvailableOrderList = () => {
     },
     {
       headerName: "Available Value",
-      field: "available_value",
+      // field: "available_value",
       sortable: false,
       cellStyle: { fontWeight: "bold" },
       type: "numericColumn",
+      valueGetter: function (params) {
+        return params.data.value_complete - params.data.value_applied;
+      },
       valueFormatter: numFormatGrid,
     },
   ];
@@ -116,7 +121,7 @@ const AvailableOrderList = () => {
   }
 
   return (
-    <Fragment>
+    <>
       <div className="grid-title">
         WORK INSTRUCTIONS AVAILABLE FOR APPLICATION:
       </div>
@@ -127,9 +132,12 @@ const AvailableOrderList = () => {
           rowData={availableOrders}
           onGridReady={(params) => params.api.sizeColumnsToFit()}
           onGridSizeChanged={(params) => params.api.sizeColumnsToFit()}
+          rowDataChangeDetectionStrategy={
+            ChangeDetectionStrategyType.IdentityCheck
+          }
         />
       </div>
-    </Fragment>
+    </>
   );
 };
 

@@ -47,8 +47,8 @@ const ApplicationsSummary = () => {
 	return (
 		<Container fluid>
 
-				<hr/>
-				<div className="grid-title" >APPLICATIONS:</div>
+				
+				<h4 style={{textAlign: "center", fontWeight: "bolder", paddingTop: 5}} >APPLICATION SUMMARY</h4>
 				<hr/>
 				<CardDeck>
 					{ applications.map(item => {

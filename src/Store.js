@@ -3,6 +3,7 @@ import { combineReducers } from "redux";
 import logger from "redux-logger";
 import { reducer as modal } from "redux-modal";
 import { persistReducer, persistStore } from "redux-persist";
+import thunk from 'redux-thunk';
 import storage from "redux-persist/lib/storage";
 import { ExcelSlice } from "./components/import-data/ImportInstructionData";
 import componentsReducer from "./components/ui-components/componentsReducer";
@@ -56,7 +57,7 @@ const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 const store = configureStore({
 	reducer: persistedReducer,
-	middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat([logger]),
+	middleware: [thunk, logger]
 });
 
 const persistor = persistStore(store);

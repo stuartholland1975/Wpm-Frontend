@@ -53,17 +53,17 @@ export const fetchWorkInstructions = createAsyncThunk(
   "workInstructions/fetchAll",
   async () => {
     const headers = await axiosInstance.get("/wpm/api/orderheader/");
-    const documents = await axiosInstance.get("/wpm/api/documents/");
-    const instructionData = headers.data.map((element) => {
-      return {
-        ...element,
-        document_count: documents.data.filter(
-          (obj) => obj.work_instruction === element.id
-        ).length,
-      };
-    });
+   // const documents = await axiosInstance.get("/wpm/api/documents/");
+  //  const instructionData = headers.data.map((element) => {
+   //   return {
+     //   ...element,
+     //   document_count: documents.data.filter(
+      //    (obj) => obj.work_instruction === element.id
+     //   ).length,
+    //  };
+   // });
 
-    return instructionData;
+    return headers.data;
   }
 );
 
@@ -234,6 +234,16 @@ export const updateLocation = createAsyncThunk(
     return response.data;
   }
 );
+
+export const createBulkLocations = createAsyncThunk(
+  "locationsBulk/addMany",
+  async (apiObject) => {
+    const response = await axiosInstance.post(
+      `/bulk/api/bulk-locations/`, apiObject
+    )
+    return response.data
+  }
+)
 
 export const createLocation = createAsyncThunk(
   "locations/addOne",
