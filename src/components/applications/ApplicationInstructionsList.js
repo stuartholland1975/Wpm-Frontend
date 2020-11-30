@@ -3,7 +3,7 @@ import React, { Fragment } from "react";
 import Loader from "react-loader-spinner";
 import { useDispatch, useSelector } from "react-redux";
 import { setSelectedInstruction, setSelectedLocation } from "../../services/data/gridData";
-import CustomNoRowsOverlay from "../grid/CustomNoRowsOverlay";
+import CustomNoRowsOverlay from "../grid/CustomNoRowsOverlay2";
 
 
 const ApplicationInstructionsList = () => {

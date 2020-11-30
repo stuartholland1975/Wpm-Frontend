@@ -12,6 +12,7 @@ import { selectAllImages } from "../../services/data/ImageData";
 import { selectAllLocations } from "../../services/data/locationData";
 import { fetchOrderSummaryInfo } from "../../services/thunks";
 import CustomNoRowsOverlay from "../grid/CustomNoRowsOverlay";
+import CustomLoadingOverlay from "../grid/CustomLoadingOverlay";
 import InstructionSummary from "../work-instructions/InstructionSummary";
 
 const LocationList = () => {
@@ -125,19 +126,10 @@ const LocationList = () => {
 		suppressNoRowsOverlay: false,
 		frameworkComponents: {
 			customNoRowsOverlay: CustomNoRowsOverlay,
+			customLoadingOverlay: CustomLoadingOverlay,
 		},
+		loadingOverlayComponent: "customLoadingOverlay",
 		noRowsOverlayComponent: "customNoRowsOverlay",
-		noRowsOverlayComponentParams: {
-			noRowsMessageFunc: function () {
-				return (
-					<Loader
-						style={ {textAlign: "center"} }
-						type={ "ThreeDots" }
-						color="#366363"
-					/>
-				);
-			},
-		},
 	};
 
 	useEffectOnce(() => {
@@ -145,8 +137,9 @@ const LocationList = () => {
 	});
 
 	useUpdateEffect(() => {
-		gridApi.redrawRows();
-	}, [images]);
+		gridApi.setRowData(locations)
+		//gridApi.redrawRows();
+	}, [images, locations]);
 
 	const onGridReady = (params) => {
 		setGridApi(params.api);
@@ -215,7 +208,7 @@ const LocationList = () => {
 				<div className="ag-theme-custom-react">
 					<AgGridReact
 						gridOptions={ gridOptions }
-						rowData={ locations }
+					//	rowData={ null }
 						immuntableData={ true }
 						getRowNodeId={ (data) => data.id }
 						onGridReady={ onGridReady }

@@ -2,7 +2,7 @@ import { AgGridReact } from "ag-grid-react";
 import React, { Fragment } from "react";
 import Loader from "react-loader-spinner";
 import { useDispatch, useSelector } from "react-redux";
-import CustomNoRowsOverlay from "../grid/CustomNoRowsOverlay";
+import CustomNoRowsOverlay from "../grid/CustomNoRowsOverlay2";
 import { setSelectedInstruction } from "../../services/data/gridData";
 import { getAvailableOrders } from "../../services/selectors";
 import { Container } from "react-bootstrap";
