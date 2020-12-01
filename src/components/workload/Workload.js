@@ -13,8 +13,7 @@ import WorkLoadCharts from "./WorkloadCharts";
 import WorkloadSummary from "./WorkloadSummary";
 
 const Workload = (props) => {
-		//	const years = ["2019", "2020", "2021"];
-		//const weeks = [...Array(52).keys()].map((i) => (i + 1).toString());
+
 		const dispatch = useDispatch();
 		const [year, setYear] = useState(moment().format("YYYY"));
 		const [week, setWeek] = useState(moment().format("W"));
@@ -25,10 +24,8 @@ const Workload = (props) => {
 			dispatch(fetchWorkDoneWeeks()).then(unwrapResult).then(result => setWorkDoneWeeks(result)).catch(error => console.log(error));
 		});
 
-		//const weeks = [...new Set(workDoneWeeks.map(item => item.iso_week.toString()))].reverse();
-		const weeks = [...new Set(workDoneWeeks.filter(obj => obj.iso_year == year).map(item => item.iso_week.toString()))].reverse();
-		const years = [...new Set(workDoneWeeks.map(item => item.iso_year.toString()))].sort().reverse();
-
+		const weeks = [...new Set(workDoneWeeks.filter(obj => obj["iso_year"] == year).map(item => item["iso_week"].toString()))].reverse();
+		const years = [...new Set(workDoneWeeks.map(item => item["iso_year"].toString()))].sort().reverse();
 
 		const handleRetrieveData = () => {
 			dispatch(fetchWeeklyWorksheets({week: week, year: year}));
