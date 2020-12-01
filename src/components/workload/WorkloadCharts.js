@@ -3,6 +3,7 @@ import { CardDeck } from "react-bootstrap";
 import WeeklyWorkDoneByArea from "../charts/WeeklyWorkDoneByArea";
 import WeeklyWorkDoneBySupervisor from "../charts/WeeklyWorkDoneBySupervisor";
 import WeeklyWorkDoneByWorkInstruction from "../charts/WeeklyWorkDoneByWorkInstruction";
+import WeeklyWorkDoneByWorkType from "../charts/WeeklyWorkDoneByWorkType";
 
 const WorkLoadCharts = (props) => {
 	return (
@@ -10,6 +11,7 @@ const WorkLoadCharts = (props) => {
 			<WeeklyWorkDoneByArea/>
 			<WeeklyWorkDoneBySupervisor/>
 			<WeeklyWorkDoneByWorkInstruction/>
+			<WeeklyWorkDoneByWorkType/>
 		</CardDeck>
 	);
 };

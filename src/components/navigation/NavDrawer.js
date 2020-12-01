@@ -32,7 +32,7 @@ import {
 	setSelectedLocation,
 	setSelectedRow,
 } from "../../services/data/gridData";
-import { selectAllWorkInstructions } from "../../services/data/InstructionData";
+import { selectAllAvailableWorkInstructions } from "../../services/data/InstructionData";
 import {
 	addWorksheetToApplication,
 	closeApplication,
@@ -99,7 +99,7 @@ const NavDrawer = (props) => {
 	const selectedBillItem = useSelector(
 		(state) => state.gridData.selectedBillItem
 	);
-	const workInstructions = useSelector(selectAllWorkInstructions);
+	const workInstructions = useSelector(selectAllAvailableWorkInstructions);
 
 	const confirm = useConfirm();
 

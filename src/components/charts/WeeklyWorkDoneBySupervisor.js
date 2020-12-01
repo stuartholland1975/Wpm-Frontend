@@ -15,12 +15,13 @@ const WeeklyWorkDoneBySupervisor = () => {
 
 	const data = useSelector(WeeklyWorkBySupervisor);
 	const week_number = data.map(item => item.week)[0];
+	const year_number = data.map((item) => item.year)[0];
 
 	return (
 		<Card>
 			<Card.Body>
 				<Card.Title>
-					<h6 style={ {textAlign: "center"} }>Work Done By Supervisor Week { week_number }</h6>
+					<h6 style={ {textAlign: "center"} }>Work Done By Supervisor Week { week_number } {year_number}</h6>
 				</Card.Title>
 				<ResponsiveContainer height={ 375 } width="100%">
 					<BarChart
@@ -31,10 +32,10 @@ const WeeklyWorkDoneBySupervisor = () => {
 							left: 20,
 							bottom: 5,
 						} }
-						scaleToFit={true}
+						scaleToFit={ true }
 					>
 						<CartesianGrid strokeDasharray="3 3"/>
-						<XAxis dataKey="supervisor" />
+						<XAxis dataKey="supervisor"/>
 						<YAxis/>
 						<Tooltip formatter={ (value, name, props) => numFormatGrid(value) }/>
 						{/* <Legend /> */ }

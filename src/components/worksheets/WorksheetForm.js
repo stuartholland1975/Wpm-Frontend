@@ -6,13 +6,14 @@ import { useConfirm } from "material-ui-confirm";
 import React, { useEffect, useState } from "react";
 import FocusLock from "react-focus-lock";
 import { useForm } from "react-hook-form";
+import Loader from "react-loader-spinner";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { resetEditedRow, selectAllEditedRows } from "../../services/data/gridData";
+import { selectAllWorkInstructions } from "../../services/data/InstructionData";
 import { selectAllSupervisors } from "../../services/data/SupervisorsData";
-import { newWorksheet, selectAllInstructionHeaders, updateInstructionDetail } from "../../services/thunks";
+import { newWorksheet, updateInstructionDetail } from "../../services/thunks";
 import { BlueButton, GreyButton } from "../ui-components/Buttons";
-import {selectAllAvailableWorkInstructions} from "../../services/data/InstructionData";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -41,17 +42,17 @@ const WorksheetForm = (props) => {
 	const {register, handleSubmit, reset} = useForm();
 	const supervisors = useSelector(selectAllSupervisors);
 	const editedRows = useSelector(selectAllEditedRows);
-	const instructionId = useSelector(selectAllAvailableWorkInstructions)[0].id;
-	const projectTitle = useSelector(selectAllAvailableWorkInstructions)[0].project_title;
+	const instructionId = useSelector(selectAllWorkInstructions)[0].id;
+	const projectTitle = useSelector(selectAllWorkInstructions)[0].project_title;
 	const classes = useStyles();
 	const confirm = useConfirm();
 	const dispatch = useDispatch();
 	const [inputValue, setInputValue] = useState("");
 	const [value, setValue] = useState("");
 	const history = useHistory();
+	const [isLoading, setIsLoading] = useState(false);
 
 	const onSubmit = (data) => {
-		console.log(JSON.stringify(data));
 		const worksheetContainer = [];
 		const billItemContainer = [];
 
@@ -70,22 +71,11 @@ const WorksheetForm = (props) => {
 			worksheetObject.labour_complete = toFixed((unit_labour_payable * qty_to_complete), 2);
 
 			worksheetContainer.push(worksheetObject);
-			console.log(worksheetObject, worksheetContainer);
-			/*if (qty_os - qty_to_complete === 0) {
-				billItemObject = {...item}
-				billItemObject.id = id;
-				billItemObject.item_status = "Closed";
-				billItemObject.item_complete = true;
-				billItemContainer.push(billItemObject);
-			}
-			console.log(billItemObject, billItemContainer);*/
 			if (qty_os - qty_to_complete === 0) {
 				dispatch(updateInstructionDetail({id: id, item_status: "Closed", item_complete: true}));
 			}
-
 		});
-
-
+		setIsLoading(true);
 		dispatch(newWorksheet(worksheetContainer))//then(() => dispatch(fetchOrderSummaryInfo(instructionId)));
 			.then(() => closeAndReset());
 	};
@@ -93,6 +83,7 @@ const WorksheetForm = (props) => {
 	const closeAndReset = () => {
 		dispatch(resetEditedRow());
 		props.handleHide();
+		setIsLoading(false);
 		history.push({pathname: `/work-instructions/summary/locations/${ instructionId }`, state: projectTitle});
 	};
 
@@ -161,6 +152,12 @@ const WorksheetForm = (props) => {
 				</Grid>
 				<hr/>
 			</form>
+			{ isLoading && <Loader
+				style={ {textAlign: "center"} }
+				type={ "ThreeDots" }
+				color={ "Blue" }
+			/>
+			}
 		</FocusLock>
 	);
 };

@@ -209,7 +209,7 @@ export const fetchDocuments = createAsyncThunk(
 );
 
 export const newDocument = createAsyncThunk(
-  "worksheet/addOne",
+  "document/addOne",
   async (apiObject) => {
     const response = await axiosInstance.post(`/wpm/api/documents/`, apiObject);
     return response.data;

@@ -4,11 +4,9 @@ import React from "react";
 import Loader from "react-loader-spinner";
 import { useDispatch, useSelector } from "react-redux";
 import { setSelectedInstruction } from "../../services/data/gridData";
-import { getAvailableOrders } from "../../services/selectors";
+import { selectAllAvailableWorkInstructions } from "../../services/data/InstructionData";
+import { fetchAvailableWorksheets } from "../../services/thunks";
 import CustomNoRowsOverlay from "../grid/CustomNoRowsOverlay2";
-import {fetchAvailableWorksheets} from "../../services/thunks";
-import {selectAllAvailableWorkInstructions} from "../../services/data/InstructionData";
-import { useUpdateEffect } from "react-use";
 
 const numFormatGrid = (params) => {
 	return params.value.toLocaleString(undefined, {
@@ -20,8 +18,8 @@ const numFormatGrid = (params) => {
 const AvailableOrderList = () => {
 	const dispatch = useDispatch();
 
-	const availableOrders = useSelector(selectAllAvailableWorkInstructions)
-	
+	const availableOrders = useSelector(selectAllAvailableWorkInstructions);
+
 
 	const ColumnDefs = [
 		{headerName: "ID", field: "id", hide: true},
@@ -113,24 +111,24 @@ const AvailableOrderList = () => {
 				);
 			},
 		},
-	
+
 	};
 	const onGridReady = params => {
-		params.api.sizeColumnsToFit()
+		params.api.sizeColumnsToFit();
 		/* const node = params.api.getRowNode(0)
 		node.setSelected(true)
 		console.log(params.api.getSelectedNodes(), node) */
-	}
+	};
 
 	const onFirstDataRendered = (params) => {
 		params.api.getDisplayedRowAtIndex(0).setSelected(true);
-	}
+	};
 
 	function selectedRow(event) {
 		if (event.node.isSelected()) {
 			dispatch(setSelectedInstruction(event.data));
-			dispatch(fetchAvailableWorksheets(`?applied=False&&item_ref__work_instruction=${event.data.work_instruction}`));
-			
+			dispatch(fetchAvailableWorksheets(`?applied=False&&item_ref__work_instruction=${ event.data.work_instruction }`));
+
 		} else if (event.api.getSelectedNodes().length === 0) {
 			dispatch(setSelectedInstruction(false));
 		}
@@ -146,8 +144,8 @@ const AvailableOrderList = () => {
 				<AgGridReact
 					gridOptions={ gridOptions }
 					rowData={ availableOrders }
-					onGridReady={ onGridReady  }
-					onFirstDataRendered={onFirstDataRendered}
+					onGridReady={ onGridReady }
+					onFirstDataRendered={ onFirstDataRendered }
 					onGridSizeChanged={ (params) => params.api.sizeColumnsToFit() }
 					rowDataChangeDetectionStrategy={
 						ChangeDetectionStrategyType.IdentityCheck

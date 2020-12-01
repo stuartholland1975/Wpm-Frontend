@@ -6,14 +6,13 @@ import { useHistory } from "react-router-dom";
 import { useEffectOnce } from "react-use";
 import { selectAllApplications } from "../../services/data/ApplicationData";
 import { setSelectedInstruction } from "../../services/data/gridData";
-import { removeAllWorkInstructions, removeAllAvailableWorkInstructions } from "../../services/data/InstructionData";
+import { removeAllAvailableWorkInstructions, removeAllWorkInstructions } from "../../services/data/InstructionData";
 import { removeAllWorksheets } from "../../services/data/WorksheetData";
-import { fetchApplications, fetchAvailableWorksheets, fetchWorkInstructions, fetchAvailableInstructions } from "../../services/thunks";
+import { fetchApplications, fetchAvailableInstructions } from "../../services/thunks";
 import { GreyButton } from "../ui-components/Buttons";
 import CommercialCard from "../ui-components/CommercialCard";
 import AvailableOrderList from "./AvailableOrderList";
 import AvailableWorksheetsList from "./AvailableWorksheetsList";
-
 
 
 function formatDate(date) {
@@ -36,13 +35,13 @@ const ApplicationsSummary = () => {
 		dispatch(fetchApplications());
 		//dispatch(fetchAvailableWorksheets(`?applied=False`));
 		//dispatch(fetchWorkInstructions());
-		dispatch(fetchAvailableInstructions())
+		dispatch(fetchAvailableInstructions());
 		//dispatch(setSelectedInstruction(false));
 
 		return (() => {
-			dispatch(removeAllAvailableWorkInstructions())
-			dispatch(setSelectedInstruction(false))
-		})
+			dispatch(removeAllAvailableWorkInstructions());
+			dispatch(setSelectedInstruction(false));
+		});
 	});
 
 	function handleViewAppSummary({app_number}) {
