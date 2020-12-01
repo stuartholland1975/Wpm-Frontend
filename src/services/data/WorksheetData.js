@@ -1,5 +1,5 @@
 import { createEntityAdapter, createSlice } from "@reduxjs/toolkit";
-import { fetchAvailableWorksheets, addWorksheetToApplication, fetchRecentWorksheets } from "../thunks";
+import { fetchAvailableWorksheets, addWorksheetToApplication, fetchRecentWorksheets, fetchWeeklyWorksheets } from "../thunks";
 
 
 const availableWorksheetAdapter = createEntityAdapter();
@@ -14,6 +14,7 @@ export const AvailableWorksheetSlice = createSlice({
 	extraReducers: builder => {
 		builder.addCase(fetchAvailableWorksheets.fulfilled, availableWorksheetAdapter.setAll);
 		builder.addCase(addWorksheetToApplication.fulfilled, availableWorksheetAdapter.removeOne)
+		
 	}
 });
 
@@ -28,6 +29,7 @@ export const RecentWorksheetSlice = createSlice({
 	},
 	extraReducers: builder => {
 		builder.addCase(fetchRecentWorksheets.fulfilled, recentWorksheetAdapter.setAll);
+		builder.addCase(fetchWeeklyWorksheets.fulfilled, availableWorksheetAdapter.setAll)
 	}
 });
 

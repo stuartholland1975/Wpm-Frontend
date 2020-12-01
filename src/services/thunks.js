@@ -436,11 +436,19 @@ export const fetchAppDetails = createAsyncThunk(
   }
 );
 
+export const fetchWeeklyWorksheets = createAsyncThunk(
+  "weeklyWorksheets/fetchAll",
+  async (week) => {
+    const response = await axiosInstance.get(`wpm/api/worksheet/?iso_week=${week}`)
+    return response.data
+  }
+)
+
 export const fetchRecentWorksheets = createAsyncThunk(
   "worksheets/fetchAll",
   async (date) => {
     const response = await axiosInstance.get(
-      `wpm/api/worksheet/?work_done_gte=${date}`
+      `wpm/api/worksheet/?work_done_week_gte=${date}`
     );
     return response.data;
   }

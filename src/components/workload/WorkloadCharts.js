@@ -4,14 +4,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffectOnce } from "react-use";
 import { selectAllRecentWorksheets } from "../../services/data/WorksheetData";
 import { fetchRecentWorksheets } from "../../services/thunks";
-import WorkDoneChart from "../charts/WorkDoneChart";
+import WeeklyWorkDoneByArea from "../charts/WeeklyWorkDoneByArea";
 import { Card, Col, Row, CardDeck, Container } from "react-bootstrap";
 
 const WorkLoadCharts = (props) => {
   return (
     <CardDeck>
-      <WorkDoneChart />
-      <WorkDoneChart />
+      <WeeklyWorkDoneByArea />
+      <WeeklyWorkDoneByArea />
     </CardDeck>
   );
 };
