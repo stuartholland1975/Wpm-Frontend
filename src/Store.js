@@ -15,7 +15,7 @@ import DocumentsReducer from "./services/data/documentsData";
 import formDataReducer from "./services/data/FormData";
 import gridReducer, { SelectedRowSlice } from "./services/data/gridData";
 import ImagesReducer from "./services/data/ImageData";
-import WorkInstructionsReducer from "./services/data/InstructionData";
+import {workInstructionsSlice, availableInstructionSlice} from "./services/data/InstructionData";
 import InstructionDetailSlice from "./services/data/instructionDetailData";
 import LocationsReducer from "./services/data/locationData";
 import { SupervisorsSlice } from "./services/data/SupervisorsData";
@@ -36,7 +36,7 @@ const rootReducer = combineReducers({
 	components: componentsReducer,
 	modal,
 	gridData: gridReducer,
-	instructionHeader: InstructionHeaderSlice.reducer,
+	instructionHeader: workInstructionsSlice.reducer,
 	editedRow: SelectedRowSlice.reducer,
 	supervisors: SupervisorsSlice.reducer,
 	applications: ApplicationsReducer,
@@ -44,13 +44,14 @@ const rootReducer = combineReducers({
 	worksheetsRecent: RecentWorksheetSlice.reducer,
 	excelData: ExcelSlice.reducer,
 	applicationDetail: ApplicationDetails,
+	availableInstructions: availableInstructionSlice.reducer,
 
 });
 
 const persistConfig = { // configuration object for redux-persist
 	key: "root",
 	storage, // define which storage to use
-	//whitelist: ["worksheets"]
+	blacklist: ["worksheetsRecent"]
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

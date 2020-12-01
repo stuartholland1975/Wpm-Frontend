@@ -53,15 +53,15 @@ export const fetchWorkInstructions = createAsyncThunk(
   "workInstructions/fetchAll",
   async () => {
     const headers = await axiosInstance.get("/wpm/api/orderheader/");
-   // const documents = await axiosInstance.get("/wpm/api/documents/");
-  //  const instructionData = headers.data.map((element) => {
-   //   return {
-     //   ...element,
-     //   document_count: documents.data.filter(
-      //    (obj) => obj.work_instruction === element.id
-     //   ).length,
+    // const documents = await axiosInstance.get("/wpm/api/documents/");
+    //  const instructionData = headers.data.map((element) => {
+    //   return {
+    //   ...element,
+    //   document_count: documents.data.filter(
+    //    (obj) => obj.work_instruction === element.id
+    //   ).length,
     //  };
-   // });
+    // });
 
     return headers.data;
   }
@@ -239,21 +239,23 @@ export const createBulkLocations = createAsyncThunk(
   "locationsBulk/addMany",
   async (apiObject) => {
     const response = await axiosInstance.post(
-      `/bulk/api/bulk-locations/`, apiObject
-    )
-    return response.data
+      `/bulk/api/bulk-locations/`,
+      apiObject
+    );
+    return response.data;
   }
-)
+);
 
 export const createBulkBillItems = createAsyncThunk(
   "billItemsBulk/addMany",
   async (apiObject) => {
     const response = await axiosInstance.post(
-      `/bulk/api/bulk-items/`, apiObject
-    )
-    return response.data
+      `/bulk/api/bulk-items/`,
+      apiObject
+    );
+    return response.data;
   }
-)
+);
 
 export const createLocation = createAsyncThunk(
   "locations/addOne",
@@ -392,8 +394,9 @@ export const fetchCurrentApplication = createAsyncThunk(
     const currentApp = await axiosInstance.get(
       "/wpm/commercial/applications/current"
     );
-    return currentApp.data[0]}
-)
+    return currentApp.data[0];
+  }
+);
 
 export const closeApplication = createAsyncThunk(
   "application/Close&Create",
@@ -439,10 +442,12 @@ export const fetchAppDetails = createAsyncThunk(
 export const fetchWeeklyWorksheets = createAsyncThunk(
   "weeklyWorksheets/fetchAll",
   async (date) => {
-    const response = await axiosInstance.get(`wpm/api/worksheet/?iso_week=${date.week}&&iso_year=${date.year}`)
-    return response.data
+    const response = await axiosInstance.get(
+      `wpm/api/worksheet/?iso_week=${date.week}&&iso_year=${date.year}`
+    );
+    return response.data;
   }
-)
+);
 
 export const fetchRecentWorksheets = createAsyncThunk(
   "worksheets/fetchAll",
@@ -457,10 +462,17 @@ export const fetchRecentWorksheets = createAsyncThunk(
 export const fetchWorkDoneWeeks = createAsyncThunk(
   "weekNumbers/fetchAll",
   async (date) => {
-    const response = await axiosInstance.get(
-      `wpm/orders/workload/weeks`
-    );
+    const response = await axiosInstance.get(`wpm/orders/workload/weeks`);
     return response.data;
   }
 );
 
+export const fetchAvailableInstructions = createAsyncThunk(
+  "availableInstructions.fetchAll",
+  async () => {
+    const response = await axiosInstance.get(
+      `/wpm/orders/work-instructions/available`
+    );
+    return response.data;
+  }
+);

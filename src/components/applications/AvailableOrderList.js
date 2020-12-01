@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setSelectedInstruction } from "../../services/data/gridData";
 import { getAvailableOrders } from "../../services/selectors";
 import CustomNoRowsOverlay from "../grid/CustomNoRowsOverlay2";
+import {fetchAvailableWorksheets} from "../../services/thunks";
 
 const numFormatGrid = (params) => {
 	return params.value.toLocaleString(undefined, {
@@ -18,6 +19,7 @@ const AvailableOrderList = () => {
 	const dispatch = useDispatch();
 
 	const availableOrders = useSelector(getAvailableOrders);
+	const availableInstructions = useSelector(selectAllAvailableWorkInstructions)
 
 	const ColumnDefs = [
 		{headerName: "ID", field: "id", hide: true},
@@ -91,7 +93,7 @@ const AvailableOrderList = () => {
 		suppressRowClickSelection: false,
 		domLayout: "autoHeight",
 		suppressClickEdit: true,
-		onRowSelected: nodeSelected,
+		onRowSelected: selectedRow,
 		suppressNoRowsOverlay: false,
 		frameworkComponents: {
 			//customLoadingOverlay: CustomLoadingOverlay,
@@ -112,10 +114,20 @@ const AvailableOrderList = () => {
 		//onGridReady:  () => gridInitWI.api.setPinnedBottomRowData([{"work_instruction": 123456, "issued_date_formatted": "01/01/2001"}]),
 	};
 
-	function nodeSelected(event) {
+	/* function nodeSelected(event) {
 		const selectedNode = gridOptions.api.getSelectedNodes();
 		if (event.node.isSelected()) {
 			dispatch(setSelectedInstruction(selectedNode[0].data));
+		}
+	} */
+
+	function selectedRow(event) {
+		if (event.node.isSelected()) {
+			dispatch(setSelectedInstruction(event.data));
+			dispatch(fetchAvailableWorksheets(`?applied=False&&item_ref__work_instruction=${event.data.work_instruction}`));
+			
+		} else if (event.api.getSelectedNodes().length === 0) {
+			dispatch(setSelectedInstruction(false));
 		}
 	}
 

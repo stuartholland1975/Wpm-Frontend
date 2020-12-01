@@ -233,7 +233,7 @@ export const WeeklyWorkBySupervisor = createSelector(
 export const WeeklyWorkByWorkInstruction = createSelector(
   [selectAllRecentWorksheets],
   (worksheets) => {
-    const workInstructions= [...new Set(worksheets.map(item => item['order_ref']))]
+    const workInstructions= [...new Set(worksheets.map(item => item['order_ref']))].sort()
     return workInstructions.map((item) => ({
 	  work_instruction: [item][0],
 	  week: worksheets.length >0 ? worksheets[0]['iso_week'] : "0",

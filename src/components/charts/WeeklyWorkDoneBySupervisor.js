@@ -20,9 +20,9 @@ const WeeklyWorkDoneBySupervisor = () => {
 		<Card>
 			<Card.Body>
 				<Card.Title>
-					<h5 style={ {textAlign: "center"} }>Work Done By Supervisor Week { week_number }</h5>
+					<h6 style={ {textAlign: "center"} }>Work Done By Supervisor Week { week_number }</h6>
 				</Card.Title>
-				<ResponsiveContainer height={ 350 } width="100%">
+				<ResponsiveContainer height={ 375 } width="100%">
 					<BarChart
 						data={ data }
 						margin={ {
@@ -31,13 +31,14 @@ const WeeklyWorkDoneBySupervisor = () => {
 							left: 20,
 							bottom: 5,
 						} }
+						scaleToFit={true}
 					>
 						<CartesianGrid strokeDasharray="3 3"/>
-						<XAxis dataKey="supervisor"/>
+						<XAxis dataKey="supervisor" />
 						<YAxis/>
 						<Tooltip formatter={ (value, name, props) => numFormatGrid(value) }/>
 						{/* <Legend /> */ }
-						<Bar dataKey="value" fill="hsl(180, 20%, 50%)"/>
+						<Bar dataKey="value" fill="hsl(180, 50%, 15%)"/>
 
 					</BarChart>
 				</ResponsiveContainer>

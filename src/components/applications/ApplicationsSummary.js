@@ -8,11 +8,12 @@ import { selectAllApplications } from "../../services/data/ApplicationData";
 import { setSelectedInstruction } from "../../services/data/gridData";
 import { removeAllWorkInstructions } from "../../services/data/InstructionData";
 import { removeAllWorksheets } from "../../services/data/WorksheetData";
-import { fetchApplications, fetchAvailableWorksheets, fetchWorkInstructions } from "../../services/thunks";
+import { fetchApplications, fetchAvailableWorksheets, fetchWorkInstructions, fetchAvailableInstructions } from "../../services/thunks";
 import { GreyButton } from "../ui-components/Buttons";
 import CommercialCard from "../ui-components/CommercialCard";
 import AvailableOrderList from "./AvailableOrderList";
 import AvailableWorksheetsList from "./AvailableWorksheetsList";
+
 
 
 function formatDate(date) {
@@ -35,6 +36,7 @@ const ApplicationsSummary = () => {
 		dispatch(fetchApplications());
 		dispatch(fetchAvailableWorksheets(`?applied=False`));
 		dispatch(fetchWorkInstructions());
+		dispatch(fetchAvailableInstructions())
 		dispatch(setSelectedInstruction(false));
 	});
 

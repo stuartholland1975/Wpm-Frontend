@@ -8,6 +8,7 @@ import { useEffectOnce } from "react-use";
 import { selectAllActivities } from "../../services/data/activityData";
 import { fetchActivities } from "../../services/thunks";
 import CustomNoRowsOverlay from "../grid/CustomNoRowsOverlay";
+import CustomLoadingOverlay from "../grid/CustomLoadingOverlay";
 
 function niceNumber(params = 0.0) {
 	return params.value.toLocaleString(undefined, {
@@ -132,7 +133,7 @@ const ActivityList = () => {
 		//stopEditingWhenGridLosesFocus: true,
 		frameworkComponents: {
 			customNoRowsOverlay: CustomNoRowsOverlay,
-			customLoadingOverlay: CustomNoRowsOverlay,
+			customLoadingOverlay: CustomLoadingOverlay,
 			//simpleEditor: SimpleEditor,
 		},
 		noRowsOverlayComponent: "customLoadingOverlay",
