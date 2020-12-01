@@ -1,11 +1,11 @@
 import React, { Fragment } from "react";
 import {ExportToCsv} from "./ExportToCsv";
+import ReChart from "./ReChart"
 
 const Test = (props) => {
 
 	return <Fragment>
-		<div>TEST</div>
-		<ExportToCsv/>
+		<ReChart/>
 	</Fragment>;
 };
 export default Test;

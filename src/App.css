@@ -23,3 +23,13 @@
   text-transform: uppercase;
   vertical-align: middle;
 }
+
+.chart-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.chart-container > h3 {
+  margin-left: auto;
+  margin-right: auto;
+}
