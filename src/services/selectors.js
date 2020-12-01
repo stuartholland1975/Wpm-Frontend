@@ -139,11 +139,11 @@ export const getAvailableValues = createSelector(
 
 const selectedInstruction = (state) => state.gridData.selectedInstruction;
 
-export const availableWorksheets = createSelector(
+/* export const availableWorksheets = createSelector(
   [selectAllAvailableWorksheets, selectedInstruction],
   (worksheets, instruction) =>
     worksheets.filter((obj) => obj.order_ref === instruction.work_instruction)
-);
+); */
 
 export const inCompleteItems = createSelector(
   [selectAllInstructionDetails, selectedLocation],

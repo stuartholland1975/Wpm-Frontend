@@ -24,7 +24,7 @@ import WorkTypeReducer from "./services/data/workTypesData";
 import { InstructionHeaderSlice } from "./services/thunks";
 
 const rootReducer = combineReducers({
-	workInstructions: WorkInstructionsReducer,
+	workInstructions:workInstructionsSlice.reducer,
 	activities: ActivitiesReducer,
 	locations: LocationsReducer,
 	instructionDetails: InstructionDetailSlice,
@@ -36,7 +36,7 @@ const rootReducer = combineReducers({
 	components: componentsReducer,
 	modal,
 	gridData: gridReducer,
-	instructionHeader: workInstructionsSlice.reducer,
+	
 	editedRow: SelectedRowSlice.reducer,
 	supervisors: SupervisorsSlice.reducer,
 	applications: ApplicationsReducer,

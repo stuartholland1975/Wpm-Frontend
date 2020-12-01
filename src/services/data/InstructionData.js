@@ -45,15 +45,25 @@ export const workInstructionsSlice = createSlice({
 export const availableInstructionSlice = createSlice({
   name: "availableInstructions",
   initialState: availableInstructionsAdapter.getInitialState(),
-  extraReducers: (builders) => {
+  reducers: {
+    removeAllAvailableWorkInstructions: availableInstructionsAdapter.removeAll,
+  },
+  extraReducers: (builder) => {
     builder.addCase(
       fetchAvailableInstructions.fulfilled,
       availableInstructionsAdapter.setAll
+    );
+    builder.addCase(
+      updateWorkInstruction.fulfilled,
+      availableInstructionsAdapter.upsertOne
     );
   },
 });
 
 export const { removeAllWorkInstructions } = workInstructionsSlice.actions;
+export const {
+  removeAllAvailableWorkInstructions,
+} = availableInstructionSlice.actions;
 
 export const {
   selectById: selectWorkInstructionById,
@@ -63,4 +73,8 @@ export const {
   selectTotal: selectTotalWorkInstructions,
 } = workInstructionsAdapter.getSelectors((state) => state.workInstructions);
 
-export const {selectAll: selectAllAvailableWorkInstructions} = availableInstructionsAdapter.getSelectors((state) => state.availableInstructions)
+export const {
+  selectAll: selectAllAvailableWorkInstructions,
+} = availableInstructionsAdapter.getSelectors(
+  (state) => state.availableInstructions
+);

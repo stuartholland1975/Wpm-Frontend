@@ -10,8 +10,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { resetEditedRow, selectAllEditedRows } from "../../services/data/gridData";
 import { selectAllSupervisors } from "../../services/data/SupervisorsData";
-import { newWorksheet, selectAllInstructionHeaders, updateInstructionDetail, } from "../../services/thunks";
+import { newWorksheet, selectAllInstructionHeaders, updateInstructionDetail } from "../../services/thunks";
 import { BlueButton, GreyButton } from "../ui-components/Buttons";
+import {selectAllAvailableWorkInstructions} from "../../services/data/InstructionData";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -40,8 +41,8 @@ const WorksheetForm = (props) => {
 	const {register, handleSubmit, reset} = useForm();
 	const supervisors = useSelector(selectAllSupervisors);
 	const editedRows = useSelector(selectAllEditedRows);
-	const instructionId = useSelector(selectAllInstructionHeaders)[0].id;
-	const projectTitle = useSelector(selectAllInstructionHeaders)[0].project_title;
+	const instructionId = useSelector(selectAllAvailableWorkInstructions)[0].id;
+	const projectTitle = useSelector(selectAllAvailableWorkInstructions)[0].project_title;
 	const classes = useStyles();
 	const confirm = useConfirm();
 	const dispatch = useDispatch();

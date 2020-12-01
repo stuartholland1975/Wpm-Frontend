@@ -7,6 +7,8 @@ import { setSelectedInstruction } from "../../services/data/gridData";
 import { getAvailableOrders } from "../../services/selectors";
 import CustomNoRowsOverlay from "../grid/CustomNoRowsOverlay2";
 import {fetchAvailableWorksheets} from "../../services/thunks";
+import {selectAllAvailableWorkInstructions} from "../../services/data/InstructionData";
+import { useUpdateEffect } from "react-use";
 
 const numFormatGrid = (params) => {
 	return params.value.toLocaleString(undefined, {
@@ -18,8 +20,8 @@ const numFormatGrid = (params) => {
 const AvailableOrderList = () => {
 	const dispatch = useDispatch();
 
-	const availableOrders = useSelector(getAvailableOrders);
-	const availableInstructions = useSelector(selectAllAvailableWorkInstructions)
+	const availableOrders = useSelector(selectAllAvailableWorkInstructions)
+	
 
 	const ColumnDefs = [
 		{headerName: "ID", field: "id", hide: true},
@@ -33,7 +35,7 @@ const AvailableOrderList = () => {
 			headerName: "Work Instruction",
 			field: "work_instruction",
 			editable: true,
-			sort: "asc",
+			//sort: "asc",
 		},
 		{
 			headerName: "Project Title",
@@ -111,15 +113,18 @@ const AvailableOrderList = () => {
 				);
 			},
 		},
-		//onGridReady:  () => gridInitWI.api.setPinnedBottomRowData([{"work_instruction": 123456, "issued_date_formatted": "01/01/2001"}]),
+	
 	};
+	const onGridReady = params => {
+		params.api.sizeColumnsToFit()
+		/* const node = params.api.getRowNode(0)
+		node.setSelected(true)
+		console.log(params.api.getSelectedNodes(), node) */
+	}
 
-	/* function nodeSelected(event) {
-		const selectedNode = gridOptions.api.getSelectedNodes();
-		if (event.node.isSelected()) {
-			dispatch(setSelectedInstruction(selectedNode[0].data));
-		}
-	} */
+	const onFirstDataRendered = (params) => {
+		params.api.getDisplayedRowAtIndex(0).setSelected(true);
+	}
 
 	function selectedRow(event) {
 		if (event.node.isSelected()) {
@@ -141,7 +146,8 @@ const AvailableOrderList = () => {
 				<AgGridReact
 					gridOptions={ gridOptions }
 					rowData={ availableOrders }
-					onGridReady={ (params) => params.api.sizeColumnsToFit() }
+					onGridReady={ onGridReady  }
+					onFirstDataRendered={onFirstDataRendered}
 					onGridSizeChanged={ (params) => params.api.sizeColumnsToFit() }
 					rowDataChangeDetectionStrategy={
 						ChangeDetectionStrategyType.IdentityCheck

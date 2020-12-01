@@ -6,7 +6,7 @@ import { useHistory } from "react-router-dom";
 import { useEffectOnce } from "react-use";
 import { selectAllApplications } from "../../services/data/ApplicationData";
 import { setSelectedInstruction } from "../../services/data/gridData";
-import { removeAllWorkInstructions } from "../../services/data/InstructionData";
+import { removeAllWorkInstructions, removeAllAvailableWorkInstructions } from "../../services/data/InstructionData";
 import { removeAllWorksheets } from "../../services/data/WorksheetData";
 import { fetchApplications, fetchAvailableWorksheets, fetchWorkInstructions, fetchAvailableInstructions } from "../../services/thunks";
 import { GreyButton } from "../ui-components/Buttons";
@@ -34,10 +34,15 @@ const ApplicationsSummary = () => {
 	}).slice(-5);
 	useEffectOnce(() => {
 		dispatch(fetchApplications());
-		dispatch(fetchAvailableWorksheets(`?applied=False`));
-		dispatch(fetchWorkInstructions());
+		//dispatch(fetchAvailableWorksheets(`?applied=False`));
+		//dispatch(fetchWorkInstructions());
 		dispatch(fetchAvailableInstructions())
-		dispatch(setSelectedInstruction(false));
+		//dispatch(setSelectedInstruction(false));
+
+		return (() => {
+			dispatch(removeAllAvailableWorkInstructions())
+			dispatch(setSelectedInstruction(false))
+		})
 	});
 
 	function handleViewAppSummary({app_number}) {
