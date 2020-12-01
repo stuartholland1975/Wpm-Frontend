@@ -2,9 +2,8 @@ import React, { Fragment } from "react";
 import { CardDeck } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
-import SummaryCard from "../ui-components/SummaryCard";
 import { selectAllInstructionDetails } from "../../services/data/instructionDetailData";
-import Loader from 'react-loader-spinner';
+import SummaryCard from "../ui-components/SummaryCard";
 
 
 const numFormat = (num) => {

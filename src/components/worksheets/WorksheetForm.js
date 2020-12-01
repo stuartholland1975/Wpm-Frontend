@@ -64,9 +64,9 @@ const WorksheetForm = (props) => {
 			worksheetObject.item_ref = id;
 			worksheetObject.date_work_done = data.work_done_date;
 			worksheetObject.qty_complete = qty_to_complete;
-			worksheetObject.value_complete = toFixed((unit_total_payable * qty_to_complete),2);
-			worksheetObject.materials_complete = toFixed((unit_materials_payable * qty_to_complete),2)
-			worksheetObject.labour_complete = toFixed((unit_labour_payable * qty_to_complete),2)
+			worksheetObject.value_complete = toFixed((unit_total_payable * qty_to_complete), 2);
+			worksheetObject.materials_complete = toFixed((unit_materials_payable * qty_to_complete), 2);
+			worksheetObject.labour_complete = toFixed((unit_labour_payable * qty_to_complete), 2);
 
 			worksheetContainer.push(worksheetObject);
 			console.log(worksheetObject, worksheetContainer);

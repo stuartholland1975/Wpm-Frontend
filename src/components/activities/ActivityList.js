@@ -1,6 +1,6 @@
 import { AgGridReact } from "ag-grid-react";
 import { ChangeDetectionStrategyType } from "ag-grid-react/lib/changeDetectionService";
-import React, { useState } from "react";
+import React from "react";
 import { Container } from "react-bootstrap";
 import Loader from "react-loader-spinner";
 import { useDispatch, useSelector } from "react-redux";
@@ -19,7 +19,6 @@ function niceNumber(params = 0.0) {
 function numberParser(params) {
 	return Number(params.newValue);
 }
-
 
 
 //TODO CRUD FUNCTIONS

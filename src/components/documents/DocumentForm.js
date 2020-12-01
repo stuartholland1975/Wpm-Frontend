@@ -5,7 +5,7 @@ import React, { useState } from "react";
 import FocusLock from "react-focus-lock";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { selectAllInstructionHeaders, newDocument} from "../../services/thunks";
+import { newDocument, selectAllInstructionHeaders } from "../../services/thunks";
 //import { updateData } from "../forms/FormData";
 import { BlueButton, GreyButton } from "../ui-components/Buttons";
 
@@ -36,7 +36,7 @@ const DocumentForm = (props) => {
 		document: null,
 	});
 	const instructionId = useSelector(selectAllInstructionHeaders)[0].id;
-	const dispatch = useDispatch()
+	const dispatch = useDispatch();
 	const onSubmit = data => {
 
 		prepareDocumentData(data);
@@ -47,8 +47,8 @@ const DocumentForm = (props) => {
 		form_data.append("document", DocumentFile[0], DocumentFile[0].name);
 		form_data.append("document_title", Title);
 		form_data.append("work_instruction", instructionId);
-		dispatch(newDocument(form_data))
-		closeAndReset()
+		dispatch(newDocument(form_data));
+		closeAndReset();
 
 	};
 	const closeAndReset = () => {
@@ -72,18 +72,18 @@ const DocumentForm = (props) => {
 						/>
 					</Grid>
 					<Grid container spacing={ 2 }>
-					<Grid item xs>
-						<TextField
-							type="file"
-							inputRef={ register({required: true}) }
-							margin="normal"
-							label="Upload File"
-							fullWidth
-							name="DocumentFile"
-							variant="filled"
-							InputLabelProps={ {shrink: true} }
-						/>
-					</Grid>
+						<Grid item xs>
+							<TextField
+								type="file"
+								inputRef={ register({required: true}) }
+								margin="normal"
+								label="Upload File"
+								fullWidth
+								name="DocumentFile"
+								variant="filled"
+								InputLabelProps={ {shrink: true} }
+							/>
+						</Grid>
 					</Grid>
 				</Grid>
 				<hr/>

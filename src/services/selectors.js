@@ -199,13 +199,13 @@ export const workloadChartData = createSelector(
   }
 );
 
-export const WeeklyWorkChartData = createSelector(
+export const WeeklyWorkByArea = createSelector(
   [selectAllRecentWorksheets, selectAllAreas],
   (worksheets, areas) => {
     let areaList = areas.map((item) => item.id);
     return areaList.map((item) => ({
 	  area: [item][0],
-	  week: worksheets[0].iso_week,
+	  week: worksheets.length >0 ? worksheets[0]['iso_week'] : "0",
 	  area_name: areas.filter(obj => obj.id === item)[0].area_description,
       value: worksheets
         .filter((obj) => obj["area"] === item)
@@ -214,3 +214,34 @@ export const WeeklyWorkChartData = createSelector(
     }));
   }
 );
+
+export const WeeklyWorkBySupervisor = createSelector(
+  [selectAllRecentWorksheets],
+  (worksheets) => {
+    const supervisors = [...new Set(worksheets.map(item => item['supervisor_name']))]
+    return supervisors.map((item) => ({
+	  supervisor: [item][0],
+	  week: worksheets.length >0 ? worksheets[0]['iso_week'] : "0",
+      value: worksheets
+        .filter((obj) => obj["supervisor_name"] === item)
+        .map((sheet) => sheet.value_complete)
+        .reduce((acc, item) => acc + item, 0),
+    }));
+  }
+);
+
+export const WeeklyWorkByWorkInstruction = createSelector(
+  [selectAllRecentWorksheets],
+  (worksheets) => {
+    const workInstructions= [...new Set(worksheets.map(item => item['order_ref']))]
+    return workInstructions.map((item) => ({
+	  work_instruction: [item][0],
+	  week: worksheets.length >0 ? worksheets[0]['iso_week'] : "0",
+      value: worksheets
+        .filter((obj) => obj["order_ref"] === item)
+        .map((sheet) => sheet.value_complete)
+        .reduce((acc, item) => acc + item, 0),
+    }));
+  }
+);
+

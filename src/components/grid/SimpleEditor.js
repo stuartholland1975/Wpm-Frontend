@@ -14,5 +14,5 @@ export default forwardRef((props, ref) => {
 		};
 	});
 	return <input style={ {textAlign: "right", height: "20px", width: "100px"} } type="text" ref={ inputRef }
-	              defaultValue={ 0.00 } />;
+	              defaultValue={ 0.00 }/>;
 });

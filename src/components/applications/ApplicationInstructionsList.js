@@ -15,7 +15,7 @@ const ApplicationInstructionsList = () => {
 			colId: "select",
 			checkboxSelection: true,
 			maxWidth: 80,
-		  },
+		},
 		{headerName: "Work Instruction", field: "work_instruction", sort: "asc"},
 		{headerName: "Project Title", field: "project_title"},
 		{
@@ -85,9 +85,9 @@ const ApplicationInstructionsList = () => {
 	function selectedRow(event) {
 		if (event.node.isSelected()) {
 			dispatch(setSelectedInstruction(event.data));
-			dispatch(setSelectedLocation(false))
-		}else if (event.api.getSelectedNodes().length === 0) {
-			dispatch(setSelectedInstruction(false))
+			dispatch(setSelectedLocation(false));
+		} else if (event.api.getSelectedNodes().length === 0) {
+			dispatch(setSelectedInstruction(false));
 		}
 	}
 

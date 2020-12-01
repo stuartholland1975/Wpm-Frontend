@@ -2,7 +2,6 @@ import { AgGridReact } from "ag-grid-react";
 import { ChangeDetectionStrategyType } from "ag-grid-react/lib/changeDetectionService";
 import React, { Fragment, useEffect, useState } from "react";
 import { Container } from "react-bootstrap";
-import Loader from "react-loader-spinner";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { useEffectOnce, useLatest, useMountedState, useUpdateEffect, } from "react-use";
@@ -11,8 +10,8 @@ import { setClickedLocation, setSelectedLocation } from "../../services/data/gri
 import { selectAllImages } from "../../services/data/ImageData";
 import { selectAllLocations } from "../../services/data/locationData";
 import { fetchOrderSummaryInfo } from "../../services/thunks";
-import CustomNoRowsOverlay from "../grid/CustomNoRowsOverlay";
 import CustomLoadingOverlay from "../grid/CustomLoadingOverlay";
+import CustomNoRowsOverlay from "../grid/CustomNoRowsOverlay";
 import InstructionSummary from "../work-instructions/InstructionSummary";
 
 const LocationList = () => {
@@ -137,7 +136,7 @@ const LocationList = () => {
 	});
 
 	useUpdateEffect(() => {
-		gridApi.setRowData(locations)
+		gridApi.setRowData(locations);
 		//gridApi.redrawRows();
 	}, [images, locations]);
 
@@ -208,7 +207,7 @@ const LocationList = () => {
 				<div className="ag-theme-custom-react">
 					<AgGridReact
 						gridOptions={ gridOptions }
-					//	rowData={ null }
+						//	rowData={ null }
 						immuntableData={ true }
 						getRowNodeId={ (data) => data.id }
 						onGridReady={ onGridReady }

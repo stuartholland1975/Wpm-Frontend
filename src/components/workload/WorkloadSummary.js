@@ -57,7 +57,7 @@ const WorkloadSummary = () => {
 							</Row>
 							<Row>
 								<Col>
-									<p style={{fontWeight: "bold"}}>Work To Do:</p>
+									<p style={ {fontWeight: "bold"} }>Work To Do:</p>
 								</Col>
 								<Col>
 									<p style={ {
@@ -124,10 +124,13 @@ const WorkloadSummary = () => {
 									</Row>
 									<Row>
 										<Col>
-											<p style={{fontWeight: "bold"}}>Work To Do:</p>
+											<p style={ {fontWeight: "bold"} }>Work To Do:</p>
 										</Col>
 										<Col>
-											<p style={ {textAlign: "right", fontWeight: "bold"} }>{ formatNumber(order_value - complete_value) }</p>
+											<p style={ {
+												textAlign: "right",
+												fontWeight: "bold"
+											} }>{ formatNumber(order_value - complete_value) }</p>
 										</Col>
 									</Row>
 									<Row>

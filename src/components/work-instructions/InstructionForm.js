@@ -7,12 +7,12 @@ import FocusLock from "react-focus-lock";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { useRendersCount } from "react-use";
-import { newWorkInstruction, updateWorkInstruction } from "../../services/thunks";
 import { selectAllAreas } from "../../services/data/areaData";
 import { updateData } from "../../services/data/FormData";
 import { setSelectedRow } from "../../services/data/gridData";
-import { BlueButton, GreyButton } from "../ui-components/Buttons";
 import { selectAllWorkTypes } from "../../services/data/workTypesData";
+import { newWorkInstruction, updateWorkInstruction } from "../../services/thunks";
+import { BlueButton, GreyButton } from "../ui-components/Buttons";
 
 
 //TODO: AREA AND WORKTYPE DEFAULTS CLEAR ON FIRST RERENDER

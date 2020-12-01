@@ -6,8 +6,8 @@ import FocusLock from "react-focus-lock";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { setSelectedLocation } from "../../services/data/gridData";
+import { createLocation, updateLocation } from "../../services/thunks";
 import { BlueButton, GreyButton } from "../ui-components/Buttons";
-import { createLocation, updateLocation, deleteLocation } from "../../services/thunks";
 
 
 const useStyles = makeStyles((theme) => ({

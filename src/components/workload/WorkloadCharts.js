@@ -1,19 +1,17 @@
 import React from "react";
-import { Bar, Line } from "react-chartjs-2";
-import { useDispatch, useSelector } from "react-redux";
-import { useEffectOnce } from "react-use";
-import { selectAllRecentWorksheets } from "../../services/data/WorksheetData";
-import { fetchRecentWorksheets } from "../../services/thunks";
+import { CardDeck } from "react-bootstrap";
 import WeeklyWorkDoneByArea from "../charts/WeeklyWorkDoneByArea";
-import { Card, Col, Row, CardDeck, Container } from "react-bootstrap";
+import WeeklyWorkDoneBySupervisor from "../charts/WeeklyWorkDoneBySupervisor";
+import WeeklyWorkDoneByWorkInstruction from "../charts/WeeklyWorkDoneByWorkInstruction";
 
 const WorkLoadCharts = (props) => {
-  return (
-    <CardDeck>
-      <WeeklyWorkDoneByArea />
-      <WeeklyWorkDoneByArea />
-    </CardDeck>
-  );
+	return (
+		<CardDeck>
+			<WeeklyWorkDoneByArea/>
+			<WeeklyWorkDoneBySupervisor/>
+			<WeeklyWorkDoneByWorkInstruction/>
+		</CardDeck>
+	);
 };
 
 export default WorkLoadCharts;

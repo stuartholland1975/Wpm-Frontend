@@ -7,11 +7,11 @@ import FocusLock from "react-focus-lock";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffectOnce } from "react-use";
-import { fetchActivities, newInstructionDetail, selectAllInstructionHeaders } from "../../services/thunks";
 import { selectAllActivities } from "../../services/data/activityData";
-import { selectAllLocations } from "../../services/data/locationData";
-import { BlueButton, GreyButton } from "../ui-components/Buttons";
 import { selectAllInstructionDetails } from "../../services/data/instructionDetailData";
+import { selectAllLocations } from "../../services/data/locationData";
+import { fetchActivities, newInstructionDetail, selectAllInstructionHeaders } from "../../services/thunks";
+import { BlueButton, GreyButton } from "../ui-components/Buttons";
 
 //TODO EDIT BILL ITEM
 
