@@ -55,17 +55,7 @@ const WorkloadSummary = () => {
 									} }>{ formatNumber(orderValues.map(item => item["complete_value"]).reduce((acc, item) => acc + item, 0)) }</p>
 								</Col>
 							</Row>
-							<Row>
-								<Col>
-									<p style={ {fontWeight: "bold"} }>Work To Do:</p>
-								</Col>
-								<Col>
-									<p style={ {
-										textAlign: "right",
-										fontWeight: "bold"
-									} }>{ formatNumber(orderValues.map(item => item.order_value - item["complete_value"]).reduce((acc, item) => acc + item, 0)) }</p>
-								</Col>
-							</Row>
+							
 							<Row>
 								<Col>
 									<p>Applied Value:</p>
@@ -90,6 +80,19 @@ const WorkloadSummary = () => {
 							</Row>
 						</Card.Text>
 					</Card.Body>
+					<Card.Footer>
+					<Row>
+								<Col>
+									<p style={ {fontWeight: "bold"} }>Work To Do:</p>
+								</Col>
+								<Col>
+									<p style={ {
+										textAlign: "right",
+										fontWeight: "bold"
+									} }>{ formatNumber(orderValues.map(item => item.order_value - item["complete_value"]).reduce((acc, item) => acc + item, 0)) }</p>
+								</Col>
+							</Row>
+					</Card.Footer>
 				</Card>
 				{ orderValues.map(item => {
 					const {order_value, applied_value, complete_value, area_description} = item;
@@ -122,17 +125,7 @@ const WorkloadSummary = () => {
 											<p style={ {textAlign: "right"} }>{ formatNumber(complete_value) }</p>
 										</Col>
 									</Row>
-									<Row>
-										<Col>
-											<p style={ {fontWeight: "bold"} }>Work To Do:</p>
-										</Col>
-										<Col>
-											<p style={ {
-												textAlign: "right",
-												fontWeight: "bold"
-											} }>{ formatNumber(order_value - complete_value) }</p>
-										</Col>
-									</Row>
+									
 									<Row>
 										<Col>
 											<p>Applied Value:</p>
@@ -151,6 +144,19 @@ const WorkloadSummary = () => {
 									</Row>
 								</Card.Text>
 							</Card.Body>
+							<Card.Footer>
+							<Row>
+										<Col>
+											<p style={ {fontWeight: "bold"} }>Work To Do:</p>
+										</Col>
+										<Col>
+											<p style={ {
+												textAlign: "right",
+												fontWeight: "bold"
+											} }>{ formatNumber(order_value - complete_value) }</p>
+										</Col>
+									</Row>
+							</Card.Footer>
 						</Card>
 					);
 				}) }

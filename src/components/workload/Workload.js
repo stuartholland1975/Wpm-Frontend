@@ -5,12 +5,13 @@ import { unwrapResult } from "@reduxjs/toolkit";
 import moment from "moment";
 import React, { useState } from "react";
 import { Container } from "react-bootstrap";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffectOnce } from "react-use";
 import { fetchWeeklyWorksheets, fetchWorkDoneWeeks } from "../../services/thunks";
 import { BlueButton } from "../ui-components/Buttons";
 import WorkLoadCharts from "./WorkloadCharts";
 import WorkloadSummary from "./WorkloadSummary";
+import {removeAllRecentWorksheets, selectAllRecentWorksheets} from "../../services/data/WorksheetData";
 
 const Workload = (props) => {
 
@@ -18,10 +19,12 @@ const Workload = (props) => {
 		const [year, setYear] = useState(moment().format("YYYY"));
 		const [week, setWeek] = useState(moment().format("W"));
 		const [workDoneWeeks, setWorkDoneWeeks] = useState([]);
+		const worksheets = useSelector(selectAllRecentWorksheets)
 
 		useEffectOnce(() => {
 
 			dispatch(fetchWorkDoneWeeks()).then(unwrapResult).then(result => setWorkDoneWeeks(result)).catch(error => console.log(error));
+			return (() => dispatch(removeAllRecentWorksheets()))
 		});
 
 		const weeks = [...new Set(workDoneWeeks.filter(obj => obj["iso_year"] === Number(year)).map(item => item["iso_week"].toString()))].reverse();
@@ -54,7 +57,7 @@ const Workload = (props) => {
 									variant="filled"
 									InputLabelProps={ {shrink: true} }
 									label="Year"
-									margin="normal"
+									//margin="normal"
 								/>
 							) }
 						/>
@@ -72,7 +75,7 @@ const Workload = (props) => {
 									variant="filled"
 									InputLabelProps={ {shrink: true} }
 									label="Week Number"
-									margin="normal"
+									//margin="normal"
 								/>
 							) }
 						/>
@@ -88,7 +91,7 @@ const Workload = (props) => {
 					</Grid>
 				</Grid>
 				<hr/>
-				<WorkLoadCharts/>
+				{worksheets.length >0 ? <WorkLoadCharts/>: <h1 style={{textAlign: "center"}}>SELECT A TIME PERIOD</h1>}
 			</Container>
 		);
 	}

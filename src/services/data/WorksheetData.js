@@ -25,7 +25,7 @@ export const RecentWorksheetSlice = createSlice({
 	initialState: recentWorksheetAdapter.getInitialState(),
 	reducers: {
 		removeWorksheet: recentWorksheetAdapter.removeOne,
-		removeAllWorksheets: recentWorksheetAdapter.removeAll,
+		removeAllRecentWorksheets: recentWorksheetAdapter.removeAll,
 	},
 	extraReducers: builder => {
 		builder.addCase(fetchRecentWorksheets.fulfilled, recentWorksheetAdapter.setAll);
@@ -34,6 +34,7 @@ export const RecentWorksheetSlice = createSlice({
 });
 
 export const {removeAllWorksheets} = AvailableWorksheetSlice.actions
+export const {removeAllRecentWorksheets} = RecentWorksheetSlice.actions
 
 export const {selectAll: selectAllAvailableWorksheets} = availableWorksheetAdapter.getSelectors(state => state.worksheetsAvailable)
 export const {selectAll: selectAllRecentWorksheets} = recentWorksheetAdapter.getSelectors(state => state.worksheetsRecent)
