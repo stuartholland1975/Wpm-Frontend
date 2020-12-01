@@ -24,7 +24,7 @@ const Workload = (props) => {
 			dispatch(fetchWorkDoneWeeks()).then(unwrapResult).then(result => setWorkDoneWeeks(result)).catch(error => console.log(error));
 		});
 
-		const weeks = [...new Set(workDoneWeeks.filter(obj => obj["iso_year"] == year).map(item => item["iso_week"].toString()))].reverse();
+		const weeks = [...new Set(workDoneWeeks.filter(obj => obj["iso_year"] === Number(year)).map(item => item["iso_week"].toString()))].reverse();
 		const years = [...new Set(workDoneWeeks.map(item => item["iso_year"].toString()))].sort().reverse();
 
 		const handleRetrieveData = () => {
