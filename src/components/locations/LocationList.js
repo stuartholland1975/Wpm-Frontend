@@ -4,7 +4,7 @@ import React, { Fragment, useEffect, useState } from "react";
 import { Container } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { useEffectOnce, useLatest, useMountedState, useUpdateEffect, } from "react-use";
+import { useEffectOnce, useLatest, useMountedState, useUpdateEffect } from "react-use";
 import { show } from "redux-modal";
 import { setClickedLocation, setSelectedLocation } from "../../services/data/gridData";
 import { selectAllImages } from "../../services/data/ImageData";
@@ -207,7 +207,7 @@ const LocationList = () => {
 				<div className="ag-theme-custom-react">
 					<AgGridReact
 						gridOptions={ gridOptions }
-						//	rowData={ null }
+							rowData={ locations }
 						immuntableData={ true }
 						getRowNodeId={ (data) => data.id }
 						onGridReady={ onGridReady }

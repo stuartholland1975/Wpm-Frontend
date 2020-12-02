@@ -1,10 +1,10 @@
 import React, { Fragment } from "react";
-import ReChart from "./ReChart";
+
 
 const Test = (props) => {
 
 	return <Fragment>
-		<ReChart/>
+		TEST
 	</Fragment>;
 };
 export default Test;

@@ -23,6 +23,7 @@
     "dayjs": "^1.9.6",
     "install": "^0.13.0",
     "json2csv": "^5.0.5",
+    "loadash": "^1.0.0",
     "luxon": "^1.25.0",
     "m": "^1.5.6",
     "material-ui-confirm": "^2.1.1",
