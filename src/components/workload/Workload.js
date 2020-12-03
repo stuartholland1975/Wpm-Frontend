@@ -20,6 +20,14 @@ import {
 import { BlueButton } from "../ui-components/Buttons";
 import WorkLoadCharts from "./WorkloadCharts";
 import WorkloadSummary from "./WorkloadSummary";
+import moment from "moment";
+import { Divider } from "@react-md/divider";
+
+function getFirstDateOfWeek(w, y) {
+  let date = new Date(y, 0, 1 + (w - 1) * 7); // Elle's method
+  date.setDate(date.getDate() + (1 - date.getDay())); // 0 - Sunday, 1 - Monday etc
+  return moment(date).startOf("isoWeek").format("DD/MM/YYYY");
+}
 
 const Workload = (props) => {
   const dispatch = useDispatch();
@@ -61,6 +69,8 @@ const Workload = (props) => {
     .sort()
     .reverse();
 
+  const weekCommencingDate = getFirstDateOfWeek(week, year);
+
   const handleRetrieveData = () => {
     if (week && year) {
       dispatch(fetchWeeklyWorksheets({ week: week, year: year }));
@@ -85,15 +95,9 @@ const Workload = (props) => {
   return (
     <Container fluid>
       <WorkloadSummary />
-      <hr />
-      <Grid
-        container
-        spacing={2}
-        direction="row"
-        justify="center"
-        alignItems="center"
-      >
-        <Grid item xs>
+      <Divider />
+      <Row className="justify-content-md-center">
+        <Col item xs>
           <Autocomplete
             options={years}
             getOptionLabel={(option) => option}
@@ -111,8 +115,8 @@ const Workload = (props) => {
               />
             )}
           />
-        </Grid>
-        <Grid item xs>
+        </Col>
+        <Col item xs>
           <Autocomplete
             options={weeks}
             getOptionLabel={(option) => option}
@@ -130,8 +134,8 @@ const Workload = (props) => {
               />
             )}
           />
-        </Grid>
-        <Grid item xs>
+        </Col>
+        <Col item xs>
           <BlueButton
             onClick={handleRetrieveData}
             fullWidth
@@ -139,40 +143,58 @@ const Workload = (props) => {
           >
             RETRIEVE DATA
           </BlueButton>
-        </Grid>
-      </Grid>
-      <hr />
-      {worksheets.length > 0 && (
-        <Row
-        /* style={{
-            backgroundColor: "hsl(180, 20%, 75%)",
-           
-          }} */
-        >
-          <Col style={{ textAlign: "center" }}>
-            <h3>{`Week ${week} ${year}`}</h3>
+        </Col>
+      </Row>
+      {worksheets.length > 0 && !isLoading && <Divider />}
+
+      {worksheets.length > 0 && !isLoading && (
+        <Row>
+          <Col
+            style={{
+              marginTop: "10px",
+              textAlign: "center",
+            }}
+          >
+            <h5 style={{fontWeight: 'bold'}}>{`Week Commencing ${weekCommencingDate}`}</h5>
           </Col>
-          <Col style={{ textAlign: "center" }}>
-            <h3>Weekly Value {numFormatGrid(totalValue)}</h3>
+          <Col
+            style={{
+              marginTop: "10px",
+              textAlign: "center",
+            }}
+          >
+            <h5 style={{fontWeight: 'bold'}}>{`Week ${week} Year ${year}`}</h5>
+          </Col>
+          <Col
+            style={{
+              marginTop: "10px",
+              textAlign: "center",
+            }}
+          >
+            <h5 style={{fontWeight: 'bold'}}>Weekly Value {numFormatGrid(totalValue)}</h5>
           </Col>
         </Row>
       )}
-
-      {worksheets.length > 0 && !isLoading && (
-        <>
-          <hr /> <WorkLoadCharts />
-        </>
-      )}
+      {worksheets.length > 0 && !isLoading && <Divider />}
+      {worksheets.length > 0 && !isLoading && <WorkLoadCharts />}
 
       {!worksheets.length > 0 && !isLoading && (
-        <h1 style={{ textAlign: "center" }}>SELECT A TIME PERIOD</h1>
+        <>
+          <Divider />
+          <h1 style={{ textAlign: "center" }}>SELECT A TIME PERIOD</h1>
+          <Divider />
+        </>
       )}
       {isLoading && (
+        <>
+        <Divider/>
         <Loader
           style={{ textAlign: "center" }}
           type={"ThreeDots"}
           color="#366363"
         />
+        <Divider/>
+        </>
       )}
     </Container>
   );

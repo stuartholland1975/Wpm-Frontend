@@ -33,16 +33,16 @@ const WeeklyWorkDoneBySupervisor = () => {
         <ResponsiveContainer height={375} width="100%">
           <BarChart
             data={data}
-            /* margin={ {
-							top: 5,
-							right: 30,
-							left: 20,
-							bottom: 5,
-						} } */
+            margin={{
+              top: 5,
+              right: 5,
+              left: 5,
+              bottom: 15,
+            }} 
             scaleToFit={true}
           >
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="supervisor" />
+            <XAxis dataKey="supervisor" label={{ value: 'Supervisor', position: 'bottom', offset: 0 }}/>
             <YAxis />
             <Tooltip formatter={(value, name, props) => numFormatGrid(value)} />
             {/* <Legend /> */}

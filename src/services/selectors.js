@@ -154,6 +154,13 @@ function getDateOfWeek(w, y) {
 	return moment(date).format("DD/MM/YYYY");
 }
 
+
+function getFirstDateOfWeek(w, y) {
+	let date = new Date(y, 0, 1 + (w - 1) * 7); // Elle's method
+	date.setDate(date.getDate() + (1 - date.getDay())); // 0 - Sunday, 1 - Monday etc
+	return moment(date).startOf("isoWeek").toDate();
+}
+
 export const workloadChartData = createSelector(
 	[selectAllRecentWorksheets, selectAllAreas],
 	(worksheets, areas) => {
@@ -169,7 +176,7 @@ export const workloadChartData = createSelector(
 		return weekList.map((item) => ({
 			week: [item][0],
 			date: getDateOfWeek(item, "2020"),
-
+			weekCommencing: getFirstDateOfWeek(item, "2020"),
 			north: worksheets
 				.filter((obj) => obj["iso_week"] === item && obj["area"] === 1)
 				.map((sheet) => sheet.value_complete)
@@ -204,6 +211,7 @@ export const WeeklyWorkByArea = createSelector(
 			area: [item][0],
 			week: worksheets.length > 0 ? worksheets[0]["iso_week"] : "0",
 			year: worksheets.length > 0 ? worksheets[0]["iso_year"] : "0",
+			weekCommencing: getFirstDateOfWeek(worksheets[0]["iso_week"], worksheets[0]["iso_year"]),
 			area_name: areas.filter(obj => obj.id === item)[0].area_description,
 			value: worksheets
 				.filter((obj) => obj["area"] === item)

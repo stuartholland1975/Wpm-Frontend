@@ -33,21 +33,22 @@ const WeeklyWorkDoneByArea = () => {
         <ResponsiveContainer height={375} width="100%">
           <BarChart
             data={data}
-            /* margin={{
+             margin={{
               top: 5,
-              right: 30,
-              left: 20,
-              bottom: 5,
-            }} */
+              right: 5,
+              left: 5,
+              bottom: 15,
+            }} 
           >
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="area_name" />
+            <XAxis dataKey="area_name" label={{ value: 'Area', position: 'bottom', offset: 0 }} />
             <YAxis />
             <Tooltip formatter={(value, name, props) => numFormatGrid(value)} />
             {/* <Legend /> */}
             <Bar
               dataKey="value"
               fill="hsl(235, 94%, 25%)"
+              
               //  onClick={(event) => alert(JSON.stringify(event.payload))}
             />
           </BarChart>

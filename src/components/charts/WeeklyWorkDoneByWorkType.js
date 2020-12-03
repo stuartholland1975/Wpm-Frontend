@@ -33,17 +33,15 @@ const WeeklyWorkDoneByWorkType = () => {
         <ResponsiveContainer height={375} width="100%">
           <BarChart
             data={data}
-            /* margin={ {
-							top: 5,
-							right: 30,
-							left: 20,
-							bottom: 5,
-						} } */
-			scaleToFit={true}
-			title={"oonoinion"}
+            margin={{
+              top: 5,
+              right: 5,
+              left: 5,
+              bottom: 15,
+            }}
           >
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="workType" />
+            <XAxis dataKey="workType" label={{ value: 'Work Type', position: 'bottom', offset: 0 }} />
             <YAxis />
             <Tooltip formatter={(value, name, props) => numFormatGrid(value)} />
             {/* <Legend /> */}

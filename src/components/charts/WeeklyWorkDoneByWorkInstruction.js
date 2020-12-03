@@ -33,15 +33,15 @@ const WeeklyWorkDoneByWorkInstruction = () => {
         <ResponsiveContainer height={375} width="100%">
           <BarChart
             data={data}
-            /* margin={ {
-							top: 5,
-							right: 30,
-							left: 20,
-							bottom: 5,
-						} } */
+            margin={{
+              top: 5,
+              right: 5,
+              left: 5,
+              bottom: 15,
+            }} 
           >
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="work_instruction" />
+            <XAxis dataKey="work_instruction" label={{ value: 'Work Instruction', position: 'bottom', offset: 0 }} />
             <YAxis />
             <Tooltip formatter={(value, name, props) => numFormatGrid(value)} />
             {/* <Legend /> */}
