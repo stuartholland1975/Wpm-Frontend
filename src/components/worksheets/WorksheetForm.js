@@ -155,7 +155,7 @@ const WorksheetForm = (props) => {
 			{ isLoading && <Loader
 				style={ {textAlign: "center"} }
 				type={ "ThreeDots" }
-				color={ "Blue" }
+				color="#366363"
 			/>
 			}
 		</FocusLock>

@@ -32,13 +32,13 @@ const WeeklyWorkDoneByWorkInstruction = () => {
         </Card.Title>
         <ResponsiveContainer height={375} width="100%">
           <BarChart
-            data={data}
-            margin={{
-              top: 5,
-              right: 5,
-              left: 5,
-              bottom: 15,
-            }} 
+             data={data}
+             margin={{
+               top: 0,
+               right: 0,
+               left: 0,
+               bottom: 15,
+             }}
           >
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="work_instruction" label={{ value: 'Work Instruction', position: 'bottom', offset: 0 }} />

@@ -15,6 +15,7 @@ import InstructionDetail from './components/work-instructions/InstructionDetail'
 import WorkProgressTable from "./components/worksheets/WorkProgressTable";
 import ApplicationsSummary from "./components/applications/ApplicationsSummary";
 import ApplicationDetail from "./components/applications/ApplicationDetail"
+import Dashboard from "./components/dashboard/Dashboard";
 
 
 const useStyles = makeStyles({
@@ -48,6 +49,7 @@ const App = (props) => {
                     <Route path="/work-instructions/workload" exact component={Workload}/>
                     <Route path="/commercial/applications/summary/" exact component={ApplicationsSummary}/>
                     <Route path="/commercial/applications/detail/:appId" exact component={ApplicationDetail}/>
+                    <Route path="/dashboard" exact component={Dashboard}/>
                 </Switch>
             </div>
         </div>

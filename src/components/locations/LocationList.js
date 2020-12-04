@@ -11,8 +11,9 @@ import { selectAllImages } from "../../services/data/ImageData";
 import { selectAllLocations } from "../../services/data/locationData";
 import { fetchOrderSummaryInfo } from "../../services/thunks";
 import CustomLoadingOverlay from "../grid/CustomLoadingOverlay";
-import CustomNoRowsOverlay from "../grid/CustomNoRowsOverlay";
+import CustomNoRowsOverlay from "../grid/CustomNoRowsOverlay2";
 import InstructionSummary from "../work-instructions/InstructionSummary";
+import Loader from "react-loader-spinner";
 
 const LocationList = () => {
 	const {OrderId} = useParams();
@@ -129,6 +130,17 @@ const LocationList = () => {
 		},
 		loadingOverlayComponent: "customLoadingOverlay",
 		noRowsOverlayComponent: "customNoRowsOverlay",
+		noRowsOverlayComponentParams: {
+			noRowsMessageFunc: function () {
+				return (
+					<Loader
+						style={ {textAlign: "center"} }
+						type={ "ThreeDots" }
+						color="#366363"
+					/>
+				);
+			},
+		},
 	};
 
 	useEffectOnce(() => {

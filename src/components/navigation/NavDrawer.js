@@ -921,8 +921,8 @@ const NavDrawer = (props) => {
 			id: uuidv4(),
 			text: "DashBoard",
 			icon: <DashboardIcon/>,
-			onClick: () => history.push("/"),
-			pathname: "/",
+			onClick: () => history.push("/dashboard"),
+			pathname: "/dashboard",
 		},
 		{
 			id: uuidv4(),

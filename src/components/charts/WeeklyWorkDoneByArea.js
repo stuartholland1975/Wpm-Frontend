@@ -34,9 +34,9 @@ const WeeklyWorkDoneByArea = () => {
           <BarChart
             data={data}
              margin={{
-              top: 5,
-              right: 5,
-              left: 5,
+              top: 0,
+              right: 0,
+              left: 0,
               bottom: 15,
             }} 
           >

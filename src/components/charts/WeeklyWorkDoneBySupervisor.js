@@ -34,15 +34,17 @@ const WeeklyWorkDoneBySupervisor = () => {
           <BarChart
             data={data}
             margin={{
-              top: 5,
-              right: 5,
-              left: 5,
+              top: 0,
+              right: 0,
+              left: 0,
               bottom: 15,
-            }} 
-            scaleToFit={true}
+            }}
           >
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="supervisor" label={{ value: 'Supervisor', position: 'bottom', offset: 0 }}/>
+            <XAxis
+              dataKey="supervisor"
+              label={{ value: "Supervisor", position: "bottom", offset: 0 }}
+            />
             <YAxis />
             <Tooltip formatter={(value, name, props) => numFormatGrid(value)} />
             {/* <Legend /> */}
