@@ -6,7 +6,7 @@ import Loader from "react-loader-spinner";
 import { useDispatch, useSelector } from "react-redux";
 import { removeEditedRow, setEditedRow } from "../../services/data/gridData";
 import { selectAllAvailableWorksheets } from "../../services/data/WorksheetData";
-import CustomNoRowsOverlay from "../grid/CustomNoRowsOverlay2";
+import CustomNoRowsOverlay from "../grid/CustomNoRowsOverlay";
 
 function formatDate(params) {
 	return moment(params.value).format("DD/MM/YYYY");

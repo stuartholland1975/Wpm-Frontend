@@ -64,7 +64,7 @@ export default function Login(props) {
             dispatch({type: 'SET_TOKENS', access: response.data.access, refresh: response.data.refresh})
             dispatch({type: 'SET_USER', userName: login.username})
             
-            props.history.push({pathname: '/'})
+            props.history.push({pathname: '/home'})
             return response;
         } catch (error) {
             throw error;

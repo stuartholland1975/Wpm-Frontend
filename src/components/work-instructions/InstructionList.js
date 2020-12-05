@@ -10,6 +10,7 @@ import { selectAllWorkInstructions } from "../../services/data/InstructionData";
 import { resetInstructionDetails } from "../../services/data/instructionDetailData";
 import { resetLocations } from "../../services/data/locationData";
 import { fetchWorkInstructions } from "../../services/thunks";
+import {resetOrderSummaryInfo} from "../../services/data/orderSummaryData";
 
 const formatNumber = (params) =>
   Math.floor(params.value)
@@ -131,7 +132,7 @@ const InstructionList = () => {
 
   useEffectOnce(() => {
     dispatch(fetchWorkInstructions());
-
+    dispatch(resetOrderSummaryInfo())
     dispatch(resetLocations());
     dispatch(resetInstructionDetails());
     dispatch(resetImages());

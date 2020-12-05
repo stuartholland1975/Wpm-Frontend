@@ -1,12 +1,13 @@
 import { AgGridReact } from "ag-grid-react";
 import { ChangeDetectionStrategyType } from "ag-grid-react/lib/changeDetectionService";
-import React from "react";
+import React, {useState} from "react";
 import Loader from "react-loader-spinner";
 import { useDispatch, useSelector } from "react-redux";
 import { setSelectedInstruction } from "../../services/data/gridData";
 import { selectAllAvailableWorkInstructions } from "../../services/data/InstructionData";
 import { fetchAvailableWorksheets } from "../../services/thunks";
 import CustomNoRowsOverlay from "../grid/CustomNoRowsOverlay2";
+import {useUpdateEffect} from "react-use";
 
 const numFormatGrid = (params) => {
 	return params.value.toLocaleString(undefined, {
@@ -19,6 +20,7 @@ const AvailableOrderList = () => {
 	const dispatch = useDispatch();
 
 	const availableOrders = useSelector(selectAllAvailableWorkInstructions);
+	const [gridApi, setGridApi] = useState()
 
 
 	const ColumnDefs = [
@@ -115,14 +117,17 @@ const AvailableOrderList = () => {
 	};
 	const onGridReady = params => {
 		params.api.sizeColumnsToFit();
+		setGridApi(params.api)
 		/* const node = params.api.getRowNode(0)
 		node.setSelected(true)
 		console.log(params.api.getSelectedNodes(), node) */
 	};
 
-	const onFirstDataRendered = (params) => {
-		params.api.getDisplayedRowAtIndex(0).setSelected(true);
-	};
+	 
+
+	useUpdateEffect(() => {
+		gridApi.getDisplayedRowAtIndex(0).setSelected(true)
+	},[availableOrders])
 
 	function selectedRow(event) {
 		if (event.node.isSelected()) {
@@ -145,7 +150,6 @@ const AvailableOrderList = () => {
 					gridOptions={ gridOptions }
 					rowData={ availableOrders }
 					onGridReady={ onGridReady }
-					onFirstDataRendered={ onFirstDataRendered }
 					onGridSizeChanged={ (params) => params.api.sizeColumnsToFit() }
 					rowDataChangeDetectionStrategy={
 						ChangeDetectionStrategyType.IdentityCheck

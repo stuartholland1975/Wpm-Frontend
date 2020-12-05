@@ -105,6 +105,8 @@ const Workload = (props) => {
               setYear(newValue);
               setWeek(null);
             }}
+            onOpen={() => dispatch(removeAllRecentWorksheets())}
+            disableClearable={true}
             renderInput={(params) => (
               <TextField
                 {...params}
@@ -123,6 +125,8 @@ const Workload = (props) => {
             onChange={(event, newValue) => {
               setWeek(newValue);
             }}
+            disableClearable={true}
+            onOpen={() => dispatch(removeAllRecentWorksheets())}
             value={week}
             renderInput={(params) => (
               <TextField
@@ -155,7 +159,9 @@ const Workload = (props) => {
               textAlign: "center",
             }}
           >
-            <h5 style={{fontWeight: 'bold'}}>{`Week Commencing ${weekCommencingDate}`}</h5>
+            <h5
+              style={{ fontWeight: "bold" }}
+            >{`Week Commencing ${weekCommencingDate}`}</h5>
           </Col>
           <Col
             style={{
@@ -163,7 +169,9 @@ const Workload = (props) => {
               textAlign: "center",
             }}
           >
-            <h5 style={{fontWeight: 'bold'}}>{`Week ${week} Year ${year}`}</h5>
+            <h5
+              style={{ fontWeight: "bold" }}
+            >{`Week ${week} Year ${year}`}</h5>
           </Col>
           <Col
             style={{
@@ -171,7 +179,9 @@ const Workload = (props) => {
               textAlign: "center",
             }}
           >
-            <h5 style={{fontWeight: 'bold'}}>Weekly Value {numFormatGrid(totalValue)}</h5>
+            <h5 style={{ fontWeight: "bold" }}>
+              Weekly Value {numFormatGrid(totalValue)}
+            </h5>
           </Col>
         </Row>
       )}
@@ -187,13 +197,15 @@ const Workload = (props) => {
       )}
       {isLoading && (
         <>
-        <Divider/>
-        <Loader
-          style={{ textAlign: "center" }}
-          type={"ThreeDots"}
-          color="#366363"
-        />
-        <Divider/>
+          <Divider />
+          <Loader
+            style={{ textAlign: "center" }}
+            type={"Grid"}
+            color="#660066"
+            height={100}
+            width={100}
+          />
+          <Divider />
         </>
       )}
     </Container>

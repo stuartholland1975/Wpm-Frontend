@@ -67,3 +67,5 @@ export const OrderSummaryInfoSlice = createSlice({
     },
   },
 });
+
+export const {resetOrderSummaryInfo} = OrderSummaryInfoSlice.actions
