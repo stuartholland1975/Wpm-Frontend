@@ -25,7 +25,7 @@ const InstructionModal = (props) => {
 		locationForm: <LocationForm handleHide={ handleHide } formType={ formType }/>,
 		worksheetForm: <WorksheetForm handleHide={ handleHide } formType={ formType }/>,
 		documentForm: <DocumentForm handleHide={ handleHide } formType={ formType }/>,
-		billItemForm: <BillItemForm handleHide={ handleHide } oromType={ formType }/>,
+		billItemForm: <BillItemForm handleHide={ handleHide } formType={ formType }/>,
 		imageForm: <ImageForm handleHide={ handleHide } formType={ formType }/>,
 		applicationImages: <ApplicationImages handleHide={ handleHide } formType={ formType } sizeClass="d-block w-100"/>
 	};

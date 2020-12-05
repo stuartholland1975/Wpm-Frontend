@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { newDocument, selectAllInstructionHeaders } from "../../services/thunks";
 //import { updateData } from "../forms/FormData";
 import { BlueButton, GreyButton } from "../ui-components/Buttons";
+import {selectOrderSummaryHeader} from "../../services/selectors";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -35,7 +36,7 @@ const DocumentForm = (props) => {
 		document_title: "",
 		document: null,
 	});
-	const instructionId = useSelector(selectAllInstructionHeaders)[0].id;
+	const instructionId = useSelector(selectOrderSummaryHeader)[0].id;
 	const dispatch = useDispatch();
 	const onSubmit = data => {
 

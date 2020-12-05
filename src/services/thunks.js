@@ -53,15 +53,6 @@ export const fetchWorkInstructions = createAsyncThunk(
   "workInstructions/fetchAll",
   async () => {
     const headers = await axiosInstance.get("/wpm/api/orderheader/");
-    // const documents = await axiosInstance.get("/wpm/api/documents/");
-    //  const instructionData = headers.data.map((element) => {
-    //   return {
-    //   ...element,
-    //   document_count: documents.data.filter(
-    //    (obj) => obj.work_instruction === element.id
-    //   ).length,
-    //  };
-    // });
 
     return headers.data;
   }
@@ -475,4 +466,15 @@ export const fetchAvailableInstructions = createAsyncThunk(
     );
     return response.data;
   }
+);
+
+export const newImage = createAsyncThunk(
+	"images/addOne",
+	async (apiObject) => {
+		const response = await axiosInstance.post(
+			`/wpm/api/images/`,
+			apiObject
+		);
+		return response.data;
+	}
 );

@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { selectAllInstructionDetails } from "../../services/data/instructionDetailData";
 import SummaryCard from "../ui-components/SummaryCard";
+import {selectOrderSummaryHeader, selectOrderSummaryDetails} from '../../services/selectors'
 
 
 const numFormat = (num) => {
@@ -14,9 +15,8 @@ const numFormat = (num) => {
 };
 
 const InstructionSummary = (props) => {
-	const orderDetail = useSelector(selectAllInstructionDetails);
+	const orderDetail = useSelector(selectOrderSummaryDetails);
 	const projectTitle = useLocation().state;
-
 	const boqItems = orderDetail.filter(({item_type}) => item_type === "BOQ" || item_type === "FREE" || item_type === "DIRECTS");
 	const varnItems = orderDetail.filter(({item_type}) => item_type === "VARN");
 	const totalLabourValue = orderDetail.map(item => item["labour_total"]).reduce((acc, item) => acc + item, 0);

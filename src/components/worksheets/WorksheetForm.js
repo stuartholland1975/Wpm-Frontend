@@ -9,11 +9,12 @@ import { useForm } from "react-hook-form";
 import Loader from "react-loader-spinner";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { resetEditedRow, selectAllEditedRows } from "../../services/data/gridData";
+import { resetEditedRow, selectAllEditedRows, setSelectedLocation } from "../../services/data/gridData";
 import { selectAllWorkInstructions } from "../../services/data/InstructionData";
 import { selectAllSupervisors } from "../../services/data/SupervisorsData";
 import { newWorksheet, updateInstructionDetail } from "../../services/thunks";
 import { BlueButton, GreyButton } from "../ui-components/Buttons";
+import {selectOrderSummaryHeader} from '../../services/selectors'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -42,8 +43,8 @@ const WorksheetForm = (props) => {
 	const {register, handleSubmit, reset} = useForm();
 	const supervisors = useSelector(selectAllSupervisors);
 	const editedRows = useSelector(selectAllEditedRows);
-	const instructionId = useSelector(selectAllWorkInstructions)[0].id;
-	const projectTitle = useSelector(selectAllWorkInstructions)[0].project_title;
+	const instructionId = useSelector(selectOrderSummaryHeader)[0].id;
+	const projectTitle = useSelector(selectOrderSummaryHeader)[0].project_title;
 	const classes = useStyles();
 	const confirm = useConfirm();
 	const dispatch = useDispatch();
@@ -81,7 +82,7 @@ const WorksheetForm = (props) => {
 	};
 
 	const closeAndReset = () => {
-		dispatch(resetEditedRow());
+		dispatch(resetEditedRow())
 		props.handleHide();
 		setIsLoading(false);
 		history.push({pathname: `/work-instructions/summary/locations/${ instructionId }`, state: projectTitle});

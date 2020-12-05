@@ -22,6 +22,8 @@ import { SupervisorsSlice } from "./services/data/SupervisorsData";
 import { AvailableWorksheetSlice, RecentWorksheetSlice }from "./services/data/WorksheetData";
 import WorkTypeReducer from "./services/data/workTypesData";
 import { InstructionHeaderSlice } from "./services/thunks";
+import {OrderSummaryInfoSlice} from "./services/data/orderSummaryData";
+
 
 const rootReducer = combineReducers({
 	workInstructions:workInstructionsSlice.reducer,
@@ -36,7 +38,7 @@ const rootReducer = combineReducers({
 	components: componentsReducer,
 	modal,
 	gridData: gridReducer,
-	
+	orderSummaryData: OrderSummaryInfoSlice.reducer,
 	editedRow: SelectedRowSlice.reducer,
 	supervisors: SupervisorsSlice.reducer,
 	applications: ApplicationsReducer,
@@ -51,7 +53,7 @@ const rootReducer = combineReducers({
 const persistConfig = { // configuration object for redux-persist
 	key: "root",
 	storage, // define which storage to use
-	blacklist: ["worksheetsRecent"]
+	blacklist: ["worksheetsRecent", "gridData"]
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

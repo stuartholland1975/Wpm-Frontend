@@ -193,6 +193,33 @@ const NavDrawer = (props) => {
 		}
 	};
 
+	const handleOpenEditItem = (name, content) => () => {
+		if (selectedBillItem) {
+			dispatch(
+				show(name, {
+					title: "EDIT BILL ITEM",
+					content: content,
+					formType: "edit",
+				})
+			);
+		} else {
+			confirm({
+				title: "NO BILL ITEM SELECTED",
+				cancellationButtonProps: {
+					disabled: true,
+					hidden: true,
+				},
+				confirmationButtonProps: {
+					variant: "contained",
+					autoFocus: true,
+				},
+				dialogProps: {
+					TransitionComponent: Slide,
+					disableBackdropClick: true,
+				},
+			}).then(() => dispatch(setSelectedBillItem(false)));
+		}}
+
 	const handleOpenEditLocation = (name, content) => () => {
 		if (selectedLocation) {
 			dispatch(
@@ -393,7 +420,7 @@ const NavDrawer = (props) => {
 
 	const handleViewItems = () => {
 		history.push({
-			pathname: `/work-instructions/summary/items/${ selectedRow.work_instruction }`,
+			pathname: `/work-instructions/summary/items/${ selectedRow.id }`,
 			state: selectedRow.project_title,
 		});
 	};
@@ -725,7 +752,7 @@ const NavDrawer = (props) => {
 						id={ uuidv4() }
 						type="button"
 						fullWidth
-						onClick={ handleOpenEdit("instruction-modal", "itemForm") }
+						onClick={ handleOpenEditItem("instruction-modal", "billItemForm") }
 					>
 						EDIT BILL ITEM
 					</GreenButton>
@@ -959,12 +986,12 @@ const NavDrawer = (props) => {
 			onClick: () => history.push("/commercial/applications/summary"),
 			pathname: "/commercial/applications/summary",
 		},
-		{
+		/* {
 			text: "TEST",
 			icon: <ListIcon/>,
 			onClick: () => history.push("/test"),
 			pathname: "/test",
-		},
+		}, */
 	];
 
 	const authList = [

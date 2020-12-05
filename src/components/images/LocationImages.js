@@ -3,7 +3,7 @@ import { Carousel } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useUnmount } from "react-use";
 import { setClickedLocation } from "../../services/data/gridData";
-import { selectAllImages } from "../../services/data/ImageData";
+import { selectOrderSummaryImages } from "../../services/selectors";
 import { GreyButton } from "../ui-components/Buttons";
 
 const LocationImages = (props) => {
@@ -12,7 +12,7 @@ const LocationImages = (props) => {
 	const handleSelect = (selectedIndex) => {
 		setIndex(selectedIndex);
 	};
-	const images = useSelector(selectAllImages);
+	const images = useSelector(selectOrderSummaryImages);
 	const selectedLocation = useSelector((state) => state.gridData.clickedRow.id);
 	const imageType = useSelector((state) => state.gridData.clickedRow.colId);
 
