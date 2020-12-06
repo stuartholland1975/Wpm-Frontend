@@ -468,13 +468,38 @@ export const fetchAvailableInstructions = createAsyncThunk(
   }
 );
 
-export const newImage = createAsyncThunk(
-	"images/addOne",
-	async (apiObject) => {
-		const response = await axiosInstance.post(
-			`/wpm/api/images/`,
-			apiObject
-		);
-		return response.data;
-	}
+export const newImage = createAsyncThunk("images/addOne", async (apiObject) => {
+  const response = await axiosInstance.post(`/wpm/api/images/`, apiObject);
+  return response.data;
+});
+
+export const submitApplication = createAsyncThunk(
+  "applications/saveOne",
+  async (apiObject) => {
+    const response = await axiosInstance.patch(
+      `wpm/api/applications/${apiObject.application_id}/`,
+      apiObject
+    );
+    return response.data;
+  }
+);
+
+export const updateAppStatus = createAsyncThunk(
+  "applications/changeStatus",
+  async (id) => {
+    const response = await axiosInstance.patch(`wpm/api/applications/${id}/`, {
+      app_submitted: true,
+    });
+    return response.data;
+  }
+);
+
+export const fetchSavedApplicationDetail = createAsyncThunk(
+  "applications/fetchOne",
+  async (id) => {
+    const response = await axiosInstance.get(
+      `wpm/api/submitted-applications/?application_id=${id}`
+    );
+    return response.data;
+  }
 );

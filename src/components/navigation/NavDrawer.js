@@ -999,12 +999,12 @@ const NavDrawer = (props) => {
       onClick: () => history.push("/commercial/applications/summary"),
       pathname: "/commercial/applications/summary",
     },
-    /* {
+    {
 			text: "TEST",
 			icon: <ListIcon/>,
 			onClick: () => history.push("/test"),
 			pathname: "/test",
-		}, */
+		},
   ];
 
   const authList = [
