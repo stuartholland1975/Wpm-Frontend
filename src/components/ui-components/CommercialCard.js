@@ -28,6 +28,11 @@ const CommercialCard = (props) => {
 							<p>{ props.textLabelBtm }</p>
 							<p>{ props.textValueBtm }</p>
 						</div>
+						<div className="wpm-row">
+							<p style={ props.textValueMisc === "NOT SUBMITTED" ? {fontWeight: 'bold'} : {} }>{ props.textLabelMisc }</p>
+							<p
+								style={ props.textValueMisc === "NOT SUBMITTED" ? {fontWeight: 'bold'} : {} }>{ props.textValueMisc }</p>
+						</div>
 					</Card.Text>
 				</Card.Body>
 				<Card.Footer style={ {backgroundColor: "hsl(180, 20%, 90%)", fontSize: "14px"} }>

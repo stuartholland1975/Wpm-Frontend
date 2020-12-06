@@ -59,7 +59,7 @@ const ApplicationsSummary = () => {
 			<hr/>
 			<CardDeck>
 				{ applications.map(item => {
-					const {app_date, app_current, id, app_ref, application_value} = item;
+					const {app_date, app_current, id, app_ref, application_value, app_submitted} = item;
 					return (
 
 						<CommercialCard
@@ -71,6 +71,8 @@ const ApplicationsSummary = () => {
 							textValueMid={ numFormat(application_value) }
 							textLabelBtm="STATUS:"
 							textValueBtm={ app_current ? "OPEN" : "CLOSED" }
+							textLabelMisc="SUBMISSION STATUS:"
+							textValueMisc={ app_submitted ? "SUBMITTED" : "NOT SUBMITTED" }
 							footer={ <GreyButton onClick={ () => handleViewAppSummary(item) } fullWidth>View Applcation</GreyButton> }
 							titleStyle={ app_current ? {color: "navy", textAlign: "center"} : {
 								color: "",
