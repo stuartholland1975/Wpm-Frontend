@@ -63,7 +63,7 @@ export const OrderSummaryInfoSlice = createSlice({
     },
 
     [newImage.fulfilled]: (state, action) => {
-      state.orderImages = [... state.orderImages, action.payload];
+      state.orderImages = [...state.orderImages, action.payload];
     },
   },
 });
