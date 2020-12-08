@@ -44,11 +44,11 @@ const ApplicationsSummary = () => {
 		});
 	});
 
-	function handleViewAppSummary({app_number}) {
+	function handleViewAppSummary({app_number, id}) {
 
 		dispatch(removeAllWorksheets());
 		dispatch(removeAllWorkInstructions());
-		history.push({pathname: `/commercial/applications/detail/${ app_number }`, state: `${ app_number }`});
+		history.push({pathname: `/commercial/applications/detail/${ app_number }`, state: id});
 	}
 
 	return (
@@ -73,7 +73,7 @@ const ApplicationsSummary = () => {
 							textValueBtm={ app_current ? "OPEN" : "CLOSED" }
 							textLabelMisc="SUBMISSION STATUS:"
 							textValueMisc={ app_submitted ? "SUBMITTED" : "NOT SUBMITTED" }
-							footer={ <GreyButton onClick={ () => handleViewAppSummary(item) } fullWidth>View Applcation</GreyButton> }
+							footer={ <GreyButton onClick={ () => handleViewAppSummary(item, id) } fullWidth>View Application</GreyButton> }
 							titleStyle={ app_current ? {color: "navy", textAlign: "center"} : {
 								color: "",
 								textAlign: "center"

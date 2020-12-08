@@ -22,6 +22,7 @@ export const selectedOrder = (state) => state.gridData.selectedInstruction;
 export const selectedLocation = (state) => state.gridData.selectedLocation;
 export const selectedBillItem = (state) => state.gridData.selectedBillItem;
 
+
 export const selectOrderSummaryHeader = (state) =>
   state.orderSummaryData.orderHeader;
 export const selectOrderSummaryDetails = (state) =>

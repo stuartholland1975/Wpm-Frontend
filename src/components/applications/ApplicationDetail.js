@@ -1,5 +1,4 @@
 import React from "react";
-import { Button } from "react-bootstrap";
 import Container from "react-bootstrap/Container";
 import { CSVDownload } from "react-csv";
 import { useDispatch, useSelector } from "react-redux";
@@ -7,7 +6,7 @@ import { useParams } from "react-router-dom";
 import { useEffectOnce } from "react-use";
 import { selectAllApplications } from "../../services/data/ApplicationData";
 import { resetApplicationDetails, setApplicationDetailsToSubmitted } from "../../services/data/ApplicationDetailsData";
-import { fetchAppDetails, fetchSavedApplicationDetail, submitApplication, } from "../../services/thunks";
+import { fetchAppDetails, fetchSavedApplicationDetail, submitApplicationData, } from "../../services/thunks";
 import ApplicationBillItems from "./ApplicationBillItems";
 import ApplicationInstructionList from "./ApplicationInstructionsList";
 import ApplicationLocations from "./ApplicationLocations";
@@ -52,6 +51,9 @@ const ApplicationDetail = () => {
 			.map((item) => item["application_value"])
 			.reduce((acc, item) => acc + item, 0)
 	);
+
+	const submissionStatus = applications.filter(obj => obj.app_number == appId)[0].app_submitted
+
 	const dispatch = useDispatch();
 	const params = useParams();
 
@@ -62,22 +64,6 @@ const ApplicationDetail = () => {
 			dispatch(resetApplicationDetails());
 		};
 	});
-
-	const saveApplicationData = () => {
-		const app = applications.filter((obj) => obj.app_number == appId);
-		dispatch(
-			submitApplication({
-				submission_detail: submittedApplication,
-				application_id: app[0].id,
-
-				app_submitted: true
-			})
-		);
-	};
-
-	const fetchApplicationData = () => {
-		dispatch(fetchSavedApplicationDetail(params["appId"]));
-	};
 
 	return (
 		<Container fluid>
@@ -90,10 +76,12 @@ const ApplicationDetail = () => {
 				} }
 			>
 				<h3 style={ {fontWeight: "bolder"} }>
-					APPLICATION NUMBER &nbsp;&nbsp;{ params["appId"] }
-				</h3>
+					APPLICATION NUMBER: &nbsp;&nbsp;{ params["appId"] }
+				</h3><h3 style={ {fontWeight: "bolder"} }>
+				SUBMISSION STATUS: &nbsp;&nbsp;{ submissionStatus ? "SUBMITTED" : "NOT SUBMITTED" }
+			</h3>
 				<h3 style={ {fontWeight: "bolder"} }>
-					APPLICATION VALUE &nbsp;&nbsp; { appValue }{ " " }
+					APPLICATION VALUE: &nbsp;&nbsp; { appValue }{ " " }
 				</h3>
 			</div>
 
@@ -107,8 +95,7 @@ const ApplicationDetail = () => {
 					filename={ "test.csv" }
 				/>
 			) }
-			<Button onClick={ saveApplicationData }>Submit Application</Button>
-			<Button onClick={ fetchApplicationData }>fetch Application</Button>
+
 		</Container>
 	);
 };

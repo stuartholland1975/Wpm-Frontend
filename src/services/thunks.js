@@ -469,12 +469,13 @@ export const newImage = createAsyncThunk("images/addOne", async (apiObject) => {
 	return response.data;
 });
 
-export const submitApplication = createAsyncThunk(
+export const submitApplicationData = createAsyncThunk(
 	"applications/saveOne",
 	async (apiObject) => {
+		const header = await axiosInstance.patch(`wpm/api/applications/${ apiObject.application_id }/`, {app_submitted: apiObject.app_submitted})
 		const response = await axiosInstance.patch(
-			`wpm/api/applications/${ apiObject.application_id }/`,
-			apiObject
+			`wpm/api/applications/${ header.data.id }/`,
+			{submission_detail: {...apiObject.submission_detail, header: header.data}}
 		);
 		return response.data;
 	}
