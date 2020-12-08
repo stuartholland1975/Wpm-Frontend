@@ -18,24 +18,39 @@ const numFormat = (num) => {
   });
 };
 
-export const selectedOrder = (state) => state.gridData.selectedInstruction;
-export const selectedLocation = (state) => state.gridData.selectedLocation;
-export const selectedBillItem = (state) => state.gridData.selectedBillItem;
+export function selectedOrder(state) {
+  return state.gridData.selectedInstruction;
+}
+export function selectedLocation(state) {
+  return state.gridData.selectedLocation;
+}
+export function selectedBillItem(state) {
+  return state.gridData.selectedBillItem;
+}
 
 
-export const selectOrderSummaryHeader = (state) =>
-  state.orderSummaryData.orderHeader;
-export const selectOrderSummaryDetails = (state) =>
-  state.orderSummaryData.orderDetails;
-export const selectOrderSummaryLocations = (state) =>
-  state.orderSummaryData.orderLocations;
-export const selectOrderSummaryImages = (state) =>
-  state.orderSummaryData.orderImages;
-export const selectOrderSummaryDocuments = (state) =>
-  state.orderSummaryData.orderDocuments;
+export function selectOrderSummaryHeader(state) {
+  return state.orderSummaryData.orderHeader;
+}
+export function selectOrderSummaryDetails(state) {
+  return state.orderSummaryData.orderDetails;
+}
+export function selectOrderSummaryLocations(state) {
+  return state.orderSummaryData.orderLocations;
+}
+export function selectOrderSummaryImages(state) {
+  return state.orderSummaryData.orderImages;
+}
+export function selectOrderSummaryDocuments(state) {
+  return state.orderSummaryData.orderDocuments;
+}
 
-const applicationLocations = (state) => state.applicationDetail.locations;
-const applicationImages = (state) => state.applicationDetail.images;
+function applicationLocations(state) {
+  return state.applicationDetail.locations;
+}
+function applicationImages(state) {
+  return state.applicationDetail.images;
+}
 
 export const appOrderLocations = createSelector(
   [applicationLocations, selectedOrder, applicationImages],
@@ -65,8 +80,12 @@ export const appOrderLocations = createSelector(
   }
 );
 
-const workInstruction = (state) => state.gridData.selectedRow.work_instruction;
-const spreadsheetData = (state) => state.excelData.rows;
+function workInstruction(state) {
+  return state.gridData.selectedRow.work_instruction;
+}
+function spreadsheetData(state) {
+  return state.excelData.rows;
+}
 export const createApiObject = createSelector(
   [workInstruction, spreadsheetData, selectAllActivities, selectAllLocations],
   (workInstruction, spreadsheetData, activities, locations) => {
@@ -117,7 +136,9 @@ export const createApiObject = createSelector(
   }
 );
 
-const applicationItems = (state) => state.applicationDetail.items;
+function applicationItems(state) {
+  return state.applicationDetail.items;
+}
 
 export const appOrderItems = createSelector(
   [selectedOrder, applicationItems],
@@ -150,13 +171,6 @@ export const getAvailableValues = createSelector(
     })
 );
 
-const selectedInstruction = (state) => state.gridData.selectedInstruction;
-
-/* export const availableWorksheets = createSelector(
-  [selectAllAvailableWorksheets, selectedInstruction],
-  (worksheets, instruction) =>
-    worksheets.filter((obj) => obj.order_ref === instruction.work_instruction)
-); */
 
 export const inCompleteItems = createSelector(
   [selectAllInstructionDetails, selectedLocation],
