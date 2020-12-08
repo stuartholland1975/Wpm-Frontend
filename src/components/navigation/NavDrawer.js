@@ -960,8 +960,8 @@ const NavDrawer = (props) => {
       },
       {
         id: uuidv4(),
-        component: (
-          <GreenButton type="button" fullWidth onClick={submitApplication}>
+        component:  (
+          <GreenButton  disabled={applicationSubmissionDetail.header.app_submitted} type="button" fullWidth onClick={submitApplication}>
             SUBMIT APPLICATION
           </GreenButton>
         ),

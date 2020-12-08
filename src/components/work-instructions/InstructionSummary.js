@@ -68,7 +68,7 @@ const InstructionSummary = (props) => {
 					valueBot={ numFormat(totalPayable) }
 				/>
 				<SummaryCard
-					cardTitle="Construction Progress Values:"
+					cardTitle="Work Done Values:"
 					labelTop={ "Current Value:" }
 					labelBot={ "Value Complete:" }
 					labelMid={ "To Complete:" }
