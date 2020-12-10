@@ -97,6 +97,7 @@ const AvailableOrderList = () => {
 		suppressClickEdit: true,
 		onRowSelected: selectedRow,
 		suppressNoRowsOverlay: false,
+		enableCellChangeFlash: true,
 		frameworkComponents: {
 			//customLoadingOverlay: CustomLoadingOverlay,
 			customNoRowsOverlay: CustomNoRowsOverlay,

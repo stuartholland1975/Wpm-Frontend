@@ -166,6 +166,27 @@ export const addWorksheetToApplication = createAsyncThunk(
 	}
 );
 
+export const addBulkWorksheetToApplication = createAsyncThunk(
+	"addToApplication/addMany",
+	async (worksheet) => {
+		/*  const order = await axiosInstance.get(
+			`/wpm/api/orderheader/?work_instruction=${worksheet.order_ref}`
+	); */
+		const updatedBulkWorksheets = await axiosInstance.put(
+			`/bulk/bulk-worksheets`,
+			worksheet
+		);
+		/* const updatedOrder = await axiosInstance.patch(
+			`/wpm/api/orderheader/${order.data[0].id}/`,
+			{
+				value_applied: toFixed(
+			updatedWorksheet.data.value_complete + order.data[0].value_applied,
+					2
+				), */
+		return updatedBulkWorksheets.data.map(item => item.id);
+	}
+);
+
 /* export const updateWorksheet = createAsyncThunk(
   "worksheet/updateOne",
   async (apiObject) => {

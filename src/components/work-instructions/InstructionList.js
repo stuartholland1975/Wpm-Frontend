@@ -32,7 +32,7 @@ const InstructionList = () => {
       {
         headerName: "Work Instruction",
         field: "work_instruction",
-        sort: "desc",
+        sort: "asc",
       },
       {
         headerName: "Project Title",
@@ -107,7 +107,7 @@ const InstructionList = () => {
     defaultColDef: defaultColDef,
     columnTypes: columnTypes,
     pagination: true,
-    paginationPageSize: 30,
+    paginationPageSize: 35,
     rowSelection: "single",
 	onRowSelected: rowSelected,
    // onSelectionChanged: rowSelected,

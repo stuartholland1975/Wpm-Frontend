@@ -28,7 +28,6 @@ export function selectedBillItem(state) {
   return state.gridData.selectedBillItem;
 }
 
-
 export function selectOrderSummaryHeader(state) {
   return state.orderSummaryData.orderHeader;
 }
@@ -171,7 +170,6 @@ export const getAvailableValues = createSelector(
     })
 );
 
-
 export const inCompleteItems = createSelector(
   [selectAllInstructionDetails, selectedLocation],
   (items, location) =>
@@ -302,5 +300,12 @@ export const WeeklyWorkByWorkInstruction = createSelector(
         .map((sheet) => sheet.value_complete)
         .reduce((acc, item) => acc + item, 0),
     }));
+  }
+);
+
+export const submissionAvailable = createSelector(
+  (state) => state.applicationDetail.header,
+  (header) => {
+    return header.app_submitted || header.app_open ? true : false;
   }
 );

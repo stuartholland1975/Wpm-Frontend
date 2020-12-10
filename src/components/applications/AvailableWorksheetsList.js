@@ -74,6 +74,7 @@ const AvailableWorksheetsList = () => {
 		rowSelection: "multiple",
 		suppressRowClickSelection: false,
 		domLayout: "autoHeight",
+		enableCellChangeFlash: true,
 		suppressClickEdit: true,
 		suppressNoRowsOverlay: false,
 		frameworkComponents: {

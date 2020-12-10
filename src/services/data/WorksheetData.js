@@ -4,6 +4,7 @@ import {
   addWorksheetToApplication,
   fetchRecentWorksheets,
   fetchWeeklyWorksheets,
+  addBulkWorksheetToApplication,
 } from "../thunks";
 
 const availableWorksheetAdapter = createEntityAdapter();
@@ -23,6 +24,10 @@ export const AvailableWorksheetSlice = createSlice({
     builder.addCase(
       addWorksheetToApplication.fulfilled,
       availableWorksheetAdapter.removeOne
+    );
+    builder.addCase(
+      addBulkWorksheetToApplication.fulfilled,
+      availableWorksheetAdapter.removeMany
     );
   },
 });

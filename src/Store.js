@@ -53,7 +53,7 @@ const rootReducer = combineReducers({
 const persistConfig = { // configuration object for redux-persist
 	key: "root",
 	storage, // define which storage to use
-	blacklist: ["worksheetsRecent", "gridData"]
+	blacklist: ["worksheetsRecent", "gridData", "editedRow"]
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

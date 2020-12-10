@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchAppDetails, updateAppStatus } from "../thunks";
+import { fetchAppDetails, submitApplicationData } from "../thunks";
 
 const initialState = {
 	header: {},
@@ -23,8 +23,9 @@ const ApplicationDetails = createSlice({
 			}
 		},
 		extraReducers: builder => {
+			builder.addCase(submitApplicationData.fulfilled, (state, action) => state = action.payload.submission_detail)
 			builder.addCase(fetchAppDetails.fulfilled, (state, action) => {
-				state.header = action.payload['Application']
+				state.header = action.payload['Application'][0]
 				state.orders = action.payload["OrderHeader"];
 				state.items = action.payload["OrderDetail"];
 				state.locations = action.payload["SiteLocation"];

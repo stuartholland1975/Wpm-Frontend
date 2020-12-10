@@ -10,18 +10,18 @@ export default function SummaryCard(props) {
         </Card.Title>
         <hr />
         <Card.Text as={"div"}>
-          <Row as={"div"}>
+          <Row className="mb-2">
             <Col>{props.labelTop}</Col>
             <Col style={{ textAlign: "right" }}>{props.valueTop}</Col>
           </Row>
-          <Row as={"div"}>
+          <Row >
             <Col>{props.labelMid}</Col>
             <Col style={{ textAlign: "right" }}>{props.valueMid}</Col>
           </Row>
         </Card.Text>
       </Card.Body>
       <Card.Footer>
-        <Row as={"div"}>
+        <Row className="mb-2">
           <Col style={{ textAlign: "left", fontWeight: "bold" }}>
             {props.labelBot}
           </Col>

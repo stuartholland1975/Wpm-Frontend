@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffectOnce } from "react-use";
 import { selectAllAreas } from "../../services/data/areaData";
 import { fetchAreas } from "../../services/thunks";
+import Color from "color";
 
 const formatNumber = (value) =>
   Math.floor(value)
@@ -15,6 +16,7 @@ const WorkloadSummary = () => {
   const orderValues = useSelector(selectAllAreas).sort(function (a, b) {
     return a["id"] - b["id"];
   });
+  
   useEffectOnce(() => {
     dispatch(fetchAreas());
   });
@@ -30,12 +32,12 @@ const WorkloadSummary = () => {
             </Card.Title>
             <hr />
             <Card.Text>
-              <Row>
+            <Row className="mb-2">
                 <Col>Order Book:</Col>
                 <Col
                   style={{
                     textAlign: "right",
-                    fontWeight: "bold",
+                    
                   }}
                 >
                   {formatNumber(
@@ -45,12 +47,12 @@ const WorkloadSummary = () => {
                   )}
                 </Col>
               </Row>
-              <Row>
-                <Col>Work Complete:</Col>
+              <Row className="mb-2">
+                <Col>Work Done:</Col>
                 <Col
                   style={{
                     textAlign: "right",
-                    fontWeight: "bold",
+                   
                   }}
                 >
                   {formatNumber(
@@ -61,12 +63,12 @@ const WorkloadSummary = () => {
                 </Col>
               </Row>
 
-              <Row>
+              <Row className="mb-2">
                 <Col>Applied Value:</Col>
                 <Col
                   style={{
                     textAlign: "right",
-                    fontWeight: "bold",
+                    
                   }}
                 >
                   {formatNumber(
@@ -81,7 +83,7 @@ const WorkloadSummary = () => {
                 <Col
                   style={{
                     textAlign: "right",
-                    fontWeight: "bold",
+                    
                   }}
                 >
                   {formatNumber(
@@ -136,20 +138,20 @@ const WorkloadSummary = () => {
                 </Card.Title>
                 <hr />
                 <Card.Text>
-                  <Row>
+                <Row className="mb-2">
                     <Col>Order Book:</Col>
                     <Col style={{ textAlign: "right" }}>
                       {formatNumber(order_value)}
                     </Col>
                   </Row>
-                  <Row>
-                    <Col>Work Complete:</Col>
+                  <Row className="mb-2">
+                    <Col>Work Done:</Col>
                     <Col style={{ textAlign: "right" }}>
                       {formatNumber(complete_value)}
                     </Col>
                   </Row>
 
-                  <Row>
+                  <Row className="mb-2">
                     <Col>Applied Value:</Col>
                     <Col style={{ textAlign: "right" }}>
                       {formatNumber(applied_value)}

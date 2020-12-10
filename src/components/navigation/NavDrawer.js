@@ -36,6 +36,7 @@ import {
   setSelectedInstruction,
   setSelectedLocation,
   setSelectedRow,
+  resetEditedRow,
 } from "../../services/data/gridData";
 import { selectAllAvailableWorkInstructions } from "../../services/data/InstructionData";
 import {
@@ -48,6 +49,7 @@ import {
   fetchCurrentApplication,
   submitApplicationData,
   updateWorkInstruction,
+  addBulkWorksheetToApplication,
 } from "../../services/thunks";
 import LetterM from "../icons/letter-m.png";
 import LetterP from "../icons/letter-p.png";
@@ -58,6 +60,7 @@ import {
   PurpleButton,
   RedButton,
 } from "../ui-components/Buttons";
+import { submissionAvailable } from "../../services/selectors";
 
 const drawerWidth = 280;
 
@@ -106,6 +109,7 @@ const NavDrawer = (props) => {
   const applicationSubmissionDetail = useSelector(
     (state) => state.applicationDetail
   );
+  const submissionButtonAvailable = useSelector(submissionAvailable);
   const selectedRow = useSelector((state) => state.gridData.selectedRow);
   const editedRows = useSelector(selectAllEditedRows);
   const selectedLocation = useSelector(
@@ -128,7 +132,19 @@ const NavDrawer = (props) => {
         .map((item) => item.value_complete)
         .reduce((acc, item) => acc + item, 0);
 
-      editedRows.map((item) => {
+      const worksheetContainer = [];
+
+      editedRows.forEach((item) => {
+        worksheetContainer.push({
+          ...item,
+          application_number: currentApp[0].app_number,
+          applied: true,
+        });
+      });
+      console.log(worksheetContainer);
+      dispatch(addBulkWorksheetToApplication(worksheetContainer));
+
+      /* editedRows.map((item) => {
         dispatch(
           addWorksheetToApplication({
             ...item,
@@ -136,7 +152,7 @@ const NavDrawer = (props) => {
             applied: true,
           })
         );
-      });
+      }); */
       dispatch(
         updateWorkInstruction({
           id: currentWorkInstruction[0].id,
@@ -146,6 +162,7 @@ const NavDrawer = (props) => {
           ),
         })
       )
+        .then(() => dispatch(resetEditedRow()))
         .then(() => dispatch(fetchAvailableInstructions()))
         .then(() => dispatch(fetchCurrentApplication()));
       dispatch(setSelectedInstruction(false));
@@ -960,8 +977,13 @@ const NavDrawer = (props) => {
       },
       {
         id: uuidv4(),
-        component:  (
-          <GreenButton  disabled={applicationSubmissionDetail.header.app_submitted} type="button" fullWidth onClick={submitApplication}>
+        component: (
+          <GreenButton
+            disabled={submissionButtonAvailable}
+            type="button"
+            fullWidth
+            onClick={submitApplication}
+          >
             SUBMIT APPLICATION
           </GreenButton>
         ),
