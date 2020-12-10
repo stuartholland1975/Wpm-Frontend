@@ -5,7 +5,7 @@ import ChartRenderer from "./TestTableCube";
 const Test = (props) => {
 
 	return <Fragment>
-		TEST
+		<ChartRenderer/>
 	</Fragment>;
 };
 export default Test;
