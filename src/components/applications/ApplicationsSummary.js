@@ -46,8 +46,8 @@ const ApplicationsSummary = () => {
 
 	function handleViewAppSummary({app_number, id}) {
 
-		dispatch(removeAllWorksheets());
-		dispatch(removeAllWorkInstructions());
+	//	dispatch(removeAllWorksheets());
+	//	dispatch(removeAllWorkInstructions());
 		history.push({pathname: `/commercial/applications/detail/${ app_number }`, state: id});
 	}
 

@@ -1,0 +1,24 @@
+{
+	"folders": [
+		{
+			"path": "../../.."
+		},
+		{
+			"path": "../../../../wpm-cube"
+		}
+	],
+	"settings": {
+		"sqltools.connections": [
+			{
+				"previewLimit": 50,
+				"server": "192.168.0.40",
+				"port": 5432,
+				"driver": "PostgreSQL",
+				"name": "BEELINK",
+				"database": "work_package_manager",
+				"username": "postgres",
+				"password": "987jmo00"
+			}
+		]
+	}
+}
