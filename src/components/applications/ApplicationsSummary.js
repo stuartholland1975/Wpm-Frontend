@@ -59,7 +59,7 @@ const ApplicationsSummary = () => {
 			<hr/>
 			<CardDeck>
 				{ applications.map(item => {
-					const {app_date, app_current, id, app_ref, application_value, app_submitted} = item;
+					const {app_date, app_current, id, app_ref, application_value, app_submitted, app_value} = item;
 					return (
 
 						<CommercialCard
@@ -68,7 +68,7 @@ const ApplicationsSummary = () => {
 							textLabelTop="Date:"
 							textValueTop={ formatDate(app_date) }
 							textLabelMid="VALUE:"
-							textValueMid={ numFormat(application_value) }
+							textValueMid={ numFormat(app_value) }
 							textLabelBtm="STATUS:"
 							textValueBtm={ app_current ? "OPEN" : "CLOSED" }
 							textLabelMisc="SUBMISSION STATUS:"

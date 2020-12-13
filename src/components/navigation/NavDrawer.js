@@ -40,7 +40,7 @@ import {
 } from "../../services/data/gridData";
 import { selectAllAvailableWorkInstructions } from "../../services/data/InstructionData";
 import {
-  addWorksheetToApplication,
+  updateCurrentApplication,
   closeApplication,
   deleteInstructionDetail,
   deleteLocation,
@@ -132,6 +132,8 @@ const NavDrawer = (props) => {
         .map((item) => item.value_complete)
         .reduce((acc, item) => acc + item, 0);
 
+        console.log(currentApp[0].app_value + applied_value)
+
       const worksheetContainer = [];
 
       editedRows.forEach((item) => {
@@ -141,18 +143,7 @@ const NavDrawer = (props) => {
           applied: true,
         });
       });
-      console.log(worksheetContainer);
       dispatch(addBulkWorksheetToApplication(worksheetContainer));
-
-      /* editedRows.map((item) => {
-        dispatch(
-          addWorksheetToApplication({
-            ...item,
-            application_number: currentApp[0].app_number,
-            applied: true,
-          })
-        );
-      }); */
       dispatch(
         updateWorkInstruction({
           id: currentWorkInstruction[0].id,
@@ -162,9 +153,17 @@ const NavDrawer = (props) => {
           ),
         })
       )
+        .then(() =>
+          dispatch(
+            updateCurrentApplication({
+              id: currentApp[0].id,
+              app_value: toFixed(currentApp[0].app_value + applied_value),
+            })
+          )
+        )
         .then(() => dispatch(resetEditedRow()))
-        .then(() => dispatch(fetchAvailableInstructions()))
-        .then(() => dispatch(fetchCurrentApplication()));
+        .then(() => dispatch(fetchAvailableInstructions()));
+      //   .then(() => dispatch(fetchCurrentApplication()));
       dispatch(setSelectedInstruction(false));
     } else {
       confirm({

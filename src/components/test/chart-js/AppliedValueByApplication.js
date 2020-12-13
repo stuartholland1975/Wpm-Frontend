@@ -2,6 +2,7 @@ import React from "react";
 import cubejs from "@cubejs-client/core";
 import { QueryRenderer } from "@cubejs-client/react";
 import { Spin } from "antd";
+import {Card} from "react-bootstrap";
 import {
   CartesianGrid,
   PieChart,
@@ -21,7 +22,7 @@ import {
 } from "recharts";
 
 const CartesianChart = ({ resultSet, children, ChartComponent }) => (
-  <ResponsiveContainer width={"50%"} height={400}>
+  <ResponsiveContainer height={400} width={"50%"}>
     <ChartComponent data={resultSet.chartPivot()}>
       <XAxis dataKey="x" />
       <YAxis />
@@ -65,22 +66,22 @@ const renderChart = (Component, pivotConfig) => ({ resultSet, error }) => {
   );
 };
 
-const ByDate = () => {
+const AppliedByApplication = () => {
   return (
     <QueryRenderer
       query={{
-        measures: ["Worksheet.valueComplete"],
+        measures: ["Application.appliedValue"],
         timeDimensions: [],
         order: {
-          "Worksheet.isoDate": "asc",
+          "Application.appRef": "asc",
         },
-        dimensions: ["Worksheet.isoDate"],
+        dimensions: ["Application.appRef"],
         filters: [],
         segments: [],
       }}
       cubejsApi={cubejsApi}
       render={renderChart(barRender, {
-        x: ["Worksheet.isoDate"],
+        x: ["Application.appRef"],
         y: ["measures"],
         fillMissingDates: true,
         joinDateRange: false,
@@ -89,4 +90,4 @@ const ByDate = () => {
   );
 };
 
-export default ByDate;
+export default AppliedByApplication;

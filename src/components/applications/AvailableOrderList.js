@@ -90,7 +90,7 @@ const AvailableOrderList = () => {
 		defaultColDef: defaultColDef,
 		columnTypes: columnTypes,
 		pagination: true,
-		paginationPageSize: 30,
+		paginationPageSize: 10,
 		rowSelection: "single",
 		suppressRowClickSelection: false,
 		domLayout: "autoHeight",
