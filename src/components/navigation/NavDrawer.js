@@ -132,7 +132,7 @@ const NavDrawer = (props) => {
         .map((item) => item.value_complete)
         .reduce((acc, item) => acc + item, 0);
 
-        console.log(currentApp[0].app_value + applied_value)
+      console.log(currentApp[0].app_value + applied_value);
 
       const worksheetContainer = [];
 
@@ -157,7 +157,7 @@ const NavDrawer = (props) => {
           dispatch(
             updateCurrentApplication({
               id: currentApp[0].id,
-              app_value: toFixed(currentApp[0].app_value + applied_value),
+              app_value: toFixed(currentApp[0].app_value + applied_value, 2),
             })
           )
         )

@@ -28,8 +28,7 @@ const ApplicationDetail = () => {
   const appValue = numFormat(
     applications
       .filter((obj) => obj.app_number == appId)
-      .map((item) => item["application_value"])
-      .reduce((acc, item) => acc + item, 0)
+      .map((item) => item["app_value"])
   );
 
   const submissionStatus = applications.filter(

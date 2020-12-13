@@ -4,7 +4,7 @@ import React, { Fragment, useState } from "react";
 import { useSelector } from "react-redux";
 import { useUpdateEffect } from "react-use";
 import { appOrderItems, selectedLocation } from "../../services/selectors";
-import CustomNoRowsOverlay from "../grid/CustomNoRowsOverlay";
+import CustomNoRowsOverlay from "../grid/CustomNoRowsOverlay2";
 
 function numFormatGrid(params) {
 	return params.value.toLocaleString(undefined, {

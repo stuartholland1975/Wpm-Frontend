@@ -25,12 +25,12 @@ const AvailableOrderList = () => {
 
 	const ColumnDefs = [
 		{headerName: "ID", field: "id", hide: true},
-		{
+		/* {
 			headerName: "Select",
 			colId: "select",
 			checkboxSelection: true,
 			maxWidth: 80,
-		},
+		}, */
 		{
 			headerName: "Work Instruction",
 			field: "work_instruction",
@@ -86,36 +86,36 @@ const AvailableOrderList = () => {
 		},
 	};
 	const gridOptions = {
-		columnDefs: ColumnDefs,
-		defaultColDef: defaultColDef,
-		columnTypes: columnTypes,
-		pagination: true,
-		paginationPageSize: 10,
-		rowSelection: "single",
-		suppressRowClickSelection: false,
-		domLayout: "autoHeight",
-		suppressClickEdit: true,
-		onRowSelected: selectedRow,
-		suppressNoRowsOverlay: false,
-		enableCellChangeFlash: true,
-		frameworkComponents: {
-			//customLoadingOverlay: CustomLoadingOverlay,
-			customNoRowsOverlay: CustomNoRowsOverlay,
-		},
-		noRowsOverlayComponent: "customNoRowsOverlay",
-		noRowsOverlayComponentParams: {
-			noRowsMessageFunc: function () {
-				return (
-					<Loader
-						style={ {textAlign: "center"} }
-						type={ "ThreeDots" }
-						color={ "Blue" }
-					/>
-				);
-			},
-		},
-
-	};
+    columnDefs: ColumnDefs,
+    defaultColDef: defaultColDef,
+    columnTypes: columnTypes,
+    pagination: true,
+    paginationPageSize: 10,
+    rowSelection: "single",
+    suppressRowDeselection: true,
+    suppressRowClickSelection: false,
+    domLayout: "autoHeight",
+    suppressClickEdit: true,
+    onRowSelected: selectedRow,
+    suppressNoRowsOverlay: false,
+    enableCellChangeFlash: true,
+    frameworkComponents: {
+      //customLoadingOverlay: CustomLoadingOverlay,
+      customNoRowsOverlay: CustomNoRowsOverlay,
+    },
+    noRowsOverlayComponent: "customNoRowsOverlay",
+    noRowsOverlayComponentParams: {
+      noRowsMessageFunc: function () {
+        return (
+          <Loader
+            style={{ textAlign: "center" }}
+            type={"ThreeDots"}
+            color={"Blue"}
+          />
+        );
+      },
+    },
+  };
 	const onGridReady = params => {
 		params.api.sizeColumnsToFit();
 		setGridApi(params.api)

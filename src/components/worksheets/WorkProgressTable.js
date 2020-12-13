@@ -131,7 +131,8 @@ const WorkProgressTable = () => {
     noRowsOverlayComponent: "customNoRowsOverlay",
     noRowsOverlayComponentParams: {
       noRowsMessageFunc: function () {
-        return "ALL ITEMS FOR THIS WORKSHEET ARE COMPLETE";
+      //  return "ALL ITEMS FOR THIS WORKSHEET ARE COMPLETE";
+      return <h1 style={{marginTop: 15}}>ALL ITEMS FOR THIS SELECTION ARE COMPLETE</h1>
       },
     },
   };

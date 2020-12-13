@@ -16,7 +16,7 @@ const WorkloadSummary = () => {
   const orderValues = useSelector(selectAllAreas).sort(function (a, b) {
     return a["id"] - b["id"];
   });
-  
+
   useEffectOnce(() => {
     dispatch(fetchAreas());
   });
@@ -32,12 +32,11 @@ const WorkloadSummary = () => {
             </Card.Title>
             <hr />
             <Card.Text>
-            <Row className="mb-2">
+              <Row className="mb-2">
                 <Col>Order Book:</Col>
                 <Col
                   style={{
                     textAlign: "right",
-                    
                   }}
                 >
                   {formatNumber(
@@ -52,7 +51,6 @@ const WorkloadSummary = () => {
                 <Col
                   style={{
                     textAlign: "right",
-                   
                   }}
                 >
                   {formatNumber(
@@ -68,7 +66,6 @@ const WorkloadSummary = () => {
                 <Col
                   style={{
                     textAlign: "right",
-                    
                   }}
                 >
                   {formatNumber(
@@ -83,7 +80,6 @@ const WorkloadSummary = () => {
                 <Col
                   style={{
                     textAlign: "right",
-                    
                   }}
                 >
                   {formatNumber(
@@ -138,7 +134,7 @@ const WorkloadSummary = () => {
                 </Card.Title>
                 <hr />
                 <Card.Text>
-                <Row className="mb-2">
+                  <Row className="mb-2">
                     <Col>Order Book:</Col>
                     <Col style={{ textAlign: "right" }}>
                       {formatNumber(order_value)}

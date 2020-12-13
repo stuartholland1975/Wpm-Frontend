@@ -59,7 +59,7 @@ const ApplicationsSummary = () => {
 			<hr/>
 			<CardDeck>
 				{ applications.map(item => {
-					const {app_date, app_current, id, app_ref, application_value, app_submitted, app_value} = item;
+					const {app_date, app_current, id, app_ref, app_submitted, app_value} = item;
 					return (
 
 						<CommercialCard

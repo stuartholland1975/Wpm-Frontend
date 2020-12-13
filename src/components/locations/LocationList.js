@@ -15,22 +15,22 @@ import {
   setClickedLocation,
   setSelectedLocation,
 } from "../../services/data/gridData";
-import { selectAllImages } from "../../services/data/ImageData";
-import { selectAllLocations } from "../../services/data/locationData";
 import { fetchOrderSummaryInfo } from "../../services/thunks";
 import CustomLoadingOverlay from "../grid/CustomLoadingOverlay";
 import CustomNoRowsOverlay from "../grid/CustomNoRowsOverlay2";
 import InstructionSummary from "../work-instructions/InstructionSummary";
 import Loader from "react-loader-spinner";
-import {selectOrderSummaryLocations, selectOrderSummaryImages} from '../../services/selectors'
+import {
+  selectOrderSummaryLocations,
+  selectOrderSummaryImages,
+} from "../../services/selectors";
 
 const LocationList = () => {
   const { OrderId } = useParams();
   const dispatch = useDispatch();
-
   const locations = useSelector(selectOrderSummaryLocations);
+  const loading = useSelector((state) => state.locations.loading);
   const images = useSelector(selectOrderSummaryImages);
-  const latestImages = useLatest(images);
   const [gridApi, setGridApi] = useState();
   const [, setColumnApi] = useState();
   const isMounted = useMountedState();
@@ -87,7 +87,8 @@ const LocationList = () => {
     },
     {
       headerName: "Images",
-      colId: "images",
+      field: "image_count",
+      colId: "imageCount",
       type: "rightAligned",
       maxWidth: 150,
       cellRenderer: getImageCount,
@@ -129,26 +130,32 @@ const LocationList = () => {
     domLayout: "autoHeight",
     rowSelection: "single",
     suppressRowClickSelection: false,
+    onCellClicked: (e) => {
+      if (e.column.colId === "imageCount") {
+        e.node.setSelected(false);
+      }
+    },
     onRowSelected: rowSelected,
-    // onSelectionChanged: rowSelected,
-    suppressNoRowsOverlay: false,
+    suppressLoadingOverlay: true,
+    /* suppressNoRowsOverlay: false,
     frameworkComponents: {
       customNoRowsOverlay: CustomNoRowsOverlay,
-      customLoadingOverlay: CustomLoadingOverlay,
     },
-    loadingOverlayComponent: "customLoadingOverlay",
     noRowsOverlayComponent: "customNoRowsOverlay",
     noRowsOverlayComponentParams: {
       noRowsMessageFunc: function () {
         return (
+          <h3 style={{ textAlign: "center", marginTop: "15px" }}>...Loading</h3>
+        );
+        return (
           <Loader
-            style={{ textAlign: "center" }}
-            type={"ThreeDots"}
+            style={{ textAlign: "center", marginTop: "15px" }}
+            type={"Puff"}
             color="#366363"
           />
         );
       },
-    },
+    }, */
   };
 
   useEffectOnce(() => {
@@ -170,20 +177,18 @@ const LocationList = () => {
   function rowSelected(event) {
     if (event.node.selected) {
       dispatch(setSelectedLocation(event.data));
+    } else {
+      dispatch(setSelectedLocation(false));
     }
   }
 
   function getImageCount(params) {
-    const siteLocationImages = latestImages.current.filter(
-      (obj) => obj.location === params.data.id
-    );
-
     let link;
-    if (siteLocationImages.length > 0) {
+    if (params.data.image_count > 0) {
       link = document.createElement("a");
       link.href = "#";
       link.style = "font-weight: bold";
-      link.innerText = siteLocationImages.length;
+      link.innerText = params.data.image_count;
       link.addEventListener("click", (e) => {
         e.preventDefault();
         dispatch(setClickedLocation(params.data));
@@ -195,10 +200,7 @@ const LocationList = () => {
         );
       });
       return link;
-    } else {
-      link = siteLocationImages.length;
-    }
-    return link;
+    } else return params.data.image_count;
   }
 
   useEffect(() => {
@@ -230,6 +232,16 @@ const LocationList = () => {
             }
           />
         </div>
+
+        {loading && locations.length === 0 && (
+          <Loader
+            style={{ textAlign: "center", marginTop: "30px" }}
+            type={"Puff"}
+            color="#366363"
+            height={150}
+            width={150}
+          />
+        )}
       </Container>
     </Fragment>
   );
