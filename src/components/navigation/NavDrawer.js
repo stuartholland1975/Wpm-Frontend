@@ -525,10 +525,25 @@ const NavDrawer = (props) => {
   };
 
   const submitApplication = () => {
+    const checkLocationImages = applicationSubmissionDetail.locations.filter(
+      (obj) => obj.image_count === 0
+    );
     confirm({
       title: "SUBMIT APPLICATION",
-      description:
-        "Are You Sure You Want To Submit This Application, Further Changes Will Be Prevented",
+      description: (
+        <>
+          <p>
+            Are You Sure You Want To Submit This Application, Further Changes
+            Will Be Prevented
+          </p>
+          {checkLocationImages.length > 0 &&
+          <h4 style={{ fontWeight: "bold", color: "red" }}>
+            This Application Contains {checkLocationImages.length} Locations
+            That Have No Images
+          </h4>}
+        </>
+      ),
+
       confirmationButtonProps: {
         variant: "contained",
         startIcon: <CheckBoxIcon />,
@@ -1058,8 +1073,8 @@ const NavDrawer = (props) => {
       id: uuidv4(),
       text: "Commercial",
       icon: <FontAwesomeIcon icon={faCoins} size="lg" />,
-      onClick: () => history.push("/commercial/applications/summary"),
-      pathname: "/commercial/applications/summary",
+      onClick: () => history.push("/commercial/summary"),
+      pathname: "/commercial/summary",
     },
     {
       text: "TEST",
