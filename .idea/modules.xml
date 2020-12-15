@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/../wpm-cube/.idea/wpm-cube.iml" filepath="$PROJECT_DIR$/../wpm-cube/.idea/wpm-cube.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/wpm-frontend.iml" filepath="$PROJECT_DIR$/.idea/wpm-frontend.iml" />
     </modules>
   </component>
