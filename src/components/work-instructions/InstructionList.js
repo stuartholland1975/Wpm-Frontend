@@ -24,20 +24,21 @@ const InstructionList = () => {
     selectedNode = useSelector((state) => state.gridData.selectedRow),
     ColumnDefs = [
       { headerName: "ID", field: "id", hide: true },
-      {
+      /* {
         headerName: "Select",
         colId: "select",
         checkboxSelection: true,
-      },
+      }, */
       {
         headerName: "Work Instruction",
         field: "work_instruction",
         sort: "asc",
+        minWidth: 150,
       },
       {
         headerName: "Project Title",
         field: "project_title",
-        minWidth: 400,
+        minWidth: 350,
       },
       {
         headerName: "Date Issued",
@@ -80,6 +81,20 @@ const InstructionList = () => {
         sortable: true,
         filter: "agNumberColumnFilter",
         valueFormatter: formatNumber,
+      },
+      {
+        headerName: "Value Remaining",
+        type: "numericColumn",
+        cellStyle: { fontWeight: "bold" },
+        sortable: true,
+        filter: "agNumberColumnFilter",
+        valueGetter: function (params) {
+          const { order_value, value_complete } = params.data;
+          return (order_value - value_complete).toLocaleString(undefined, {
+            maximumFractionDigits: 0,
+            minimumFractionDigits: 0,
+          });
+        },
       },
       {
         headerName: "Value Applied",

@@ -25,6 +25,21 @@ import {
   selectOrderSummaryImages,
 } from "../../services/selectors";
 
+const formatGridNumber = (params) =>
+  Math.floor(params.value)
+    .toString()
+    .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+
+const formatNumber = (value) =>
+  Math.floor(value)
+    .toString()
+    .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+
+function toFixed(number, decimals) {
+  const x = Math.pow(10, Number(decimals) + 1);
+  return (Number(number) + 1 / x).toFixed(decimals);
+}
+
 const LocationList = () => {
   const { OrderId } = useParams();
   const dispatch = useDispatch();
@@ -40,16 +55,16 @@ const LocationList = () => {
 
   let columnDefs = [
     {
-      headerName: "Select",
-      colId: "select",
-      checkboxSelection: true,
-      maxWidth: 120,
+      headerName: "Status",
+      mixWidth: 150,
       valueGetter: function (params) {
         if (params.data.item_count === 0) {
           return "New";
         } else if (params.data.item_count - params.data.items_complete === 0) {
           return "Complete";
-        }
+        } else if (params.data.items_complete > 0) {
+          return "In Progress";
+        } else return "Not Started";
       },
       filter: false,
     },
@@ -57,29 +72,27 @@ const LocationList = () => {
       headerName: "Worksheet Ref",
       field: "worksheet_ref",
       colId: "worksheet_ref",
-      maxWidth: 150,
+
       sort: "asc",
     },
-    { headerName: "Location", field: "location_ref" },
+    { headerName: "Location", field: "location_ref", minWidth: 250 },
     {
       headerName: "Item Count",
       field: "item_count",
       colId: "item_count",
       type: "numericColumn",
-      maxWidth: 150,
     },
     {
       headerName: "Items Complete",
       field: "items_complete",
       colId: "items_complete",
       type: "numericColumn",
-      maxWidth: 150,
     },
     {
       headerName: "Items Remaining",
       colId: "items_remaining",
       type: "numericColumn",
-      maxWidth: 150,
+
       valueGetter: function (params) {
         const { item_count, items_complete } = params.data;
         return item_count - items_complete;
@@ -90,7 +103,7 @@ const LocationList = () => {
       field: "image_count",
       colId: "imageCount",
       type: "rightAligned",
-      maxWidth: 150,
+
       cellRenderer: getImageCount,
     },
     {
@@ -101,8 +114,8 @@ const LocationList = () => {
       cellStyle: { fontWeight: "bold" },
       valueFormatter: function (params) {
         return params.value.toLocaleString(undefined, {
-          maximumFractionDigits: 0,
-          minimumFractionDigits: 0,
+          maximumFractionDigits: 2,
+          minimumFractionDigits: 2,
         });
       },
     },
@@ -114,8 +127,8 @@ const LocationList = () => {
       cellStyle: { fontWeight: "bold" },
       valueFormatter: function (params) {
         return params.value.toLocaleString(undefined, {
-          maximumFractionDigits: 0,
-          minimumFractionDigits: 0,
+          maximumFractionDigits: 2,
+          minimumFractionDigits: 2,
         });
       },
     },
@@ -124,13 +137,15 @@ const LocationList = () => {
       colId: "value_remaining",
       type: "numericColumn",
       cellStyle: { fontWeight: "bold" },
-      
+      valueFormatter: function (params) {
+        return params.value.toLocaleString(undefined, {
+          maximumFractionDigits: 2,
+          minimumFractionDigits: 2,
+        });
+      },
       valueGetter: function (params) {
         const { total_payable, value_complete } = params.data;
-        return (total_payable - value_complete).toLocaleString(undefined, {
-          maximumFractionDigits: 0,
-          minimumFractionDigits: 0,
-        });
+        return total_payable - value_complete;
       },
     },
   ];
@@ -157,6 +172,12 @@ const LocationList = () => {
     domLayout: "autoHeight",
     rowSelection: "single",
     suppressRowClickSelection: false,
+    getRowStyle: function (params) {
+      console.log(params);
+      if (params.data.item_count - params.data.items_complete === 0) {
+        return { color: "navy", fontWeight: "bolder" };
+      }
+    },
     onCellClicked: (e) => {
       if (e.column.colId === "imageCount") {
         e.node.setSelected(false);

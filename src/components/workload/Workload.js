@@ -30,7 +30,7 @@ const numberRender = ({ resultSet }) => (
   </h5></Col>
 );
 
-const API_URL = "http://localhost:4000"; // change to your actual endpoint
+const API_URL = "http://192.168.0.4:4000"; // change to your actual endpoint
 
 const cubejsApi = cubejs(
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MDc5MTE5NTgsImV4cCI6MTYwNzk5ODM1OH0.00rOD0rbAnNQvJlPL32t5PIZtv1qXUWJA0f7H465zZE",

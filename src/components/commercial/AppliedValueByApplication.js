@@ -23,7 +23,7 @@ const barRender = ({ resultSet }) => {
   return <Bar data={data} options={options} />;
 };
 
-const API_URL = "http://localhost:4000"; // change to your actual endpoint
+const API_URL = "http://192.168.0.4:4000"; // change to your actual endpoint
 
 const cubejsApi = cubejs(
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MDc5MDQzMjcsImV4cCI6MTYwNzk5MDcyN30.7SoHaX1YSfn0-9mBTpSDy58VjrHcVj1yI8I-1KzowkA",

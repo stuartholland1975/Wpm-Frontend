@@ -25,17 +25,18 @@ const InstructionDetail = () => {
   const gridOptions = {
     columnDefs: [
       {
-        headerName: "Select",
-        colId: "select",
-        checkboxSelection: true,
+        headerName: "Status",
+        colId: "status",
+        checkboxSelection: false,
         minWidth: 100,
         valueGetter: function (params) {
           if (params.data.qty_ordered - params.data.qty_complete === 0) {
             return "Complete";
-          } else if (params.data.qty_complete > 0.0) {
-            return "In Progress";
-          }
+          } else if (params.data.qty_ordered - params.data.qty_complete !== 0) {
+            return "Not Started";
+          } else return "In Progress";
         },
+        
         filter: false,
       },
       { headerName: "Item Ref", field: "item_number", sort: "desc", flex: 1 },
@@ -94,6 +95,12 @@ const InstructionDetail = () => {
     },
 
     pagination: true,
+    getRowStyle: function (params) {
+      console.log(params)
+      if(params.data.qty_ordered - params.data.qty_complete === 0) {
+        return {color: "navy", fontWeight: "bolder"}
+      }
+    },
     paginationPageSize: 20,
     rowSelection: "single",
     domLayout: "autoHeight",
