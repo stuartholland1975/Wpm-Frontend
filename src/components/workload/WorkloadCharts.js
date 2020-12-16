@@ -1,9 +1,9 @@
 import React from "react";
 import { CardDeck } from "react-bootstrap";
-import WeeklyWorkDoneByArea from "../charts/WeeklyWorkDoneByArea_copy";
-import WeeklyWorkDoneBySupervisor from "../charts/WeeklyWorkDoneBySupervisor_copy";
-import WeeklyWorkDoneByWorkInstruction from "../charts/WeeklyWorkDoneByWorkInstruction_copy";
-import WeeklyWorkDoneByWorkType from "../charts/WeeklyWorkDoneByWorkType_copy";
+import WeeklyWorkDoneByArea from "../charts/WeeklyWorkDoneByArea";
+import WeeklyWorkDoneBySupervisor from "../charts/WeeklyWorkDoneBySupervisor";
+import WeeklyWorkDoneByWorkInstruction from "../charts/WeeklyWorkDoneByWorkInstruction";
+import WeeklyWorkDoneByWorkType from "../charts/WeeklyWorkDoneByWorkType";
 
 const WorkLoadCharts = (props) => {
 	return (
