@@ -207,7 +207,7 @@ const LocationList = () => {
   };
 
   useEffectOnce(() => {
-    !locations.length > 0 && dispatch(fetchOrderSummaryInfo(OrderId));
+    dispatch(fetchOrderSummaryInfo(OrderId));
     dispatch(setSelectedLocation(false));
   });
 

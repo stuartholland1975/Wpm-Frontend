@@ -113,10 +113,10 @@ const WorksheetForm = (props) => {
     });
     setIsLoading(true);
     dispatch(newWorksheet(worksheetContainer));
+
     dispatch(updateItemStatus(billItemContainer))
-      .then(() =>
-        dispatch(fetchSingleLocation(editedRows[0].location_ref)))
-      
+      .then(() => dispatch(fetchSingleLocation(editedRows[0].location_ref)))
+
       .then(() => closeAndReset());
   };
 
