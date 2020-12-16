@@ -101,8 +101,8 @@ const LocationList = () => {
       cellStyle: { fontWeight: "bold" },
       valueFormatter: function (params) {
         return params.value.toLocaleString(undefined, {
-          maximumFractionDigits: 2,
-          minimumFractionDigits: 2,
+          maximumFractionDigits: 0,
+          minimumFractionDigits: 0,
         });
       },
     },
@@ -114,8 +114,8 @@ const LocationList = () => {
       cellStyle: { fontWeight: "bold" },
       valueFormatter: function (params) {
         return params.value.toLocaleString(undefined, {
-          maximumFractionDigits: 2,
-          minimumFractionDigits: 2,
+          maximumFractionDigits: 0,
+          minimumFractionDigits: 0,
         });
       },
     },
@@ -128,8 +128,8 @@ const LocationList = () => {
       valueGetter: function (params) {
         const { total_payable, value_complete } = params.data;
         return (total_payable - value_complete).toLocaleString(undefined, {
-          maximumFractionDigits: 2,
-          minimumFractionDigits: 2,
+          maximumFractionDigits: 0,
+          minimumFractionDigits: 0,
         });
       },
     },

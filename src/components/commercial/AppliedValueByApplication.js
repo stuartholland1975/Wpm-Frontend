@@ -16,6 +16,7 @@ const barRender = ({ resultSet }) => {
       fill: false,
     })),
   };
+  console.log(data)
   const options = {
     scales: { xAxes: [{ stacked: true }] },
   };

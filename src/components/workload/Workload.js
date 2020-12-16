@@ -21,18 +21,12 @@ import cubejs from "@cubejs-client/core";
 import { QueryRenderer } from "@cubejs-client/react";
 import { Spin } from "antd";
 
-const numFormatGrid = (value) => {
-    return value.toLocaleString(undefined, {
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0,
-    });
-  };
 
 const numberRender = ({ resultSet }) => (
     <Col style={{ marginTop: "10px", textAlign: "center" }}>
-  <h5>
+  <h5 style={{fontWeight: "bold"}}>
     {"Weekly Value "}{" "}
-    {numFormatGrid(resultSet.seriesNames().map((s) => resultSet.totalRow()[s.key]))}
+    {resultSet.seriesNames().map((s) => resultSet.totalRow()[s.key]).toLocaleString({minimumFractionDigits: 2})}
   </h5></Col>
 );
 
