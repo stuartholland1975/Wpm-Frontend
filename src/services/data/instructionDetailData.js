@@ -12,6 +12,7 @@ import {
   fetchAppItems,
   fetchAppInstructions,
   createBulkBillItems,
+  updateItemStatus,
 } from "../thunks";
 
 export const instructionDetailAdapter = createEntityAdapter();
@@ -42,7 +43,14 @@ export const InstructionDetailSlice = createSlice({
       instructionDetailAdapter.removeOne
     );
     builder.addCase(fetchAppItems.fulfilled, instructionDetailAdapter.setAll);
-    builder.addCase(createBulkBillItems.fulfilled, instructionDetailAdapter.upsertMany);
+    builder.addCase(
+      createBulkBillItems.fulfilled,
+      instructionDetailAdapter.upsertMany
+    );
+    builder.addCase(
+      updateItemStatus.fulfilled,
+      instructionDetailAdapter.upsertMany
+    );
   },
 });
 

@@ -1,58 +1,27 @@
+import Grid from "@material-ui/core/Grid";
 import Slide from "@material-ui/core/Slide";
 import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { unwrapResult } from "@reduxjs/toolkit";
 import { useConfirm } from "material-ui-confirm";
 import React, { useState } from "react";
-import { Col, Container, Row } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
+import Loader from "react-loader-spinner";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffectOnce } from "react-use";
 import {
   removeAllRecentWorksheets,
   selectAllRecentWorksheets,
-} from "../../services/data/WorksheetData";
-import { fetchWorkDoneWeeks } from "../../services/thunks";
-import { BlueButton } from "../ui-components/Buttons";
+} from "../../../services/data/WorksheetData";
+import {
+  fetchWeeklyWorksheets,
+  fetchWorkDoneWeeks,
+} from "../../../services/thunks";
+import { BlueButton } from "../../ui-components/Buttons";
 import WorkLoadCharts from "./WorkloadCharts";
-import WorkloadSummary from "./WorkloadSummary";
+import WorkloadSummary from "../WorkloadSummary";
 import moment from "moment";
 import { Divider } from "@react-md/divider";
-import cubejs from "@cubejs-client/core";
-import { QueryRenderer } from "@cubejs-client/react";
-import { Spin } from "antd";
-
-const numFormatGrid = (value) => {
-    return value.toLocaleString(undefined, {
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0,
-    });
-  };
-
-const numberRender = ({ resultSet }) => (
-    <Col style={{ marginTop: "10px", textAlign: "center" }}>
-  <h5>
-    {"Weekly Value "}{" "}
-    {numFormatGrid(resultSet.seriesNames().map((s) => resultSet.totalRow()[s.key]))}
-  </h5></Col>
-);
-
-const API_URL = "http://localhost:4000"; // change to your actual endpoint
-
-const cubejsApi = cubejs(
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MDc5MTE5NTgsImV4cCI6MTYwNzk5ODM1OH0.00rOD0rbAnNQvJlPL32t5PIZtv1qXUWJA0f7H465zZE",
-  { apiUrl: API_URL + "/cubejs-api/v1" }
-);
-
-const renderChart = (Component, pivotConfig) => ({ resultSet, error }) => {
-  return (
-    (resultSet && (
-      <Component resultSet={resultSet} pivotConfig={pivotConfig} />
-    )) ||
-    (error && error.toString()) || <Spin />
-  );
-};
-
-
 
 function getFirstDateOfWeek(w, y) {
   let date = new Date(y, 0, 1 + (w - 1) * 7); // Elle's method
@@ -60,47 +29,21 @@ function getFirstDateOfWeek(w, y) {
   return moment(date).startOf("isoWeek").format("DD/MM/YYYY");
 }
 
-const Workload = () => {
+const Workload = (props) => {
   const dispatch = useDispatch();
   const [year, setYear] = useState(null);
   const [week, setWeek] = useState(null);
   const [workDoneWeeks, setWorkDoneWeeks] = useState([]);
-  const [cubeWeek, setCubeWeek] = useState(false);
-  const [cubeYear, setCubeYear] = useState(false);
+  const worksheets = useSelector(selectAllRecentWorksheets);
+  const isLoading = useSelector((state) => state.worksheetsRecent.loading);
   const confirm = useConfirm();
 
-  const WeeklyValue = () => {
-    return (
-      <QueryRenderer
-        query={{
-          measures: ["Worksheet.valueComplete"],
-          timeDimensions: [],
-          order: {},
-          dimensions: [],
-          filters: [
-            {
-              dimension: "Worksheet.isoYear",
-              operator: "equals",
-              values: [cubeYear.toString()],
-            },
-            {
-              dimension: "Worksheet.isoWeek",
-              operator: "equals",
-              values: [cubeWeek.toString()],
-            },
-          ],
-        }}
-        cubejsApi={cubejsApi}
-        render={renderChart(numberRender, {
-          x: [],
-          y: ["measures"],
-          fillMissingDates: true,
-          joinDateRange: false,
-        })}
-      />
-    );
+  const numFormatGrid = (value) => {
+    return value.toLocaleString(undefined, {
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
+    });
   };
-
   useEffectOnce(() => {
     dispatch(fetchWorkDoneWeeks())
       .then(unwrapResult)
@@ -108,6 +51,10 @@ const Workload = () => {
       .catch((error) => console.log(error));
     return () => dispatch(removeAllRecentWorksheets());
   });
+
+  const totalValue = worksheets
+    .map((item) => item.value_complete)
+    .reduce((acc, item) => acc + item, 0);
 
   const weeks = [
     ...new Set(
@@ -122,12 +69,11 @@ const Workload = () => {
     .sort()
     .reverse();
 
-  const weekCommencingDate = getFirstDateOfWeek(cubeWeek, cubeYear);
+  const weekCommencingDate = getFirstDateOfWeek(week, year);
 
   const handleRetrieveData = () => {
     if (week && year) {
-      setCubeWeek(week);
-      setCubeYear(year);
+      dispatch(fetchWeeklyWorksheets({ week: week, year: year }));
     } else {
       confirm({
         title: "PLEASE SELECT A TIME PERIOD",
@@ -158,13 +104,8 @@ const Workload = () => {
             onChange={(event, newValue) => {
               setYear(newValue);
               setWeek(null);
-              setCubeWeek(null);
             }}
-            onOpen={() => {
-              dispatch(removeAllRecentWorksheets());
-              setCubeYear(null);
-              setCubeWeek(null);
-            }}
+            onOpen={() => dispatch(removeAllRecentWorksheets())}
             disableClearable={true}
             renderInput={(params) => (
               <TextField
@@ -185,10 +126,7 @@ const Workload = () => {
               setWeek(newValue);
             }}
             disableClearable={true}
-            onOpen={() => {
-              dispatch(removeAllRecentWorksheets());
-              setCubeWeek(null);
-            }}
+            onOpen={() => dispatch(removeAllRecentWorksheets())}
             value={week}
             renderInput={(params) => (
               <TextField
@@ -211,32 +149,62 @@ const Workload = () => {
           </BlueButton>
         </Col>
       </Row>
-      {cubeWeek && cubeYear && <Divider />}
-      {cubeWeek && cubeYear && (
+      {worksheets.length > 0 && !isLoading && <Divider />}
+
+      {worksheets.length > 0 && !isLoading && (
         <Row>
-          <Col style={{ marginTop: "10px", textAlign: "center" }}>
+          <Col
+            style={{
+              marginTop: "10px",
+              textAlign: "center",
+            }}
+          >
             <h5
               style={{ fontWeight: "bold" }}
             >{`Week Commencing ${weekCommencingDate}`}</h5>
           </Col>
-          <Col style={{ marginTop: "10px", textAlign: "center" }}>
+          <Col
+            style={{
+              marginTop: "10px",
+              textAlign: "center",
+            }}
+          >
             <h5
               style={{ fontWeight: "bold" }}
-            >{`Week ${cubeWeek} Year ${cubeYear}`}</h5>
+            >{`Week ${week} Year ${year}`}</h5>
           </Col>
-          
-            <WeeklyValue />
-          
+          <Col
+            style={{
+              marginTop: "10px",
+              textAlign: "center",
+            }}
+          >
+            <h5 style={{ fontWeight: "bold" }}>
+              Weekly Value {numFormatGrid(totalValue)}
+            </h5>
+          </Col>
         </Row>
       )}
-      {cubeWeek && cubeYear && <Divider />}
-      {cubeWeek && cubeYear && (
-        <WorkLoadCharts yearSelection={cubeYear} weekSelection={cubeWeek} />
-      )}
-      {!cubeWeek && (
+      {worksheets.length > 0 && !isLoading && <Divider />}
+      {worksheets.length > 0 && !isLoading && <WorkLoadCharts yearSelection={year} weekSelection={week}/>}
+
+      {!worksheets.length > 0 && !isLoading && (
         <>
           <Divider />
           <h1 style={{ textAlign: "center" }}>SELECT A TIME PERIOD</h1>
+          <Divider />
+        </>
+      )}
+      {isLoading && (
+        <>
+          <Divider />
+          <Loader
+            style={{ textAlign: "center" }}
+            type={"Grid"}
+            color="#660066"
+            height={100}
+            width={100}
+          />
           <Divider />
         </>
       )}

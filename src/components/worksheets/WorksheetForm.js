@@ -16,7 +16,11 @@ import {
 } from "../../services/data/gridData";
 import { selectAllWorkInstructions } from "../../services/data/InstructionData";
 import { selectAllSupervisors } from "../../services/data/SupervisorsData";
-import { newWorksheet, updateInstructionDetail } from "../../services/thunks";
+import {
+  newWorksheet,
+  updateItemStatus,
+  fetchSingleLocation,
+} from "../../services/thunks";
 import { BlueButton, GreyButton } from "../ui-components/Buttons";
 import { selectOrderSummaryHeader } from "../../services/selectors";
 
@@ -92,17 +96,27 @@ const WorksheetForm = (props) => {
 
       worksheetContainer.push(worksheetObject);
       if (qty_os - qty_to_complete === 0) {
-        dispatch(
+        billItemObject.id = id;
+        billItemObject.item_status = "Closed";
+        billItemObject.item_complete = true;
+
+        billItemContainer.push(billItemObject);
+
+        /* dispatch(
           updateInstructionDetail({
             id: id,
             item_status: "Closed",
             item_complete: true,
           })
-        );
+        ); */
       }
     });
     setIsLoading(true);
-    dispatch(newWorksheet(worksheetContainer)) //then(() => dispatch(fetchOrderSummaryInfo(instructionId)));
+    dispatch(newWorksheet(worksheetContainer));
+    dispatch(updateItemStatus(billItemContainer))
+      .then(() =>
+        dispatch(fetchSingleLocation(editedRows[0].location_ref)))
+      
       .then(() => closeAndReset());
   };
 

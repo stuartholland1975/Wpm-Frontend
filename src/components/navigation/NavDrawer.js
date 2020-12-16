@@ -536,11 +536,12 @@ const NavDrawer = (props) => {
             Are You Sure You Want To Submit This Application, Further Changes
             Will Be Prevented
           </p>
-          {checkLocationImages.length > 0 &&
-          <h4 style={{ fontWeight: "bold", color: "red" }}>
-            This Application Contains {checkLocationImages.length} Locations
-            That Have No Images
-          </h4>}
+          {checkLocationImages.length > 0 && (
+            <h4 style={{ fontWeight: "bold", color: "red" }}>
+              This Application Contains {checkLocationImages.length} Locations
+              That Have No Images
+            </h4>
+          )}
         </>
       ),
 
@@ -558,15 +559,17 @@ const NavDrawer = (props) => {
         disableBackdropClick: true,
       },
     })
-      .then(() =>
+      .then(() => {
         dispatch(
           submitApplicationData({
             application_id: location.state,
             submission_detail: applicationSubmissionDetail,
             app_submitted: true,
           })
-        )
-      )
+        );
+        history.goBack();
+      })
+
       .catch((error) => console.log(error));
   };
 
@@ -1000,6 +1003,19 @@ const NavDrawer = (props) => {
           >
             SUBMIT APPLICATION
           </GreenButton>
+        ),
+      },
+      {
+        id: uuidv4(),
+        component: (
+          <BlueButton
+            id={uuidv4()}
+            type="button"
+            fullWidth
+            onClick={history.goBack}
+          >
+            GO BACK
+          </BlueButton>
         ),
       },
     ],

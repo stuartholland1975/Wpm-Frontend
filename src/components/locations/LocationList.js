@@ -106,6 +106,33 @@ const LocationList = () => {
         });
       },
     },
+    {
+      headerName: "Value Complete",
+      field: "value_complete",
+      colId: "value_complete",
+      type: "rightAligned",
+      cellStyle: { fontWeight: "bold" },
+      valueFormatter: function (params) {
+        return params.value.toLocaleString(undefined, {
+          maximumFractionDigits: 2,
+          minimumFractionDigits: 2,
+        });
+      },
+    },
+    {
+      headerName: "Value Remaining",
+      colId: "value_remaining",
+      type: "numericColumn",
+      cellStyle: { fontWeight: "bold" },
+      
+      valueGetter: function (params) {
+        const { total_payable, value_complete } = params.data;
+        return (total_payable - value_complete).toLocaleString(undefined, {
+          maximumFractionDigits: 2,
+          minimumFractionDigits: 2,
+        });
+      },
+    },
   ];
 
   const defaultColDef = {
@@ -159,7 +186,7 @@ const LocationList = () => {
   };
 
   useEffectOnce(() => {
-    dispatch(fetchOrderSummaryInfo(OrderId));
+    !locations.length > 0 && dispatch(fetchOrderSummaryInfo(OrderId));
     dispatch(setSelectedLocation(false));
   });
 

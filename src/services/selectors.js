@@ -304,7 +304,7 @@ export const WeeklyWorkByWorkInstruction = createSelector(
 );
 
 export const submissionAvailable = createSelector(
-  (state) => state.applicationDetail.header,
+  (state) => state.applicationDetail.header && state.applicationDetail.header,
   (header) => {
     return header.app_submitted || header.app_open ? true : false;
   }

@@ -8,7 +8,9 @@ import {
   newInstructionDetail,
   newDocument,
   newImage,
-  updateInstructionDetail
+  updateInstructionDetail,
+  updateItemStatus,
+  fetchSingleLocation,
 } from "../thunks";
 
 const initialState = {
@@ -57,6 +59,12 @@ export const OrderSummaryInfoSlice = createSlice({
         item.id !== action.payload.id ? item : action.payload
       );
     },
+    [updateItemStatus.fulfilled]: (state, action) => {
+      state.orderDetails = state.orderDetails.map((t1) => ({
+        ...t1,
+        ...action.payload.find((t2) => t2.id === t1.id),
+      }));
+    },
 
     [newDocument.fulfilled]: (state, action) => {
       state.orderDocuments = [...state.orderDocuments, action.payload];
@@ -65,7 +73,13 @@ export const OrderSummaryInfoSlice = createSlice({
     [newImage.fulfilled]: (state, action) => {
       state.orderImages = [...state.orderImages, action.payload];
     },
+
+    [fetchSingleLocation.fulfilled]: (state, action) => {
+      state.orderLocations = state.orderLocations.map((item) =>
+        item.id !== action.payload.id ? item : action.payload
+      );
+    },
   },
 });
 
-export const {resetOrderSummaryInfo} = OrderSummaryInfoSlice.actions
+export const { resetOrderSummaryInfo } = OrderSummaryInfoSlice.actions;

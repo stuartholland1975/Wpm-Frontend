@@ -148,6 +148,14 @@ export const newWorksheet = createAsyncThunk(
   }
 );
 
+export const updateItemStatus = createAsyncThunk(
+  "updateItemStatus/updateMany",
+  async (apiObject) => {
+    const response = await axiosInstance.patch(`/bulk/bulk-items`, apiObject);
+    return response.data;
+  }
+);
+
 export const addWorksheetToApplication = createAsyncThunk(
   "addToApplication/addOne",
   async (worksheet) => {
@@ -186,6 +194,14 @@ export const fetchAreas = createAsyncThunk("areas/fetchAll", async () => {
   const response = await axiosInstance.get("/wpm/api/areas/");
   return response.data;
 });
+
+export const fetchSingleLocation = createAsyncThunk(
+  'locations/fetchOne',
+  async(id) => {
+    const response = await axiosInstance.get(`/wpm/api/sitelocation/${id}`)
+    return response.data
+  }
+)
 
 export const updateArea = createAsyncThunk("area/updateOne", async (arg) => {
   const response = await axiosInstance.put(`/wpm/api/areas/${arg}`);
