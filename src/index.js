@@ -14,6 +14,9 @@ import "ag-grid-community/dist/styles/ag-theme-alpine.css";
 import "./GridStyles.scss";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { ConfirmProvider } from "material-ui-confirm";
+import { ThemeProvider } from "@material-ui/core/styles";
+import {theme} from "./components/ui-components/MuiTheme";
+
 
 function initialise() {
   if (cssHasLoaded("ag-theme-custom-react")) {
@@ -21,10 +24,12 @@ function initialise() {
       <Router>
         <Provider store={store}>
           <CssBaseline />
-           <PersistGate loading={null} persistor={persistor}>
+          <PersistGate loading={null} persistor={persistor}>
             <ConfirmProvider>
-            <App />
-          </ConfirmProvider>
+              <ThemeProvider theme={theme}>
+                <App />
+              </ThemeProvider>
+            </ConfirmProvider>
           </PersistGate>
         </Provider>
       </Router>,

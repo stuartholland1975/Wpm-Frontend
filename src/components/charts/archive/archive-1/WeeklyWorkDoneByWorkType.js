@@ -10,7 +10,7 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import { WeeklyWorkByWorkInstruction } from "../../../services/selectors";
+import { WeeklyWorkByWorkType } from "../../../../services/selectors";
 
 const numFormatGrid = (value) => {
   return value.toLocaleString(undefined, {
@@ -19,8 +19,8 @@ const numFormatGrid = (value) => {
   });
 };
 
-const WeeklyWorkDoneByWorkInstruction = () => {
-  const data = useSelector(WeeklyWorkByWorkInstruction);
+const WeeklyWorkDoneByWorkType = () => {
+  const data = useSelector(WeeklyWorkByWorkType);
   const week_number = data.map((item) => item.week)[0];
   const year_number = data.map((item) => item.year)[0];
 
@@ -28,7 +28,7 @@ const WeeklyWorkDoneByWorkInstruction = () => {
     <Card>
       <Card.Body>
         <Card.Title style={{ textAlign: "center", fontWeight: "bold" }}>
-          Weekly Value By Work Instruction
+          Weekly Value By Work Type
         </Card.Title>
         <ResponsiveContainer height={375} width="100%">
           <BarChart
@@ -41,11 +41,11 @@ const WeeklyWorkDoneByWorkInstruction = () => {
              }}
           >
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="work_instruction" label={{ value: 'Work Instruction', position: 'bottom', offset: 0 }} />
+            <XAxis dataKey="workType" label={{ value: 'Work Type', position: 'bottom', offset: 0 }} />
             <YAxis />
             <Tooltip formatter={(value, name, props) => numFormatGrid(value)} />
             {/* <Legend /> */}
-            <Bar dataKey="value" fill="hsl(0, 0%, 25%)" />
+            <Bar dataKey="value" fill="hsl(300, 79%, 11%)" />
           </BarChart>
         </ResponsiveContainer>
       </Card.Body>
@@ -53,4 +53,4 @@ const WeeklyWorkDoneByWorkInstruction = () => {
   );
 };
 
-export default WeeklyWorkDoneByWorkInstruction;
+export default WeeklyWorkDoneByWorkType;

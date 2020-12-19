@@ -13,14 +13,11 @@ import { makeStyles } from "@material-ui/core/styles";
 import BuildIcon from "@material-ui/icons/Build";
 import CancelIcon from "@material-ui/icons/Cancel";
 import CheckBoxIcon from "@material-ui/icons/CheckBox";
-import CloudUploadIcon from "@material-ui/icons/CloudUpload";
 import DashboardIcon from "@material-ui/icons/Dashboard";
-import DeleteIcon from "@material-ui/icons/Delete";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import HomeIcon from "@material-ui/icons/Home";
 import ListIcon from "@material-ui/icons/List";
 import LockOpenIcon from "@material-ui/icons/LockOpen";
-import SaveIcon from "@material-ui/icons/Save";
 import { useConfirm } from "material-ui-confirm";
 import React, { Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -28,7 +25,6 @@ import { NavLink, useLocation, withRouter } from "react-router-dom";
 import { show } from "redux-modal";
 import { v4 as uuidv4 } from "uuid";
 import { selectAllApplications } from "../../services/data/ApplicationData";
-import { exportApplicationDetails } from "../../services/data/ApplicationDetailsData";
 import {
   selectAllEditedRows,
   setClickedLocation,
@@ -46,7 +42,6 @@ import {
   deleteLocation,
   deleteWorkInstruction,
   fetchAvailableInstructions,
-  fetchCurrentApplication,
   submitApplicationData,
   updateWorkInstruction,
   addBulkWorksheetToApplication,
@@ -54,15 +49,15 @@ import {
 import LetterM from "../icons/letter-m.png";
 import LetterP from "../icons/letter-p.png";
 import LetterW from "../icons/letter-w.png";
-import {
-  BlueButton,
-  GreenButton,
-  PurpleButton,
-  RedButton,
-} from "../ui-components/Buttons";
 import { submissionAvailable } from "../../services/selectors";
+import WorkInstructionButtons from "./WorkInstructionButtons";
+import BillItemButtons from "./BillItemButtons";
+import LocationButtons from "./LocationButtons";
+import WorksheetButtons from "./WorksheetButtons";
+import ApplicationButtons from "./ApplicationButtons";
+import ApplicationDetailButtons from "./ApplicationDetailButtons";
 
-const drawerWidth = 280;
+const drawerWidth = 260;
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -444,8 +439,8 @@ const NavDrawer = (props) => {
     }
   };
 
-  const handleViewOnly = (name, content, title) => () => {
-    dispatch(show(name, { title: title, content: content }));
+  const handleViewOnly = (name, content, title, size) => () => {
+    dispatch(show(name, { title: title, content: content, size: size }));
     dispatch(setClickedLocation(false));
   };
 
@@ -573,454 +568,6 @@ const NavDrawer = (props) => {
       .catch((error) => console.log(error));
   };
 
-  const instructionBarButtons = {
-    crudButtons: [
-      {
-        id: uuidv4(),
-        component: (
-          <GreenButton
-            id={uuidv4()}
-            type="button"
-            onClick={handleOpenCreate(
-              "instruction-modal",
-              "instructionForm",
-              "CREATE WORK INSTRUCTION"
-            )}
-            fullWidth
-          >
-            CREATE INSTRUCTION
-          </GreenButton>
-        ),
-      },
-      {
-        id: uuidv4(),
-        component: (
-          <GreenButton
-            id={uuidv4()}
-            type="button"
-            fullWidth
-            onClick={handleOpenEdit("instruction-modal", "instructionForm")}
-          >
-            EDIT INSTRUCTION
-          </GreenButton>
-        ),
-      },
-      {
-        id: uuidv4(),
-        component: (
-          <RedButton
-            id={uuidv4()}
-            type="button"
-            onClick={handleDeleteInstruction}
-            fullWidth
-            startIcon={<DeleteIcon />}
-          >
-            DELETE INSTRUCTION
-          </RedButton>
-        ),
-      },
-    ],
-    navButtons: [
-      {
-        id: uuidv4(),
-        component: (
-          <PurpleButton
-            id={uuidv4()}
-            type="button"
-            onClick={handleViewSummary}
-            fullWidth
-          >
-            VIEW INSTRUCTION SUMMARY
-          </PurpleButton>
-        ),
-      },
-    ],
-    actionButtons: [
-      {
-        id: uuidv4(),
-        component: (
-          <BlueButton
-            id={uuidv4()}
-            type="button"
-            onClick={handleUploadFromTemplate}
-            fullWidth
-          >
-            UPLOAD FROM TEMPLATE
-          </BlueButton>
-        ),
-      },
-    ],
-  };
-
-  const locationsBarButtons = {
-    crudButtons: [
-      {
-        id: uuidv4(),
-        component: (
-          <GreenButton
-            id={uuidv4()}
-            type="button"
-            onClick={handleOpenCreate(
-              "instruction-modal",
-              "locationForm",
-              "CREATE LOCATION"
-            )}
-            fullWidth
-          >
-            CREATE LOCATION
-          </GreenButton>
-        ),
-      },
-      {
-        id: uuidv4(),
-        component: (
-          <GreenButton
-            id={uuidv4()}
-            type="button"
-            onClick={handleOpenEditLocation(
-              "instruction-modal",
-              "locationForm"
-            )}
-            fullWidth
-          >
-            EDIT LOCATION
-          </GreenButton>
-        ),
-      },
-      {
-        id: uuidv4(),
-        component: (
-          <RedButton
-            id={uuidv4()}
-            type="button"
-            onClick={handleDeleteLocation}
-            fullWidth
-            startIcon={<DeleteIcon />}
-          >
-            DELETE LOCATION
-          </RedButton>
-        ),
-      },
-      {
-        id: uuidv4(),
-        component: (
-          <GreenButton
-            id={uuidv4()}
-            type="button"
-            fullWidth
-            onClick={handleViewWorksheets}
-          >
-            UPDATE WORK PROGRESS
-          </GreenButton>
-        ),
-      },
-    ],
-    navButtons: [
-      {
-        id: uuidv4(),
-        component: (
-          <PurpleButton
-            id={uuidv4()}
-            type="button"
-            fullWidth
-            onClick={handleViewItems}
-          >
-            VIEW ITEMS
-          </PurpleButton>
-        ),
-      },
-      {
-        id: uuidv4(),
-        component: (
-          <PurpleButton
-            id={uuidv4()}
-            type="button"
-            fullWidth
-            onClick={handleViewOnly(
-              "instruction-modal",
-              "documentsList",
-              "VIEW DOCUMENTS"
-            )}
-          >
-            VIEW DOCUMENTS
-          </PurpleButton>
-        ),
-      },
-      {
-        id: uuidv4(),
-        component: (
-          <PurpleButton
-            id={uuidv4()}
-            type="button"
-            fullWidth
-            onClick={handleViewOnly(
-              "instruction-modal",
-              "locationImages",
-              "LOCATION IMAGES"
-            )}
-          >
-            VIEW ALL IMAGES
-          </PurpleButton>
-        ),
-      },
-    ],
-    actionButtons: [
-      {
-        id: uuidv4(),
-        component: (
-          <GreenButton
-            id={uuidv4()}
-            type="button"
-            fullWidth
-            onClick={() =>
-              handleUploadImage(
-                "instruction-modal",
-                "imageForm",
-                "UPLOAD NEW IMAGE"
-              )
-            }
-            startIcon={<CloudUploadIcon />}
-          >
-            UPLOAD IMAGE
-          </GreenButton>
-        ),
-      },
-      {
-        id: uuidv4(),
-        component: (
-          <GreenButton
-            id={uuidv4()}
-            type="button"
-            fullWidth
-            onClick={handleOpenCreate(
-              "instruction-modal",
-              "documentForm",
-              "UPLOAD NEW DOCUMENT"
-            )}
-            startIcon={<CloudUploadIcon />}
-          >
-            UPLOAD DOCUMENT
-          </GreenButton>
-        ),
-      },
-    ],
-  };
-
-  const itemDetailsBarButtons = {
-    crudButtons: [
-      {
-        id: uuidv4(),
-        component: (
-          <GreenButton
-            id={uuidv4()}
-            type="button"
-            fullWidth
-            onClick={handleOpenCreate(
-              "instruction-modal",
-              "billItemForm",
-              "CREATE BILL ITEM"
-            )}
-          >
-            CREATE BILL ITEM
-          </GreenButton>
-        ),
-      },
-      {
-        id: uuidv4(),
-        component: (
-          <GreenButton
-            id={uuidv4()}
-            type="button"
-            fullWidth
-            onClick={handleOpenEditItem("instruction-modal", "billItemForm")}
-          >
-            EDIT BILL ITEM
-          </GreenButton>
-        ),
-      },
-      {
-        id: uuidv4(),
-        component: (
-          <RedButton
-            id={uuidv4()}
-            type="button"
-            fullWidth
-            onClick={handleDeleteInstructionDetail}
-            startIcon={<DeleteIcon />}
-          >
-            DELETE BILL ITEM
-          </RedButton>
-        ),
-      },
-    ],
-    navButtons: [
-      {
-        id: uuidv4(),
-        component: (
-          <PurpleButton
-            id={uuidv4()}
-            fullWidth
-            type="button"
-            onClick={handleViewSummary}
-          >
-            VIEW LOCATIONS
-          </PurpleButton>
-        ),
-      },
-      {
-        id: uuidv4(),
-        component: (
-          <PurpleButton
-            id={uuidv4()}
-            type="button"
-            fullWidth
-            onClick={handleViewOnly("instruction-modal", "documentsList")}
-          >
-            VIEW DOCUMENTS
-          </PurpleButton>
-        ),
-      },
-      {
-        id: uuidv4(),
-        component: (
-          <PurpleButton
-            id={uuidv4()}
-            type="button"
-            fullWidth
-            onClick={handleViewOnly("instruction-modal", "locationImages")}
-          >
-            VIEW ALL IMAGES
-          </PurpleButton>
-        ),
-      },
-    ],
-    actionButtons: [
-      {
-        id: uuidv4(),
-        component: (
-          <GreenButton
-            id={uuidv4()}
-            type="button"
-            fullWidth
-            startIcon={<CloudUploadIcon />}
-          >
-            UPLOAD DOCUMENT
-          </GreenButton>
-        ),
-      },
-    ],
-  };
-
-  const worksheetBarButtons = {
-    actionButtons: [
-      {
-        id: uuidv4(),
-        component: (
-          <GreenButton
-            id={uuidv4()}
-            type="button"
-            fullWidth
-            onClick={handleOpenCreate(
-              "instruction-modal",
-              "worksheetForm",
-              "SAVE WORK PROGRESS"
-            )}
-            startIcon={<SaveIcon />}
-          >
-            SAVE WORK PROGRESS
-          </GreenButton>
-        ),
-      },
-      {
-        id: uuidv4(),
-        component: (
-          <BlueButton
-            id={uuidv4()}
-            type="button"
-            fullWidth
-            onClick={history.goBack}
-          >
-            GO BACK
-          </BlueButton>
-        ),
-      },
-    ],
-  };
-
-  const applicationsBarButtons = {
-    actionButtons: [
-      {
-        id: uuidv4(),
-        component: (
-          <GreenButton
-            id={uuidv4()}
-            type="button"
-            fullWidth
-            onClick={updateAppliedWorksheet}
-          >
-            ADD ITEMS TO APPLICATION
-          </GreenButton>
-        ),
-      },
-      {
-        id: uuidv4(),
-        component: (
-          <GreenButton
-            id={uuidv4()}
-            type="button"
-            fullWidth
-            onClick={closeAndCreateApplication}
-          >
-            CLOSE CURRENT APPLICATION
-          </GreenButton>
-        ),
-      },
-    ],
-  };
-
-  const applicationDetailBarButtons = {
-    actionButtons: [
-      {
-        id: uuidv4(),
-        component: (
-          <GreenButton
-            type="button"
-            fullWidth
-            onClick={() => dispatch(exportApplicationDetails(true))}
-          >
-            EXPORT APP TO CSV
-          </GreenButton>
-        ),
-      },
-      {
-        id: uuidv4(),
-        component: (
-          <GreenButton
-            disabled={submissionButtonAvailable}
-            type="button"
-            fullWidth
-            onClick={submitApplication}
-          >
-            SUBMIT APPLICATION
-          </GreenButton>
-        ),
-      },
-      {
-        id: uuidv4(),
-        component: (
-          <BlueButton
-            id={uuidv4()}
-            type="button"
-            fullWidth
-            onClick={history.goBack}
-          >
-            GO BACK
-          </BlueButton>
-        ),
-      },
-    ],
-  };
-
   const atWorkInstructions = location.pathname === "/work-instructions";
   const atLocations = location.pathname.startsWith(
     "/work-instructions/summary/locations/"
@@ -1133,7 +680,7 @@ const NavDrawer = (props) => {
         <Divider />
         <List>
           {itemsList.map((item) => {
-            const { text, icon, onClick, pathname, id } = item;
+            const { text, icon, pathname } = item;
             return (
               // <ListItem button key={uuidv4()} onClick={onClick}>
               <ListItem
@@ -1170,119 +717,132 @@ const NavDrawer = (props) => {
         </List>
 
         <List>
-          {atWorkInstructions &&
-            instructionBarButtons.crudButtons.map((item) => {
-              const { component, id } = item;
-              return (
-                <Fragment key={component.id}>
-                  <ListItem>{component}</ListItem>
-                </Fragment>
-              );
-            })}
-          {atLocations &&
-            locationsBarButtons.crudButtons.map((item) => {
-              const { component, id } = item;
-              return (
-                <Fragment key={component.id}>
-                  <ListItem>{component}</ListItem>
-                </Fragment>
-              );
-            })}
-          {atItemDetail &&
-            itemDetailsBarButtons.crudButtons.map((item) => {
-              const { component, id } = item;
-              return (
-                <Fragment key={component.id}>
-                  <ListItem>{component}</ListItem>
-                </Fragment>
-              );
-            })}
+          {atWorkInstructions && (
+            <WorkInstructionButtons
+              createInstruction={handleOpenCreate(
+                "instruction-modal",
+                "instructionForm",
+                "CREATE WORK INSTRUCTION"
+              )}
+              editInstruction={handleOpenEdit(
+                "instruction-modal",
+                "instructionForm"
+              )}
+              deleteInstruction={handleDeleteInstruction}
+              viewSummary={handleViewSummary}
+              uploadFromTemplate={handleUploadFromTemplate}
+            />
+          )}
 
-          {atWorkInstructions &&
-            instructionBarButtons.navButtons.map((item) => {
-              const { component, id } = item;
-              return (
-                <Fragment key={component.id}>
-                  <ListItem>{component}</ListItem>
-                </Fragment>
-              );
-            })}
-          {atItemDetail &&
-            itemDetailsBarButtons.navButtons.map((item) => {
-              const { component, id } = item;
-              return (
-                <Fragment key={component.id}>
-                  <ListItem>{component}</ListItem>
-                </Fragment>
-              );
-            })}
-          {atLocations &&
-            locationsBarButtons.navButtons.map((item) => {
-              const { component, id } = item;
-              return (
-                <Fragment key={component.id}>
-                  <ListItem>{component}</ListItem>
-                </Fragment>
-              );
-            })}
-          {atApplicationDetail &&
-            applicationDetailBarButtons.actionButtons.map((item) => {
-              const { component, id } = item;
-              return (
-                <Fragment key={component.id}>
-                  <ListItem>{component}</ListItem>
-                </Fragment>
-              );
-            })}
-        </List>
+          {atLocations && (
+            <LocationButtons
+              createLocation={handleOpenCreate(
+                "instruction-modal",
+                "locationForm",
+                "CREATE LOCATION"
+              )}
+              editLocation={handleOpenEditLocation(
+                "instruction-modal",
+                "locationForm"
+              )}
+              deleteLocation={handleDeleteLocation}
+              updateProgress={handleViewWorksheets}
+              viewItems={handleViewItems}
+              viewDocuments={handleViewOnly(
+                "instruction-modal",
+                "documentsList",
+                "VIEW DOCUMENTS"
+              )}
+              viewImages={handleViewOnly(
+                "instruction-modal",
+                "locationImages",
+                "LOCATION IMAGES",
+                "md"
+              )}
+              viewImageMap={handleViewOnly(
+                "instruction-modal",
+                "imageMap",
+                "IMAGE MAP",
+                "lg"
+              )}
+              uploadImage={() =>
+                handleUploadImage(
+                  "instruction-modal",
+                  "imageForm",
+                  "UPLOAD NEW IMAGE"
+                )
+              }
+              uploadDocument={handleOpenCreate(
+                "instruction-modal",
+                "documentForm",
+                "UPLOAD NEW DOCUMENT"
+              )}
+            />
+          )}
 
-        <List>
-          {atLocations &&
-            locationsBarButtons.actionButtons.map((item) => {
-              const { component, id } = item;
-              return (
-                <>
-                  <ListItem key={id}>{component}</ListItem>
-                </>
-              );
-            })}
+          {atItemDetail && (
+            <BillItemButtons
+              viewDocuments={handleViewOnly(
+                "instruction-modal",
+                "documentsList",
+                "VIEW DOCUMENTS"
+              )}
+              viewImages={handleViewOnly(
+                "instruction-modal",
+                "locationImages",
+                "LOCATION IMAGES",
+                "md"
+              )}
+              viewImageMap={handleViewOnly(
+                "instruction-modal",
+                "imageMap",
+                "IMAGE MAP",
+                "lg"
+              )}
+              uploadDocument={handleOpenCreate(
+                "instruction-modal",
+                "documentForm",
+                "UPLOAD NEW DOCUMENT"
+              )}
+              createBillItem={handleOpenCreate(
+                "instruction-modal",
+                "billItemForm",
+                "CREATE BILL ITEM"
+              )}
+              editBillItem={handleOpenEditItem(
+                "instruction-modal",
+                "billItemForm"
+              )}
+              deleteBillItem={handleDeleteInstructionDetail}
+              viewLocations={handleViewSummary}
+            />
+          )}
 
-          {atApplications &&
-            applicationsBarButtons.actionButtons.map((item) => {
-              const { component, id } = item;
-              return (
-                <>
-                  <ListItem key={id}>{component}</ListItem>
-                </>
-              );
-            })}
-          {atItemDetail &&
-            itemDetailsBarButtons.actionButtons.map((item) => {
-              const { component, id } = item;
-              return (
-                <>
-                  <ListItem key={id}>{component}</ListItem>
-                </>
-              );
-            })}
-          {atWorksheets &&
-            worksheetBarButtons.actionButtons.map((item) => {
-              const { component, id } = item;
-              return (
-                <>
-                  <ListItem key={id}>{component}</ListItem>
-                </>
-              );
-            })}
-          {atWorkInstructions &&
-            instructionBarButtons.actionButtons.map((item) => {
-              const { component, id } = item;
-              return (
-                <Fragment key={id}>
-                  <ListItem>{component}</ListItem>
-                </Fragment>
-              );
-            })}
+          {atApplicationDetail && (
+            <ApplicationDetailButtons
+              submissionAvailable={submissionButtonAvailable}
+              goBack={history.goBack}
+              submitApplication={submitApplication}
+            />
+          )}
+
+          {atApplications && (
+            <ApplicationButtons
+              addToApplication={updateAppliedWorksheet}
+              closeApplication={closeAndCreateApplication}
+            />
+          )}
+
+          {atWorksheets && (
+            <WorksheetButtons
+              saveProgress={handleOpenCreate(
+                "instruction-modal",
+                "worksheetForm",
+                "SAVE WORK PROGRESS"
+              )}
+              goBack={props.history.goBack}
+            />
+          )}
         </List>
       </Drawer>
     </div>

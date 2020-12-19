@@ -16,9 +16,10 @@ const barRender = ({ resultSet }) => {
       fill: false,
     })),
   };
-  console.log(data)
+  
   const options = {
     scales: { xAxes: [{ stacked: true }] },
+    legend: { display: false },
   };
   return <Bar data={data} options={options} />;
 };

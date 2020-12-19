@@ -10,7 +10,7 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import { WeeklyWorkByArea } from "../../../services/selectors";
+import { WeeklyWorkBySupervisor } from "../../../../services/selectors";
 
 const numFormatGrid = (value) => {
   return value.toLocaleString(undefined, {
@@ -19,8 +19,8 @@ const numFormatGrid = (value) => {
   });
 };
 
-const WeeklyWorkDoneByArea = () => {
-  const data = useSelector(WeeklyWorkByArea);
+const WeeklyWorkDoneBySupervisor = () => {
+  const data = useSelector(WeeklyWorkBySupervisor);
   const week_number = data.map((item) => item.week)[0];
   const year_number = data.map((item) => item.year)[0];
 
@@ -28,29 +28,27 @@ const WeeklyWorkDoneByArea = () => {
     <Card>
       <Card.Body>
         <Card.Title style={{ textAlign: "center", fontWeight: "bold" }}>
-          Weekly Value By Area
+          Weekly Value By Supervisor
         </Card.Title>
         <ResponsiveContainer height={375} width="100%">
           <BarChart
             data={data}
-             margin={{
+            margin={{
               top: 0,
               right: 0,
               left: 0,
               bottom: 15,
-            }} 
+            }}
           >
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="area_name" label={{ value: 'Area', position: 'bottom', offset: 0 }} />
+            <XAxis
+              dataKey="supervisor"
+              label={{ value: "Supervisor", position: "bottom", offset: 0 }}
+            />
             <YAxis />
             <Tooltip formatter={(value, name, props) => numFormatGrid(value)} />
             {/* <Legend /> */}
-            <Bar
-              dataKey="value"
-              fill="hsl(235, 94%, 25%)"
-              
-              //  onClick={(event) => alert(JSON.stringify(event.payload))}
-            />
+            <Bar dataKey="value" fill="hsl(180, 50%, 15%)" />
           </BarChart>
         </ResponsiveContainer>
       </Card.Body>
@@ -58,4 +56,4 @@ const WeeklyWorkDoneByArea = () => {
   );
 };
 
-export default WeeklyWorkDoneByArea;
+export default WeeklyWorkDoneBySupervisor;

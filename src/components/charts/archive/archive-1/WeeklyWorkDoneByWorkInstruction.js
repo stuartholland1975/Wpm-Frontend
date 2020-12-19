@@ -10,7 +10,7 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import { WeeklyWorkBySupervisor } from "../../../services/selectors";
+import { WeeklyWorkByWorkInstruction } from "../../../../services/selectors";
 
 const numFormatGrid = (value) => {
   return value.toLocaleString(undefined, {
@@ -19,8 +19,8 @@ const numFormatGrid = (value) => {
   });
 };
 
-const WeeklyWorkDoneBySupervisor = () => {
-  const data = useSelector(WeeklyWorkBySupervisor);
+const WeeklyWorkDoneByWorkInstruction = () => {
+  const data = useSelector(WeeklyWorkByWorkInstruction);
   const week_number = data.map((item) => item.week)[0];
   const year_number = data.map((item) => item.year)[0];
 
@@ -28,27 +28,24 @@ const WeeklyWorkDoneBySupervisor = () => {
     <Card>
       <Card.Body>
         <Card.Title style={{ textAlign: "center", fontWeight: "bold" }}>
-          Weekly Value By Supervisor
+          Weekly Value By Work Instruction
         </Card.Title>
         <ResponsiveContainer height={375} width="100%">
           <BarChart
-            data={data}
-            margin={{
-              top: 0,
-              right: 0,
-              left: 0,
-              bottom: 15,
-            }}
+             data={data}
+             margin={{
+               top: 0,
+               right: 0,
+               left: 0,
+               bottom: 15,
+             }}
           >
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis
-              dataKey="supervisor"
-              label={{ value: "Supervisor", position: "bottom", offset: 0 }}
-            />
+            <XAxis dataKey="work_instruction" label={{ value: 'Work Instruction', position: 'bottom', offset: 0 }} />
             <YAxis />
             <Tooltip formatter={(value, name, props) => numFormatGrid(value)} />
             {/* <Legend /> */}
-            <Bar dataKey="value" fill="hsl(180, 50%, 15%)" />
+            <Bar dataKey="value" fill="hsl(0, 0%, 25%)" />
           </BarChart>
         </ResponsiveContainer>
       </Card.Body>
@@ -56,4 +53,4 @@ const WeeklyWorkDoneBySupervisor = () => {
   );
 };
 
-export default WeeklyWorkDoneBySupervisor;
+export default WeeklyWorkDoneByWorkInstruction;

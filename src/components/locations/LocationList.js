@@ -40,6 +40,8 @@ function toFixed(number, decimals) {
   return (Number(number) + 1 / x).toFixed(decimals);
 }
 
+
+
 const LocationList = () => {
   const { OrderId } = useParams();
   const dispatch = useDispatch();
@@ -52,6 +54,8 @@ const LocationList = () => {
   const selectedLocation = useSelector(
     (state) => state.gridData.selectedLocation
   );
+
+  
 
   let columnDefs = [
     {

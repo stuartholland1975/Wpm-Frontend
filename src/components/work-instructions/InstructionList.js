@@ -60,6 +60,11 @@ const InstructionList = () => {
         field: "document_count.document_count",
       },
       {
+        headerName: "Images",
+        type: "numericColumn",
+        field: "image_count.image_count",
+      },
+      {
         headerName: "Item Count",
         field: "item_count",
         type: "numericColumn",

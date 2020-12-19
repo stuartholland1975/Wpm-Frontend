@@ -21,13 +21,16 @@ import cubejs from "@cubejs-client/core";
 import { QueryRenderer } from "@cubejs-client/react";
 import { Spin } from "antd";
 
-
 const numberRender = ({ resultSet }) => (
-    <Col style={{ marginTop: "10px", textAlign: "center" }}>
-  <h5 style={{fontWeight: "bold"}}>
-    {"Weekly Value "}{" "}
-    {resultSet.seriesNames().map((s) => resultSet.totalRow()[s.key]).toLocaleString({minimumFractionDigits: 2})}
-  </h5></Col>
+  <Col style={{ marginTop: "10px", textAlign: "center" }}>
+    <h5 style={{ fontWeight: "bold" }}>
+      {"Weekly Value "}{" "}
+      {resultSet
+        .seriesNames()
+        .map((s) => resultSet.totalRow()[s.key])
+        .toLocaleString({ minimumFractionDigits: 2 })}
+    </h5>
+  </Col>
 );
 
 const API_URL = "http://192.168.0.4:4000"; // change to your actual endpoint
@@ -45,8 +48,6 @@ const renderChart = (Component, pivotConfig) => ({ resultSet, error }) => {
     (error && error.toString()) || <Spin />
   );
 };
-
-
 
 function getFirstDateOfWeek(w, y) {
   let date = new Date(y, 0, 1 + (w - 1) * 7); // Elle's method
@@ -218,9 +219,8 @@ const Workload = () => {
               style={{ fontWeight: "bold" }}
             >{`Week ${cubeWeek} Year ${cubeYear}`}</h5>
           </Col>
-          
-            <WeeklyValue />
-          
+
+          <WeeklyValue />
         </Row>
       )}
       {cubeWeek && cubeYear && <Divider />}
