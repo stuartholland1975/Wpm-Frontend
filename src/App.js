@@ -17,7 +17,7 @@ import ApplicationsSummary from "./components/applications/ApplicationsSummary";
 import ApplicationDetail from "./components/applications/ApplicationDetail"
 import Dashboard from "./components/dashboard/Dashboard";
 import CommercialSummary from "./components/commercial/CommercialSummary";
-
+import { WorksheetPrints } from "./components/worksheets/WorksheetPrints";
 
 const useStyles = makeStyles({
     container: {
@@ -33,28 +33,68 @@ const useStyles = makeStyles({
 const App = (props) => {
     const classes = useStyles();
     return (
-        <div className={classes.container}>
-            <NavDrawer/>
-            <WpmModal/>
-            <div className={classes.content}>
-                <Switch>
-                    <Route exact from="/home" render={(props) => <Home {...props} />}/>
-                    <Route path="/work-instructions" exact component={InstructionList}/>
-                    <Route path="/activities" exact component={ActivityList}/>
-                    <Route path="/test" exact component={Test}/>
-                    <Route path="/login" exact component={Login}/>
-                    <Route path="/work-instructions/summary/locations/:OrderId" exact component={LocationList}/>
-                    <Route path="/work-instructions/summary/items/:OrderId" exact component={InstructionDetail}/>
-                    <Route path="/work-instructions/summary/worksheets/:OrderId" exact component={WorkProgressTable}/>
-                    <Route path="/work-instructions/summary/import" exact component={ImportInstructionData}/>
-                    <Route path="/work-instructions/workload" exact component={Workload}/>
-                    <Route path="/commercial/applications/summary/" exact component={ApplicationsSummary}/>
-                    <Route path="/commercial/applications/detail/:appId" exact component={ApplicationDetail}/>
-                    <Route path="/commercial/summary/" exact component={CommercialSummary}/>
-                    <Route path="/dashboard" exact component={Dashboard}/>
-                </Switch>
-            </div>
+      <div className={classes.container}>
+        <NavDrawer />
+        <WpmModal />
+        <div className={classes.content}>
+          <Switch>
+            <Route exact from="/home" render={(props) => <Home {...props} />} />
+            <Route
+              path="/work-instructions"
+              exact
+              component={InstructionList}
+            />
+            <Route path="/activities" exact component={ActivityList} />
+            <Route
+              path="/work-instructions/summary/worksheets"
+              exact
+              component={WorksheetPrints}
+            />
+            <Route path="/login" exact component={Login} />
+            <Route
+              path="/work-instructions/summary/locations/:OrderId"
+              exact
+              component={LocationList}
+            />
+            <Route
+              path="/work-instructions/summary/items/:OrderId"
+              exact
+              component={InstructionDetail}
+            />
+            <Route
+              path="/work-instructions/summary/worksheets/:OrderId"
+              exact
+              component={WorkProgressTable}
+            />
+            <Route
+              path="/work-instructions/summary/import"
+              exact
+              component={ImportInstructionData}
+            />
+            <Route
+              path="/work-instructions/workload"
+              exact
+              component={Workload}
+            />
+            <Route
+              path="/commercial/applications/summary/"
+              exact
+              component={ApplicationsSummary}
+            />
+            <Route
+              path="/commercial/applications/detail/:appId"
+              exact
+              component={ApplicationDetail}
+            />
+            <Route
+              path="/commercial/summary/"
+              exact
+              component={CommercialSummary}
+            />
+            <Route path="/dashboard" exact component={Dashboard} />
+          </Switch>
         </div>
+      </div>
     );
 };
 

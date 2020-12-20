@@ -24,24 +24,6 @@ import {
   selectOrderSummaryLocations,
   selectOrderSummaryImages,
 } from "../../services/selectors";
-
-const formatGridNumber = (params) =>
-  Math.floor(params.value)
-    .toString()
-    .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
-
-const formatNumber = (value) =>
-  Math.floor(value)
-    .toString()
-    .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
-
-function toFixed(number, decimals) {
-  const x = Math.pow(10, Number(decimals) + 1);
-  return (Number(number) + 1 / x).toFixed(decimals);
-}
-
-
-
 const LocationList = () => {
   const { OrderId } = useParams();
   const dispatch = useDispatch();
@@ -180,11 +162,6 @@ const LocationList = () => {
       console.log(params);
       if (params.data.item_count - params.data.items_complete === 0) {
         return { color: "navy", fontWeight: "bolder" };
-      }
-    },
-    onCellClicked: (e) => {
-      if (e.column.colId === "imageCount") {
-        e.node.setSelected(false);
       }
     },
     onRowSelected: rowSelected,

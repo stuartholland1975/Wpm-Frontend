@@ -26,7 +26,7 @@ export const GreenButton = styled(Button)({
 	// textAlign: "center",
 	textTransform: "uppercase",
 	fontSize: "15px",
-	margin: "5px 2px",
+	margin: "3px 2px",
 	textDecoration: "none",
 	"&:hover": {
 		backgroundImage: "linear-gradient(hsl(180, 50%, 15%), hsl(180, 50%, 30%))",
@@ -43,7 +43,7 @@ export const RedButton = styled(Button)({
   // textAlign: "center",
   textTransform: "uppercase",
   fontSize: "15px",
-  margin: "5px 2px",
+  margin: "3px 2px",
   textDecoration: "none",
   "&:hover": {
     backgroundImage: "linear-gradient(hsl(351, 50%, 25%), hsl(351, 80%, 50%))",
@@ -60,7 +60,7 @@ export const BlueButton = styled(Button)({
   // textAlign: "center",
   textTransform: "uppercase",
   fontSize: "15px",
-  margin: "5px 2px",
+  margin: "3px 2px",
   textDecoration: "none",
   "&:hover": {
     backgroundImage: "linear-gradient(hsl(235, 80%, 25%), hsl(235, 50%, 50%))",
@@ -77,7 +77,7 @@ export const PurpleButton = styled(Button)({
   // textAlign: "center",
   textTransform: "uppercase",
   fontSize: "15px",
-  margin: "5px 2px",
+  margin: "3px 2px",
   textDecoration: "none",
   "&:hover": {
     backgroundImage: "linear-gradient(hsl(300, 80%, 15%), hsl(300, 100%, 30%))",

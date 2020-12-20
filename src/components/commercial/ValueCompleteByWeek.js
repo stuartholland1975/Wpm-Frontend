@@ -22,7 +22,7 @@ const barRender = ({ resultSet }) => {
     })),
   };
   const options = {
-    scales: { xAxes: [{ stacked: true }] },
+    scales: { xAxes: [{ stacked: true }], yAxes: [{ stacked: true }] },
     legend: { display: false },
   };
   return <Bar data={data} options={options} />;

@@ -2,24 +2,36 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b3866a03-1fa0-47cd-8407-d9640d5d1fb5" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/runConfigurations/dev.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/runConfigurations/start.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.eslintcache" beforeDir="false" afterPath="$PROJECT_DIR$/.eslintcache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/wpm-frontend.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/wpm-frontend.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/workload/Workload_copy.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/workload/Workload_copy.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/applications/ApplicationsSummary.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/applications/ApplicationsSummary.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/charts/WeeklyWorkDoneByWorkInstruction.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/charts/WeeklyWorkDoneByWorkInstruction.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/charts/WeeklyWorkDoneByWorkType.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/charts/WeeklyWorkDoneByWorkType.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/locations/LocationList.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/locations/LocationList.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/work-instructions/InstructionDetail.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/work-instructions/InstructionDetail.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/work-instructions/InstructionSummary.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/work-instructions/InstructionSummary.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/workload/Workload.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/workload/Workload.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/worksheets/WorksheetForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/worksheets/WorksheetForm.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/selectors.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/selectors.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="DjangoConsoleOptions" custom-start-script="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)">
+    <option name="myCustomStartScript" value="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)" />
+  </component>
+  <component name="FlaskConsoleOptions" custom-start-script="import sys&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;from flask.cli import ScriptInfo&#10;locals().update(ScriptInfo(create_app=None).load_app().make_shell_context())&#10;print(&quot;Python %s on %s\nApp: %s [%s]\nInstance: %s&quot; % (sys.version, sys.platform, app.import_name, app.env, app.instance_path))">
+    <envs>
+      <env key="FLASK_APP" value="app" />
+    </envs>
+    <option name="myCustomStartScript" value="import sys&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;from flask.cli import ScriptInfo&#10;locals().update(ScriptInfo(create_app=None).load_app().make_shell_context())&#10;print(&quot;Python %s on %s\nApp: %s [%s]\nInstance: %s&quot; % (sys.version, sys.platform, app.import_name, app.env, app.instance_path))" />
+    <option name="myEnvs">
+      <map>
+        <entry key="FLASK_APP" value="app" />
+      </map>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -41,6 +53,7 @@
     <property name="WebServerToolWindowPanel.toolwindow.show.date" value="false" />
     <property name="WebServerToolWindowPanel.toolwindow.show.permissions" value="false" />
     <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
+    <property name="js.last.introduce.type" value="CONST" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../wpm-cube" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
@@ -51,7 +64,7 @@
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="database.main" />
   </component>
-  <component name="RunManager" selected="npm.dev">
+  <component name="RunManager" selected="npm.start">
     <list>
       <item itemvalue="npm.start" />
       <item itemvalue="npm.dev" />
@@ -66,7 +79,17 @@
       <option name="presentableId" value="Default" />
       <updated>1608046824700</updated>
       <workItem from="1608046983699" duration="5300000" />
+      <workItem from="1608408345053" duration="7624000" />
+      <workItem from="1608416535447" duration="17000" />
     </task>
+    <task id="LOCAL-00001" summary="18122020">
+      <created>1608408475971</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1608408475971</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -82,5 +105,10 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="18122020" />
+    <option name="LAST_COMMIT_MESSAGE" value="18122020" />
   </component>
 </project>

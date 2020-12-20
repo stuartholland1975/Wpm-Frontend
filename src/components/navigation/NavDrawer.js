@@ -57,7 +57,7 @@ import WorksheetButtons from "./WorksheetButtons";
 import ApplicationButtons from "./ApplicationButtons";
 import ApplicationDetailButtons from "./ApplicationDetailButtons";
 
-const drawerWidth = 260;
+const drawerWidth = 270;
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -639,12 +639,12 @@ const NavDrawer = (props) => {
       onClick: () => history.push("/commercial/summary"),
       pathname: "/commercial/summary",
     },
-    {
+    /* {
       text: "TEST",
       icon: <ListIcon />,
       onClick: () => history.push("/test"),
       pathname: "/test",
-    },
+    }, */
   ];
 
   const authList = [

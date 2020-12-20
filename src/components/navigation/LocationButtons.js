@@ -11,9 +11,12 @@ import EditIcon from "@material-ui/icons/Edit";
 import CloudUploadIcon from "@material-ui/icons/CloudUpload";
 import { Divider } from "@react-md/divider";
 import { Container } from "react-bootstrap";
+import { NavLink, useLocation, withRouter, useHistory } from "react-router-dom";
+
 
 
 const LocationButtons = (props) => {
+  const history=useHistory()
     return (
       <Container fluid>
         <GreenButton
@@ -47,7 +50,7 @@ const LocationButtons = (props) => {
           fullWidth
           // startIcon={<EditIcon />}
         >
-          UPDATE WORK PROGRESS
+          UPDATE WORK SHEET
         </GreenButton>
         <GreenButton
           type="button"
@@ -78,6 +81,14 @@ const LocationButtons = (props) => {
         </PurpleButton>
         <PurpleButton type="button" onClick={props.viewImageMap} fullWidth>
           VIEW IMAGE MAP
+        </PurpleButton>
+        <PurpleButton
+          type="button"
+          onClick={props.viewWorksheets}
+          fullWidth
+          onClick={() => history.push("/work-instructions/summary/worksheets")}
+        >
+          VIEW WORKSHEETS
         </PurpleButton>
       </Container>
     );

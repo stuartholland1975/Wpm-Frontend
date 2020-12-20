@@ -12,13 +12,8 @@ function generateRandomColor() {
   //random color will be freshly served
 }
 
-const color = Color(generateRandomColor())
 
-const COLORS_SERIES = ["hsl(0, 0%, 25%)", "#141446", "#7A77FF"];
-let colors = [];
 const barRender = ({ resultSet }) => {
-  const test = resultSet.series()[0].series.map((r, index) => colors.push(color.darken([index]/2).toString()));
-  console.log(colors)
   const data = {
     labels: resultSet.categories().map((c) => c.category),
     datasets: resultSet.series().map((s, index) => ({

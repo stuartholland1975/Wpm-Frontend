@@ -178,74 +178,12 @@ const BillItemForm = (props) => {
           order_value:
             instruction[0].order_value -
             selectedItem.total_payable +
-            apiObject.total_payable,
+            totalPayable,
         })
       );
       props.handleHide();
     }
   };
-
-  /* const onSubmit = ({
-    item_number,
-    qty_ordered,
-    materials_base,
-    activity_code,
-    item_type,
-    location_ref,
-  }) => {
-    const labourBase = roundNumber(
-      qty_ordered * value.activity_code.labour_base
-    );
-    const labourUplift = roundNumber(
-      qty_ordered * value.activity_code.labour_uplift
-    );
-    const labourTotal = roundNumber(labourBase + labourUplift);
-    const unitLabour = roundNumber(labourTotal / qty_ordered);
-    const otherMaterials = value.activity_code.materials_other;
-    const materialsBase = parseFloat(materials_base);
-    const materialsUplift = roundNumber(materialsBase * 0.05);
-    const materialsTotalExclOtherMaterials = roundNumber(
-      materialsBase + materialsUplift
-    );
-    const materialsTotalInclOtherMaterials = roundNumber(
-      materialsTotalExclOtherMaterials + otherMaterials
-    );
-    const unitMaterialsPayable = roundNumber(
-      materialsTotalInclOtherMaterials / qty_ordered
-    );
-    const totalPayable = roundNumber(
-      labourTotal + materialsTotalInclOtherMaterials
-    );
-    const unitTotalPayable = roundNumber(totalPayable / qty_ordered);
-    const apiObject = {
-      work_instruction: instruction[0].work_instruction,
-      location_ref: value.location.id,
-      item_number: item_number,
-      item_type: value.item_type.id,
-      activity_ref: value.activity_code.id,
-      qty_ordered: qty_ordered,
-      labour_base: labourBase,
-      labour_uplift: labourUplift,
-      labour_total: labourTotal,
-      unit_labour_payable: unitLabour,
-      materials_base: materialsBase,
-      materials_uplift: materialsUplift,
-      materials_total_excl_other_materials: materialsTotalExclOtherMaterials,
-      materials_other: value.activity_code.materials_other,
-      materials_total_incl_other_materials: materialsTotalInclOtherMaterials,
-      unit_materials_payable: unitMaterialsPayable,
-      total_payable: totalPayable,
-      unit_total_payable: unitTotalPayable,
-    };
-    if (props.formType === "create") {
-      dispatch(newInstructionDetail(apiObject));
-      closeAndReset();
-    } else if (props.formType === "edit") {
-      dispatch(updateInstructionDetail({ ...apiObject, id: selectedItem.id }));
-
-      closeAndReset();
-    }
-  }; */
 
   const closeAndReset = () => {
     props.handleHide();

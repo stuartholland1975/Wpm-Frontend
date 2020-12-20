@@ -14,7 +14,7 @@ const numFormat = (num) => {
 	});
 };
 
-const InstructionSummary = (props) => {
+const InstructionSummary = () => {
 	const orderDetail = useSelector(selectOrderSummaryDetails);
 	const projectTitle = useLocation().state;
 	const boqItems = orderDetail.filter(({item_type}) => item_type === "BOQ" || item_type === "FREE" || item_type === "DIRECTS");

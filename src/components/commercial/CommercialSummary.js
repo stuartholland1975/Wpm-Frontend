@@ -2,13 +2,14 @@ import React from "react";
 import AppliedValueByApplication from "./AppliedValueByApplication";
 import ValueCompleteByWeek from "./ValueCompleteByWeek";
 import ValueCompleteByWorkInstruction from "./ValueCompleteByWorkInstruction";
+import ValueCompleteByAreaWeek from "./ValueCompleteByAreaWeek";
 import { CardDeck, Card, Container } from "react-bootstrap";
 
 const CommercialSummary = () => {
   return (
     <Container fluid>
-      <h3 style={{textAlign: "center"}}>COMMERCIAL SUMMARY</h3>
-      <hr/>
+      <h3 style={{ textAlign: "center" }}>COMMERCIAL SUMMARY</h3>
+      <hr />
       <CardDeck>
         <Card>
           <Card.Body>
@@ -28,6 +29,8 @@ const CommercialSummary = () => {
             <ValueCompleteByWeek />
           </Card.Body>
         </Card>
+      </CardDeck>
+      <CardDeck>
         <Card>
           <Card.Body>
             <Card.Title style={{ textAlign: "center", fontWeight: "bold" }}>
@@ -35,6 +38,15 @@ const CommercialSummary = () => {
             </Card.Title>
 
             <ValueCompleteByWorkInstruction />
+          </Card.Body>
+        </Card>
+        <Card>
+          <Card.Body>
+            <Card.Title style={{ textAlign: "center", fontWeight: "bold" }}>
+              Value Complete By Area Week
+            </Card.Title>
+
+            <ValueCompleteByAreaWeek />
           </Card.Body>
         </Card>
       </CardDeck>

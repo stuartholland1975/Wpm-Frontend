@@ -1,20 +1,11 @@
-import React, { Fragment } from "react";
-import { MapContainer } from "../maps/MapContainer";
-import { Row, Col } from "react-bootstrap";
-import {
-  Container,
-  Grid,
-  AppBar,
-  Toolbar,
-  Paper,
- 
-} from "@material-ui/core";
+import React from "react";
+import {WorksheetPrints} from "../worksheets/WorksheetPrints";
+
 
 const Test = () => {
   return (
-    <>
-    TEST
-    </>
+    <WorksheetPrints/>
   );
 };
+
 export default Test;

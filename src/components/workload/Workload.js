@@ -20,6 +20,16 @@ import { Divider } from "@react-md/divider";
 import cubejs from "@cubejs-client/core";
 import { QueryRenderer } from "@cubejs-client/react";
 import { Spin } from "antd";
+import {makeStyles} from '@material-ui/core';
+
+const useStyles = makeStyles({
+    '@global': {
+        '.MuiAutocomplete-option[data-focus="true"]': {
+            background: 'lightgray'
+        }
+    }
+
+});
 
 const numberRender = ({ resultSet }) => (
   <Col style={{ marginTop: "10px", textAlign: "center" }}>
@@ -32,6 +42,8 @@ const numberRender = ({ resultSet }) => (
     </h5>
   </Col>
 );
+
+
 
 const API_URL = "http://192.168.0.4:4000"; // change to your actual endpoint
 
@@ -63,6 +75,7 @@ const Workload = () => {
   const [cubeWeek, setCubeWeek] = useState(false);
   const [cubeYear, setCubeYear] = useState(false);
   const confirm = useConfirm();
+  useStyles()
 
   const WeeklyValue = () => {
     return (
@@ -148,6 +161,7 @@ const Workload = () => {
       <Row className="justify-content-md-center">
         <Col item xs>
           <Autocomplete
+
             options={years}
             getOptionLabel={(option) => option}
             onChange={(event, newValue) => {

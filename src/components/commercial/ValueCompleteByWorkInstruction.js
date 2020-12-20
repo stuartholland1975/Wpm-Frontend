@@ -4,7 +4,7 @@ import { QueryRenderer } from "@cubejs-client/react";
 import { Spin } from "antd";
 import { Line, Bar, Pie } from "react-chartjs-2";
 
-const COLORS_SERIES = ["grey",  "#FF6492", "#141446", "#7A77FF"];
+const COLORS_SERIES = ["grey", "#366363", "#141446", "#7A77FF"];
 
 const barRender = ({ resultSet }) => {
   const data = {
@@ -17,10 +17,11 @@ const barRender = ({ resultSet }) => {
     })),
   };
   const options = {
-    scales: { xAxes: [{ stacked: true }] },
-    legend: { display: false },
+    scales: { xAxes: [{ stacked: true }], yAxes: [{ stacked: true }] },
+    legend: { display: true },
+    //maintainAspectRatio: false,
   };
-  return <Bar data={data} options={options} />;
+  return <Bar data={data} options={options} height={150} />;
 };
 
 const API_URL = "http://192.168.0.4:4000"; // change to your actual endpoint
@@ -48,7 +49,7 @@ const ValueCompleteByWorkInstruction = () => {
         order: {
           "Orderheader.workInstruction": "asc",
         },
-        measures: ["Orderheader.valueComplete"],
+        measures: ["Orderheader.valueComplete", "Orderheader.orderValue"],
         filters: [
           {
             dimension: "Orderheader.valueComplete",

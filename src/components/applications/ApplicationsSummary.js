@@ -58,7 +58,7 @@ const ApplicationsSummary = () => {
 			<h4 style={ {textAlign: "center", fontWeight: "bolder", paddingTop: 5} }>APPLICATION SUMMARY</h4>
 			<hr/>
 			<CardDeck>
-				{ applications.map(item => {
+				{ applications && applications.map(item => {
 					const {app_date, app_current, id, app_ref, app_submitted, app_value} = item;
 					return (
 
@@ -68,7 +68,7 @@ const ApplicationsSummary = () => {
 							textLabelTop="Date:"
 							textValueTop={ formatDate(app_date) }
 							textLabelMid="VALUE:"
-							textValueMid={ numFormat(app_value) }
+							textValueMid={ app_value.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2}) }
 							textLabelBtm="STATUS:"
 							textValueBtm={ app_current ? "OPEN" : "CLOSED" }
 							textLabelMisc="SUBMISSION STATUS:"
